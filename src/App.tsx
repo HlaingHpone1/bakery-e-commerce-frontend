@@ -1,3 +1,4 @@
+import { DarkThemeContextProvider } from "./context/DarkThemeContext"
 import Router from "./router/Router"
 
 
@@ -5,7 +6,9 @@ function App() {
 
   return (
     <>
-      <Router />
+      <DarkThemeContextProvider>
+        <Router />
+      </DarkThemeContextProvider>
     </>
   )
 }
