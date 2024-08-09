@@ -1,20 +1,18 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-// This is example for userStore. U Can create as u Like.
-interface UserData {
-  id: string;
-  userName: string;
-  email: string;
-  role: string;
-}
-
 interface UserStore {
   logInUser: boolean;
-  userData: UserData | null;
+  name: string;
+  email: string;
+  token: string;
+  role: string;
 
   setLogInUser: (logInUser: boolean) => void;
-  setUserData: (data: UserData) => void;
+  setName: (name: string) => void;
+  setEmail: (email: string) => void;
+  setToken: (token: string) => void;
+  setRole: (role: string) => void;
   logOut: () => void;
 }
 
@@ -23,10 +21,17 @@ export const userStore = create<UserStore>()(
     persist<UserStore>(
       (set) => ({
         logInUser: false,
-        userData: null,
+        name: "",
+        email: "",
+        token: "",
+        role: "",
 
         setLogInUser: (logInUser: boolean) => set({ logInUser: logInUser }),
-        setUserData: (data: UserData) => set({ userData: data }),
+        setName: (name: string) => set({ name: name }),
+        setEmail: (email: string) => set({ email: email }),
+        setToken: (token: string) => set({ token: token }),
+        setRole: (role: string) => set({ role: role }),
+
         logOut: () => {
           set(() => ({
             logInUser: false,

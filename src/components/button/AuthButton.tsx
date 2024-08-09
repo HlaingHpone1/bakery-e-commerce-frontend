@@ -12,6 +12,7 @@ const AuthButton = ({ text, type, sx, onSubmit }: ButtonProps) => {
   return (
     <Button
       variant={type}
+      type="submit"
       sx={{
         letterSpacing: "1px",
         textTransform: "capitalize",
