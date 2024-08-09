@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useFormik } from "formik";
 
@@ -9,6 +9,7 @@ import {
   FacebookRounded,
   Google,
   KeyRounded,
+  LocalPhoneRounded,
 } from "@mui/icons-material";
 
 import {
@@ -30,31 +31,50 @@ import ButtonIcon from "../../components/button/ButtonIcon";
 import AuthButton from "../../components/button/AuthButton";
 import FormInputPassword from "../../components/form/FormInputPassword";
 import { RegisterValidationSchema } from "../../validation/RegisterValidationSchema";
+import { register } from "../../api/auth/auth";
+import { alertStore } from "../../store/alertStore";
 
-type RegisterProps = {
-  username: string;
+export type RegisterProps = {
+  name: string;
   email: string;
+  phone_number: string;
   password: string;
-  confirm_password: string;
+  password_confirmation: string;
 };
 
 const Register = () => {
   const animationRef = useRef<LottieRefCurrentProps>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [forgotShow, setForgotShow] = useState(false);
+  const navigate = useNavigate();
+  const { setAlert } = alertStore();
 
   const { handleBlur, handleChange, errors, touched, handleSubmit } =
     useFormik<RegisterProps>({
       initialValues: {
-        username: "",
+        name: "",
         email: "",
+        phone_number: "",
         password: "",
-        confirm_password: "",
+        password_confirmation: "",
       },
       validationSchema: RegisterValidationSchema,
-      onSubmit: () => {
-        console.log("Submit");
+      onSubmit: async (value) => {
+        await register(value)
+          .then((response) => {
+            if (response.data.code === 201) {
+              setAlert(true, response.data.message, "success");
+              navigate("/login");
+            }
+          })
+          .catch((e) =>
+            setAlert(
+              true,
+              e.response.data.code === 422
+                ? e.response.data.data.message
+                : e.response.data.message,
+              "error"
+            )
+          );
       },
     });
 
@@ -116,89 +136,91 @@ const Register = () => {
               >
                 Register
               </Typography>
-              <FormInput
-                name="username"
-                label="Username"
-                required={true}
-                icon={<EmailRounded />}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                error={errors.username}
-                touch={touched.username}
-                sx={{
-                  paddingBottom: "20px",
-                }}
-              />
-              <FormInput
-                name="email"
-                label="Email"
-                required={true}
-                icon={<EmailRounded />}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                error={errors.email}
-                touch={touched.email}
-                sx={{
-                  paddingBottom: "20px",
-                }}
-              />
-              <FormInputPassword
-                name="password"
-                label="Password"
-                required={true}
-                icon={<KeyRounded />}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                error={errors.password}
-                touch={touched.password}
-                sx={{
-                  paddingBottom: "20px",
-                }}
-              />
-              <FormInputPassword
-                name="confirm_password"
-                label="Confirm Password"
-                required={true}
-                icon={<KeyRounded />}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                error={errors.confirm_password}
-                touch={touched.confirm_password}
-                sx={{
-                  paddingBottom: "10px",
-                }}
-              />
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                marginBottom={2}
-              >
+              <form onSubmit={handleSubmit}>
+                <FormInput
+                  name="name"
+                  label="User Name"
+                  required={true}
+                  icon={<EmailRounded />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={errors.name}
+                  touch={touched.name}
+                  sx={{
+                    paddingBottom: "20px",
+                  }}
+                />
+                <FormInput
+                  name="email"
+                  label="Email"
+                  required={true}
+                  icon={<EmailRounded />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={errors.email}
+                  touch={touched.email}
+                  sx={{
+                    paddingBottom: "20px",
+                  }}
+                />
+                <FormInput
+                  name="phone_number"
+                  label="Phone Number"
+                  required={true}
+                  icon={<LocalPhoneRounded />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={errors.phone_number}
+                  touch={touched.phone_number}
+                  sx={{
+                    paddingBottom: "20px",
+                  }}
+                />
+                <FormInputPassword
+                  name="password"
+                  label="Password"
+                  required={true}
+                  icon={<KeyRounded />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={errors.password}
+                  touch={touched.password}
+                  sx={{
+                    paddingBottom: "20px",
+                  }}
+                />
+                <FormInputPassword
+                  name="password_confirmation"
+                  label="Confirm Password"
+                  required={true}
+                  icon={<KeyRounded />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={errors.password_confirmation}
+                  touch={touched.password_confirmation}
+                  sx={{
+                    paddingBottom: "10px",
+                  }}
+                />
                 <FormControlLabel
                   control={<Checkbox size="small" color="info" />}
                   label="Accept Terms and Conditions"
                 />
+                <AuthButton
+                  text="Submit"
+                  type="contained"
+                  sx={{
+                    width: "100%",
 
-                {forgotShow && (
-                  <Typography color="error" marginBottom="0" paragraph>
-                    Forgot Password
-                  </Typography>
-                )}
-              </Stack>
-              <AuthButton
-                text="Submit"
-                type="contained"
-                sx={{
-                  width: "100%",
-
-                  backgroundColor: "#8B4513",
-
-                  ":hover": {
                     backgroundColor: "#8B4513",
-                  },
-                }}
-                onSubmit={handleSubmit}
-              />
+
+                    ":hover": {
+                      backgroundColor: "#8B4513",
+                    },
+                  }}
+                  onSubmit={handleSubmit}
+                />
+              </form>
 
               <Divider
                 sx={{

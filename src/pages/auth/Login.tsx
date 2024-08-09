@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useFormik } from "formik";
 
@@ -30,8 +30,11 @@ import ButtonIcon from "../../components/button/ButtonIcon";
 import AuthButton from "../../components/button/AuthButton";
 import FormInputPassword from "../../components/form/FormInputPassword";
 import { LoginValidationSchema } from "../../validation/loginValidationSchmea";
+import { login } from "../../api/auth/auth";
+import { alertStore } from "../../store/alertStore";
+import { userStore } from "../../store/userStore";
 
-type LoginProps = {
+export type LoginProps = {
   email: string;
   password: string;
 };
@@ -39,22 +42,46 @@ type LoginProps = {
 const Login = () => {
   const animationRef = useRef<LottieRefCurrentProps>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const navigate = useNavigate();
+  const { setAlert } = alertStore();
+  const { setLogInUser, setName, setEmail, setToken, setRole } = userStore();
+
   const [forgotShow, setForgotShow] = useState(false);
 
-  const { values, handleBlur, handleChange, errors, touched, handleSubmit } =
+  const { handleBlur, handleChange, errors, touched, handleSubmit } =
     useFormik<LoginProps>({
       initialValues: {
         email: "",
         password: "",
       },
       validationSchema: LoginValidationSchema,
-      onSubmit: () => {
-        console.log("Submit");
+      onSubmit: async (value) => {
+        await login(value)
+          .then((response) => {
+            if (response.data.code === 200) {
+              setAlert(true, response.data.message, "success");
+              setLogInUser(true);
+              setName(response.data.data.name);
+              setEmail(response.data.data.email);
+              setToken(response.data.data.token);
+              setRole(response.data.data.role);
+              navigate("/");
+            }
+          })
+          .catch((e) => {
+            setAlert(
+              true,
+              e.response.data.code === 422
+                ? e.response.data.data.message
+                : e.response.data.message,
+              "error"
+            );
+            if (e.response.data.code === 401) {
+              setForgotShow(true);
+            }
+          });
       },
     });
-
-  console.log(values);
 
   return (
     <>
@@ -92,63 +119,65 @@ const Login = () => {
               >
                 Log in
               </Typography>
-              <FormInput
-                name="email"
-                label="Email"
-                required={true}
-                icon={<EmailRounded />}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                error={errors.email}
-                touch={touched.email}
-                sx={{
-                  paddingBottom: "20px",
-                }}
-              />
-              <FormInputPassword
-                name="password"
-                label="Password"
-                required={true}
-                icon={<KeyRounded />}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                error={errors.password}
-                touch={touched.password}
-                sx={{
-                  paddingBottom: "10px",
-                }}
-              />
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                marginBottom={2}
-              >
-                <FormControlLabel
-                  control={<Checkbox size="small" />}
-                  label="Accept Terms and Conditions"
+              <form onSubmit={handleSubmit}>
+                <FormInput
+                  name="email"
+                  label="Email"
+                  required={true}
+                  icon={<EmailRounded />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={errors.email}
+                  touch={touched.email}
+                  sx={{
+                    paddingBottom: "20px",
+                  }}
                 />
+                <FormInputPassword
+                  name="password"
+                  label="Password"
+                  required={true}
+                  icon={<KeyRounded />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={errors.password}
+                  touch={touched.password}
+                  sx={{
+                    paddingBottom: "10px",
+                  }}
+                />
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  marginBottom={2}
+                >
+                  <FormControlLabel
+                    control={<Checkbox size="small" />}
+                    label="Accept Terms and Conditions"
+                  />
 
-                {forgotShow && (
-                  <Typography color="error" marginBottom="0" paragraph>
-                    Forgot Password
-                  </Typography>
-                )}
-              </Stack>
-              <AuthButton
-                text="Submit"
-                type="contained"
-                sx={{
-                  width: "100%",
+                  {forgotShow && (
+                    <Typography color="error" marginBottom="0" paragraph>
+                      Forgot Password
+                    </Typography>
+                  )}
+                </Stack>
+                <AuthButton
+                  text="Submit"
+                  type="contained"
+                  sx={{
+                    width: "100%",
 
-                  backgroundColor: "#8B4513",
-
-                  ":hover": {
                     backgroundColor: "#8B4513",
-                  },
-                }}
-                onSubmit={handleSubmit}
-              />
+
+                    ":hover": {
+                      backgroundColor: "#8B4513",
+                    },
+                  }}
+                  onSubmit={handleSubmit}
+                />
+              </form>
 
               <Divider
                 sx={{
