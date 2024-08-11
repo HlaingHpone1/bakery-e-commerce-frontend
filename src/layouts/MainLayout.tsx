@@ -1,61 +1,65 @@
-import { useContext } from "react";
 import { Outlet } from "react-router-dom";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, Fab, Fade, Toolbar, useScrollTrigger } from "@mui/material";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { DarkThemeContext } from "../context/DarkThemeContext";
 
 import "@fontsource/roboto";
 import "@fontsource/roboto-slab";
+import { KeyboardArrowUp } from "@mui/icons-material";
+
+interface Props {
+  window?: () => Window;
+  children: React.ReactElement;
+}
+
+function ScrollTop(props: Props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+    disableHysteresis: true,
+    threshold: 100,
+  });
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const anchor = (
+      (event.target as HTMLDivElement).ownerDocument || document
+    ).querySelector("#back-to-top-anchor");
+
+    if (anchor) {
+      anchor.scrollIntoView({
+        block: "center",
+      });
+    }
+  };
+
+  return (
+    <Fade in={trigger}>
+      <Box
+        onClick={handleClick}
+        role="presentation"
+        sx={{ position: "fixed", bottom: 16, right: 16 }}
+      >
+        {children}
+      </Box>
+    </Fade>
+  );
+}
 
 const MainLayout = () => {
-  const { isDarkTheme } = useContext(DarkThemeContext);
-
-  const theme = createTheme({
-    palette: {
-      mode: isDarkTheme ? "dark" : "light",
-      primary: {
-        main: "#FFD700",
-      },
-      secondary: {
-        main: "#FFF5E1",
-      },
-      tertiary: {
-        main: "#8B4513",
-      },
-      optional: {
-        main: "#F5DEB3",
-        light: "#FFC0CB",
-      },
-    },
-    typography: {
-      fontFamily: ["Roboto", "Roboto Slab", "sans-serif", "Arial"].join(","),
-    },
-    breakpoints: {
-      values: {
-        xs: 0,
-        smx: 480,
-        sm: 600,
-        smd: 750,
-        md: 900,
-        lg: 1200,
-        xl: 1536,
-        inner_wrap: 1280,
-      },
-    },
-  });
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Navbar />
-        <Outlet />
-        <Footer />
-        <ReactQueryDevtools />
-      </ThemeProvider>
+      <Navbar />
+      <Toolbar id="back-to-top-anchor" />
+      <Outlet />
+      <Footer />
+      <ScrollTop>
+        <Fab size="small" aria-label="scroll back to top">
+          <KeyboardArrowUp />
+        </Fab>
+      </ScrollTop>
+      {/* <ReactQueryDevtools /> */}
     </>
   );
 };

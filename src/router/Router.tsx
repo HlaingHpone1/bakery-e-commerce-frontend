@@ -15,11 +15,18 @@ import Register from "../pages/auth/Register";
 import AboutUs from "../pages/visitor/AboutUs";
 import MainLayout from "../layouts/MainLayout";
 import AddToCart from "../pages/user/AddToCart";
+import AdminLayout from "../layouts/AdminLayout";
+import Dashboard from "../pages/admin/Dashboard";
 import Services from "../pages/visitor/Services";
 import ContactUs from "../pages/visitor/ContactUs";
+import UserList from "../pages/admin/user/UserList";
+import BlogList from "../pages/admin/blog/BlogList";
 import BlogDetail from "../pages/visitor/BlogDetail";
+import OrderList from "../pages/admin/order/OrderList";
 import Agricultural from "../pages/visitor/Agricultural";
 import ProductDetail from "../pages/visitor/ProductDetail";
+import ProductList from "../pages/admin/product/ProductList";
+import CategoryList from "../pages/admin/category/CategoryList";
 
 export type Role = "Admin" | "User";
 
@@ -116,6 +123,50 @@ const Router = () => {
           element: AboutUs,
           private: true,
           role: ["Admin", "User"],
+        },
+      ],
+    },
+    {
+      path: "/admin",
+      element: AdminLayout,
+      private: true,
+      role: ["Admin"],
+      children: [
+        {
+          path: "/admin",
+          element: Dashboard,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/admin/users",
+          element: UserList,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/admin/blogs",
+          element: BlogList,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/admin/categories",
+          element: CategoryList,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/admin/products",
+          element: ProductList,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/admin/orders",
+          element: OrderList,
+          private: true,
+          role: ["Admin"],
         },
       ],
     },
