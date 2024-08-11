@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 
 import {
   Box,
+  Button,
+  Divider,
   List,
   ListItem,
   ListItemButton,
@@ -19,6 +21,7 @@ import {
   HomeRounded,
   StorefrontRounded,
 } from "@mui/icons-material";
+import { userStore } from "../../store/userStore";
 
 type UserSideBarProps = {
   setOpen: (open: boolean) => void;
@@ -76,6 +79,7 @@ const sideBarList = [
 ];
 
 const UserSideBar = ({ setOpen }: UserSideBarProps) => {
+  const { logInUser } = userStore();
   return (
     <Box sx={{ width: 250 }} role="presentation" onClick={() => setOpen(!open)}>
       <List>
@@ -91,6 +95,61 @@ const UserSideBar = ({ setOpen }: UserSideBarProps) => {
             </ListItem>
           </Link>
         ))}
+
+        {logInUser && (
+          <>
+            <Divider />
+
+            <Box padding="10px">
+              <Link to="/login">
+                <Button
+                  variant="contained"
+                  color="tertiary"
+                  sx={{
+                    margin: "10px auto",
+
+                    width: "100%",
+
+                    color: "#fff",
+
+                    letterSpacing: "1px",
+                    textTransform: "capitalize",
+                    fontFamily: "Roboto Slab",
+                    display: {
+                      smx: "none",
+                      xs: "block",
+                    },
+                  }}
+                >
+                  Log in
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button
+                  variant="contained"
+                  color="tertiary"
+                  sx={{
+                    width: "100%",
+
+                    margin: "10px auto",
+
+                    color: "#fff",
+
+                    letterSpacing: "1px",
+                    textTransform: "capitalize",
+                    fontFamily: "Roboto Slab",
+                    display: {
+                      sm: "none",
+                      xs: "block",
+                    },
+                  }}
+                >
+                  Register
+                </Button>
+              </Link>
+            </Box>
+          </>
+        )}
       </List>
     </Box>
   );

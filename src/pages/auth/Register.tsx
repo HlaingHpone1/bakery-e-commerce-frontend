@@ -10,6 +10,7 @@ import {
   Google,
   KeyRounded,
   LocalPhoneRounded,
+  Person,
 } from "@mui/icons-material";
 
 import {
@@ -141,7 +142,7 @@ const Register = () => {
                   name="name"
                   label="User Name"
                   required={true}
-                  icon={<EmailRounded />}
+                  icon={<Person />}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   error={errors.name}

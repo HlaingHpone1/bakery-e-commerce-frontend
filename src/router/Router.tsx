@@ -21,7 +21,7 @@ import BlogDetail from "../pages/visitor/BlogDetail";
 import Agricultural from "../pages/visitor/Agricultural";
 import ProductDetail from "../pages/visitor/ProductDetail";
 
-export type Role = "admin" | "user";
+export type Role = "Admin" | "User";
 
 interface RouteConfig {
   path: string;
@@ -37,85 +37,85 @@ const Router = () => {
       path: "/",
       element: MainLayout,
       private: false,
-      role: ["admin", "user"],
+      role: ["Admin", "User"],
       children: [
         {
           path: "/",
           element: Home,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/products",
           element: Product,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/products/:id",
           element: ProductDetail,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/services",
           element: Services,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/blogs",
           element: Blog,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/blogs/:id",
           element: BlogDetail,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/profile/:id",
           element: Profile,
           private: true,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/shops",
           element: Shop,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/contact-us",
           element: ContactUs,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/agricultural",
           element: Agricultural,
           private: false,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/add-to-cart",
           element: AddToCart,
           private: true,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/settings",
           element: Setting,
           private: true,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
         {
           path: "/about-us",
           element: AboutUs,
           private: true,
-          role: ["admin", "user"],
+          role: ["Admin", "User"],
         },
       ],
     },
@@ -123,19 +123,19 @@ const Router = () => {
       path: "/login",
       private: false,
       element: Login,
-      role: ["admin", "user"],
+      role: ["Admin", "User"],
     },
     {
       path: "/register",
       private: false,
       element: Register,
-      role: ["admin", "user"],
+      role: ["Admin", "User"],
     },
     {
       path: "*",
       private: false,
       element: NotFound,
-      role: ["admin", "user"],
+      role: ["Admin", "User"],
     },
   ];
 
@@ -149,7 +149,7 @@ const Router = () => {
             isPrivate ? (
               <PrivateRoute element={Element} roles={role} />
             ) : (
-              <Element />
+              <PublicRoute element={Element} />
             )
           }
         >
@@ -161,21 +161,7 @@ const Router = () => {
 
   return (
     <>
-      <Routes>
-        {routeList.map((route, i) => {
-          const RouteComponent = route.private ? (
-            <PrivateRoute element={route.element} roles={route.role} />
-          ) : (
-            <PublicRoute element={route.element} />
-          );
-
-          return (
-            <Route key={i} path={route.path} element={RouteComponent}>
-              {route.children && renderRoutes(route.children)}
-            </Route>
-          );
-        })}
-      </Routes>
+      <Routes>{renderRoutes(routeList)}</Routes>
     </>
   );
 };
