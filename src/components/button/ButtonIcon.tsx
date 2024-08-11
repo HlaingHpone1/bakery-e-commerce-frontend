@@ -1,5 +1,6 @@
-import { Button } from "@mui/material";
 import { CSSProperties, ReactNode } from "react";
+
+import { Button } from "@mui/material";
 
 type ButtonIconProps = {
   icon: ReactNode;

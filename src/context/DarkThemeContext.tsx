@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@mui/material";
+// import { useMediaQuery } from "@mui/material";
 import { createContext, useState } from "react";
 
 type DarkThemeContextProviderProps = {
@@ -24,8 +24,8 @@ export const DarkThemeContext = createContext<DarkThemeContext>(
 export const DarkThemeContextProvider = ({
   children,
 }: DarkThemeContextProviderProps) => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(prefersDarkMode);
+  // const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
 
   return (
     <DarkThemeContext.Provider

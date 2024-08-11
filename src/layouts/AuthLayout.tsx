@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
+
 import { Container } from "@mui/material";
 
 type AuthLayoutProps = {

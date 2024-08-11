@@ -35,9 +35,13 @@ export const userStore = create<UserStore>()(
         logOut: () => {
           set(() => ({
             logInUser: false,
-            userData: null,
+            name: "",
+            email: "",
+            token: "",
+            role: "",
           }));
           localStorage.removeItem("userStore");
+          localStorage.removeItem("product");
         },
       }),
       {
