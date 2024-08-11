@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   ListItem,
@@ -10,6 +10,7 @@ import {
 
 import {
   AccountCircle,
+  Dashboard,
   LogoutRounded,
   SettingsRounded,
   SvgIconComponent,
@@ -45,7 +46,9 @@ const menuList: MenuList[] = [
 ];
 
 const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
-  const { logOut } = userStore();
+  const navigate = useNavigate();
+  const { logInUser, logOut } = userStore();
+
   return (
     <Menu
       anchorEl={anchorEl}
@@ -62,6 +65,26 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
     >
+      {logInUser && (
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              navigate("/admin");
+            }}
+          >
+            <ListItemIcon>
+              <Dashboard
+                sx={{
+                  minWidth: "40px",
+                  fontSize: "27px",
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Admin Dashboard" />
+          </ListItemButton>
+        </ListItem>
+      )}
+
       {menuList.map((list) => (
         <Link key={list.id} to={list.link}>
           <ListItem disablePadding>

@@ -18,7 +18,7 @@ const Footer = () => {
       sx={{
         paddingY: "2rem",
         height: "100%",
-        background: "linear-gradient(45deg, #FFF5E1, #F5DEB3)",
+        background: "linear-gradient(45deg, #FFD5AD, #FFF5E1)",
       }}
     >
       <ContainerWrapper component="footer">
