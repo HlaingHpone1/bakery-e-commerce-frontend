@@ -12,17 +12,17 @@ const ContactInfo = ({ icon, text }: ContactInfoProps) => {
     <Box display="flex" gap="10px" alignItems="center" marginBottom="10px">
       <Avatar
         sx={{
-          bgcolor: "#8B4513",
+          bgcolor: "#fff",
         }}
       >
         {icon}
       </Avatar>
       <Stack>
         <Typography
-          variant="h6"
+          variant="body2"
           component="p"
           sx={{
-            fontSize: "18px",
+            fontSize: "16px",
           }}
         >
           {text}

@@ -47,7 +47,9 @@ const menuList: MenuList[] = [
 
 const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
   const navigate = useNavigate();
-  const { logInUser, logOut } = userStore();
+  const { logInUser, logOut, role } = userStore();
+
+  const path = location.pathname.split(/\//g);
 
   return (
     <Menu
@@ -65,11 +67,11 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
     >
-      {logInUser && (
+      {logInUser && !path.includes("admin") && role === "Admin" && (
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
-              navigate("/admin");
+              navigate("/dashboard");
             }}
           >
             <ListItemIcon>

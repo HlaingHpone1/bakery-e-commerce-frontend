@@ -1,20 +1,27 @@
-import { ChangeEvent, CSSProperties, FocusEvent, useState } from "react";
+import {
+  ChangeEvent,
+  CSSProperties,
+  FocusEvent,
+  ReactNode,
+  useState,
+} from "react";
 
 import {
-  Box,
+  FormControl,
   IconButton,
   InputAdornment,
-  InputLabel,
   TextField,
 } from "@mui/material";
 
-import RequiredStar from "./RequiredStar";
 import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
 
-type FormInputPasswordProps = {
+import RequiredStar from "./RequiredStar";
+
+type IconFormInputPasswordProps = {
   name: string;
   label: string;
   required: boolean;
+  icon: ReactNode;
   onBlur: (e: FocusEvent<HTMLInputElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   error?: string;
@@ -22,34 +29,51 @@ type FormInputPasswordProps = {
   sx?: CSSProperties;
 };
 
-const FormInputPassword = ({
+const IconFormInputPassword = ({
   name,
   label,
   required = false,
+  icon,
   onBlur,
   onChange,
   error,
   touch,
   sx,
-}: FormInputPasswordProps) => {
+}: IconFormInputPasswordProps) => {
   const [show, setShow] = useState(false);
 
   return (
-    <Box>
-      <InputLabel className="mb-1">
-        {label}
-        {required && <RequiredStar />}
-      </InputLabel>
+    <FormControl fullWidth>
       <TextField
         variant="outlined"
         id={name}
-        size="small"
         type={show ? "text" : "password"}
         sx={{
-          width: "100%",
+          "& .MuiOutlinedInput-root": {
+            "&.Mui-focused.Mui-error fieldset": {
+              borderColor: "error",
+            },
+
+            "&.Mui-focused fieldset": {
+              borderColor: "#8B4513",
+            },
+          },
+
+          ".MuiFormLabel-root.MuiInputLabel-root.Mui-focused": {
+            color: "#000",
+          },
           ...sx,
         }}
+        label={
+          <>
+            {label}
+            {required && <RequiredStar />}
+          </>
+        }
         InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">{icon}</InputAdornment>
+          ),
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
@@ -69,8 +93,8 @@ const FormInputPassword = ({
         error={!!error && touch}
         helperText={touch && error ? error : ""}
       />
-    </Box>
+    </FormControl>
   );
 };
 
-export default FormInputPassword;
+export default IconFormInputPassword;

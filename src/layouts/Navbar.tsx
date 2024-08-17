@@ -62,6 +62,7 @@ const Navbar = () => {
           sx={{
             bgcolor: "primary.main",
             color: "#000",
+            zIndex: "50",
           }}
         >
           <ContainerWrapper
@@ -152,9 +153,9 @@ const Navbar = () => {
                   <Link to="/login">
                     <Button
                       variant="contained"
-                      color="tertiary"
                       sx={{
                         color: "#fff",
+                        bgcolor: "#3a506b",
 
                         letterSpacing: "1px",
                         textTransform: "capitalize",
@@ -171,9 +172,9 @@ const Navbar = () => {
                   <Link to="/register">
                     <Button
                       variant="contained"
-                      color="tertiary"
                       sx={{
                         color: "#fff",
+                        bgcolor: "#3a506b",
 
                         letterSpacing: "1px",
                         textTransform: "capitalize",

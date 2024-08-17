@@ -27,10 +27,10 @@ import {
 import shopAnimation from "../../assets/animation/register.json";
 
 import AuthLayout from "../../layouts/AuthLayout";
-import FormInput from "../../components/form/FormInput";
+import IconFormInput from "../../components/form/IconFormInput";
 import ButtonIcon from "../../components/button/ButtonIcon";
 import AuthButton from "../../components/button/AuthButton";
-import FormInputPassword from "../../components/form/FormInputPassword";
+import IconFormInputPassword from "../../components/form/IconFormInputPassword";
 import { RegisterValidationSchema } from "../../validation/RegisterValidationSchema";
 import { register } from "../../api/auth/auth";
 import { alertStore } from "../../store/alertStore";
@@ -59,7 +59,7 @@ const Register = () => {
         password_confirmation: "",
       },
       validationSchema: RegisterValidationSchema,
-      onSubmit: async (value) => {
+      onSubmit: async (value, { setErrors }) => {
         await register(value)
           .then((response) => {
             if (response.data.code === 201) {
@@ -67,15 +67,16 @@ const Register = () => {
               navigate("/login");
             }
           })
-          .catch((e) =>
+          .catch((e) => {
             setAlert(
               true,
               e.response.data.code === 422
                 ? e.response.data.data.message
                 : e.response.data.message,
               "error"
-            )
-          );
+            );
+            setErrors(e.response.data.data.errors);
+          });
       },
     });
 
@@ -138,7 +139,7 @@ const Register = () => {
                 Register
               </Typography>
               <form onSubmit={handleSubmit}>
-                <FormInput
+                <IconFormInput
                   name="name"
                   label="User Name"
                   required={true}
@@ -151,7 +152,7 @@ const Register = () => {
                     paddingBottom: "20px",
                   }}
                 />
-                <FormInput
+                <IconFormInput
                   name="email"
                   label="Email"
                   required={true}
@@ -164,7 +165,7 @@ const Register = () => {
                     paddingBottom: "20px",
                   }}
                 />
-                <FormInput
+                <IconFormInput
                   name="phone_number"
                   label="Phone Number"
                   required={true}
@@ -177,7 +178,7 @@ const Register = () => {
                     paddingBottom: "20px",
                   }}
                 />
-                <FormInputPassword
+                <IconFormInputPassword
                   name="password"
                   label="Password"
                   required={true}
@@ -190,7 +191,7 @@ const Register = () => {
                     paddingBottom: "20px",
                   }}
                 />
-                <FormInputPassword
+                <IconFormInputPassword
                   name="password_confirmation"
                   label="Confirm Password"
                   required={true}

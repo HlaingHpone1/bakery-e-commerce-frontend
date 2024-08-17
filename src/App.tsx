@@ -7,18 +7,24 @@ import {
   DarkThemeContext,
   DarkThemeContextProvider,
 } from "./context/DarkThemeContext";
+import { PaginationProvider } from "./context/PaginationContent";
+import { SortModelProvider } from "./context/SortModel";
+import Loading from "./components/loading/Loading";
+import DeleteModalBox from "./components/modalBox/DeleteModalBox";
+import { DeleteModalContext } from "./context/DeleteModalContext";
 
 function App() {
   const { isDarkTheme } = useContext(DarkThemeContext);
+  const { open } = useContext(DeleteModalContext);
 
   const theme = createTheme({
     palette: {
       mode: isDarkTheme ? "dark" : "light",
       primary: {
-        main: "#FFD5AD",
+        main: "#919798",
       },
       secondary: {
-        main: "#FFF5E1",
+        main: "#000",
       },
       tertiary: {
         main: "#8B4513",
@@ -48,11 +54,18 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <DarkThemeContextProvider>
-          <Router />
-        </DarkThemeContextProvider>
+
+        <PaginationProvider>
+          <DarkThemeContextProvider>
+            <SortModelProvider>
+              <Router />
+            </SortModelProvider>
+          </DarkThemeContextProvider>
+        </PaginationProvider>
       </ThemeProvider>
       <AlertBox />
+      <Loading />
+      {open && <DeleteModalBox />}
     </>
   );
 }

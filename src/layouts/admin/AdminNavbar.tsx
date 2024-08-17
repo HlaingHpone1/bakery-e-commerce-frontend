@@ -10,10 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { MenuRounded } from "@mui/icons-material";
 import { MouseEvent, useState } from "react";
-import AdminSideBar from "../components/navbar/AdminSideBar";
+import AdminSideBar from "../../components/navbar/AdminSideBar";
 import { Avatar } from "@mui/material";
-import { userStore } from "../store/userStore";
-import ProfileMenu from "../components/navbar/ProfileMenu";
+import { userStore } from "../../store/userStore";
+import ProfileMenu from "../../components/navbar/ProfileMenu";
 
 const drawerWidth = 240;
 
@@ -99,7 +99,13 @@ function AdminNavbar() {
 
   return (
     <>
-      <AppBar position="fixed" open={open}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{
+          zIndex: "50",
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -145,7 +151,13 @@ function AdminNavbar() {
           handleMenuClose={handleMenuClose}
         />
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        sx={{
+          zIndex: "40",
+        }}
+      >
         <DrawerHeader>
           <Typography
             component="h1"

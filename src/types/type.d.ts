@@ -1,0 +1,3 @@
+interface ApiSuccessResponse {
+  code: number;
+}

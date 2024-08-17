@@ -26,35 +26,35 @@ const AdminSideBar = ({ open }: AdminSideBarProps) => {
     {
       id: 1,
       text: "Users",
-      link: "/admin/users",
+      link: "/dashboard/users",
       icon: PeopleAlt,
       role: ["Admin"],
     },
     {
       id: 2,
       text: "Blogs",
-      link: "/admin/blogs",
+      link: "/dashboard/blogs",
       icon: AppRegistrationRounded,
       role: ["Admin"],
     },
     {
       id: 3,
       text: "Categories",
-      link: "/admin/categories",
+      link: "/dashboard/categories",
       icon: CategoryRounded,
       role: ["Admin"],
     },
     {
       id: 4,
       text: "Products",
-      link: "/admin/products",
+      link: "/dashboard/products",
       icon: EmojiFoodBeverageRounded,
       role: ["Admin"],
     },
     {
       id: 5,
       text: "Orders",
-      link: "/admin/orders",
+      link: "/dashboard/orders",
       icon: TaskRounded,
       role: ["Admin"],
     },
@@ -62,33 +62,31 @@ const AdminSideBar = ({ open }: AdminSideBarProps) => {
   return (
     <>
       {MenuList.filter((list) => list.role.includes(role)).map((list, i) => (
-        <>
-          <ListItem key={i} disablePadding sx={{ display: "block" }}>
-            <Link to={list.link}>
-              <ListItemButton
+        <ListItem key={i} disablePadding sx={{ display: "block" }}>
+          <Link to={list.link}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <list.icon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={list.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        </>
+                <list.icon />
+              </ListItemIcon>
+              <ListItemText
+                primary={list.text}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </Link>
+        </ListItem>
       ))}
     </>
   );
