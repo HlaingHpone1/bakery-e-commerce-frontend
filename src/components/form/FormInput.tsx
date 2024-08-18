@@ -39,8 +39,10 @@ const FormInput = <T,>({
         id={name}
         size="small"
         value={value}
+        color="secondary"
         sx={{
           width: "100%",
+
           ...sx,
         }}
         autoComplete="off"

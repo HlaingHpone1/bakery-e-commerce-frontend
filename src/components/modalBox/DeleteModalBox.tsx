@@ -1,6 +1,8 @@
-import { Button, Stack, Box, Modal, Typography } from "@mui/material";
+import { Stack, Box, Modal, Typography } from "@mui/material";
 
 import { deleteModalStore } from "../../store/deleteModalStore";
+import CancelButton from "../button/CancelButton";
+import NormalButton from "../button/NormalButton";
 
 const DeleteModalBox = () => {
   const { open, setOpen, setIsConfirm } = deleteModalStore();
@@ -39,24 +41,12 @@ const DeleteModalBox = () => {
           Are you sure you want to delete this ?
         </Typography>
         <Stack mt={3.25} gap={2} flexDirection={"row"} justifyContent={"end"}>
-          <Button
-            variant="contained"
-            onClick={() => setOpen(false)}
-            sx={{ textTransform: "none" }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => {
-              setIsConfirm(true);
-              setOpen(false);
-            }}
-            autoFocus
-            sx={{ textTransform: "none" }}
-          >
-            Delete
-          </Button>
+          <CancelButton type="contained" onClick={() => setOpen(false)} />
+          <NormalButton
+            type="contained"
+            text="Delete"
+            onClick={() => (setIsConfirm(true), setOpen(false))}
+          />
         </Stack>
       </Box>
     </Modal>

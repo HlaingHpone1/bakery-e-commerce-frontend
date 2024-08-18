@@ -82,19 +82,17 @@ const UserForm = ({ initialValue, fetch }: UserFormProps) => {
 
       await fetch(value)
         .then((response: unknown) => {
-          console.log(response);
-
           if ((response as ApiSuccessResponse).code === 201)
             setIsLoading(false);
         })
         .catch((e) => {
           setIsLoading(false);
-          setErrors(e.response.data.data.errors);
+          setErrors(
+            e.response.data.code === 422 ? e.response.data.data.errors : ""
+          );
         });
     },
   });
-
-  console.log(values, errors);
 
   return (
     <>
@@ -177,6 +175,7 @@ const UserForm = ({ initialValue, fetch }: UserFormProps) => {
             </InputLabel>
             <Autocomplete
               disablePortal
+              color="secondary"
               options={roleData}
               getOptionLabel={(option: Role) => option.name}
               value={
@@ -194,6 +193,7 @@ const UserForm = ({ initialValue, fetch }: UserFormProps) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  color="secondary"
                   name="role_id"
                   placeholder="role"
                   variant="outlined"
@@ -242,13 +242,14 @@ const UserForm = ({ initialValue, fetch }: UserFormProps) => {
             <InputLabel className="mb-1">Gender</InputLabel>
             <RadioGroup
               row
+              color="secondary"
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
             >
               <FormControlLabel
                 value={1}
                 checked={Number(values.gender) === 1}
-                control={<Radio size="small" />}
+                control={<Radio color="secondary" size="small" />}
                 label="Male"
                 name="gender"
                 onChange={handleChange}
@@ -257,7 +258,7 @@ const UserForm = ({ initialValue, fetch }: UserFormProps) => {
               <FormControlLabel
                 checked={Number(values.gender) === 2}
                 value={2}
-                control={<Radio size="small" />}
+                control={<Radio color="secondary" size="small" />}
                 label="Female"
                 name="gender"
                 onChange={handleChange}

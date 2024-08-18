@@ -45,6 +45,7 @@ const FormInputPassword = ({
         variant="outlined"
         id={name}
         size="small"
+        color="secondary"
         type={show ? "text" : "password"}
         sx={{
           width: "100%",

@@ -29,7 +29,7 @@ import IconFormInput from "../../components/form/IconFormInput";
 import ButtonIcon from "../../components/button/ButtonIcon";
 import AuthButton from "../../components/button/AuthButton";
 import IconFormInputPassword from "../../components/form/IconFormInputPassword";
-import { LoginValidationSchema } from "../../validation/LoginValidationSchmea";
+import { LoginValidationSchema } from "../../validation/LoginValidationSchema";
 import { login } from "../../api/auth/auth";
 import { alertStore } from "../../store/alertStore";
 import { userStore } from "../../store/userStore";
