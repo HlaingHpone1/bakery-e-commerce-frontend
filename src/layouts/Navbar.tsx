@@ -1,6 +1,8 @@
 import { cloneElement, MouseEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { ShoppingCartRounded, MenuRounded } from "@mui/icons-material";
+
 import {
   AppBar,
   Avatar,
@@ -14,8 +16,6 @@ import {
   Badge,
   useScrollTrigger,
 } from "@mui/material";
-
-import { ShoppingCartRounded, MenuRounded } from "@mui/icons-material";
 
 import { logo } from "../utils/image";
 import { userStore } from "../store/userStore";
@@ -62,6 +62,7 @@ const Navbar = () => {
           sx={{
             bgcolor: "primary.main",
             color: "#000",
+            zIndex: "50",
           }}
         >
           <ContainerWrapper
@@ -152,9 +153,9 @@ const Navbar = () => {
                   <Link to="/login">
                     <Button
                       variant="contained"
-                      color="tertiary"
                       sx={{
                         color: "#fff",
+                        bgcolor: "#3a506b",
 
                         letterSpacing: "1px",
                         textTransform: "capitalize",
@@ -171,9 +172,9 @@ const Navbar = () => {
                   <Link to="/register">
                     <Button
                       variant="contained"
-                      color="tertiary"
                       sx={{
                         color: "#fff",
+                        bgcolor: "#3a506b",
 
                         letterSpacing: "1px",
                         textTransform: "capitalize",

@@ -1,4 +1,3 @@
-// import { useMediaQuery } from "@mui/material";
 import { createContext, useState } from "react";
 
 type DarkThemeContextProviderProps = {

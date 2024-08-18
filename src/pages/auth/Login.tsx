@@ -25,11 +25,11 @@ import {
 import shopAnimation from "../../assets/animation/login.json";
 
 import AuthLayout from "../../layouts/AuthLayout";
-import FormInput from "../../components/form/FormInput";
+import IconFormInput from "../../components/form/IconFormInput";
 import ButtonIcon from "../../components/button/ButtonIcon";
 import AuthButton from "../../components/button/AuthButton";
-import FormInputPassword from "../../components/form/FormInputPassword";
-import { LoginValidationSchema } from "../../validation/loginValidationSchmea";
+import IconFormInputPassword from "../../components/form/IconFormInputPassword";
+import { LoginValidationSchema } from "../../validation/LoginValidationSchmea";
 import { login } from "../../api/auth/auth";
 import { alertStore } from "../../store/alertStore";
 import { userStore } from "../../store/userStore";
@@ -65,7 +65,8 @@ const Login = () => {
               setEmail(response.data.data.email);
               setToken(response.data.data.token);
               setRole(response.data.data.role);
-              navigate("/");
+              if (response.data.data.role == "Admin") navigate("/dashboard");
+              else navigate("/");
             }
           })
           .catch((e) => {
@@ -76,7 +77,7 @@ const Login = () => {
                 : e.response.data.message,
               "error"
             );
-            if (e.response.data.code === 401) {
+            if (e.response.data.code === 400) {
               setForgotShow(true);
             }
           });
@@ -120,7 +121,7 @@ const Login = () => {
                 Log in
               </Typography>
               <form onSubmit={handleSubmit}>
-                <FormInput
+                <IconFormInput
                   name="email"
                   label="Email"
                   required={true}
@@ -133,7 +134,7 @@ const Login = () => {
                     paddingBottom: "20px",
                   }}
                 />
-                <FormInputPassword
+                <IconFormInputPassword
                   name="password"
                   label="Password"
                   required={true}

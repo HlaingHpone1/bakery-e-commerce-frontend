@@ -15,7 +15,7 @@ import Register from "../pages/auth/Register";
 import AboutUs from "../pages/visitor/AboutUs";
 import MainLayout from "../layouts/MainLayout";
 import AddToCart from "../pages/user/AddToCart";
-import AdminLayout from "../layouts/AdminLayout";
+import AdminLayout from "../layouts/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import Services from "../pages/visitor/Services";
 import ContactUs from "../pages/visitor/ContactUs";
@@ -27,6 +27,8 @@ import Agricultural from "../pages/visitor/Agricultural";
 import ProductDetail from "../pages/visitor/ProductDetail";
 import ProductList from "../pages/admin/product/ProductList";
 import CategoryList from "../pages/admin/category/CategoryList";
+import UserCreate from "../pages/admin/user/UserCreate";
+import UserUpdate from "../pages/admin/user/UserUpdate";
 
 export type Role = "Admin" | "User";
 
@@ -127,43 +129,55 @@ const Router = () => {
       ],
     },
     {
-      path: "/admin",
+      path: "/dashboard",
       element: AdminLayout,
       private: true,
       role: ["Admin"],
       children: [
         {
-          path: "/admin",
+          path: "/dashboard",
           element: Dashboard,
           private: true,
           role: ["Admin"],
         },
         {
-          path: "/admin/users",
+          path: "/dashboard/users",
           element: UserList,
           private: true,
           role: ["Admin"],
         },
         {
-          path: "/admin/blogs",
+          path: "/dashboard/users/create",
+          element: UserCreate,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/users/:id/update",
+          element: UserUpdate,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/blogs",
           element: BlogList,
           private: true,
           role: ["Admin"],
         },
         {
-          path: "/admin/categories",
+          path: "/dashboard/categories",
           element: CategoryList,
           private: true,
           role: ["Admin"],
         },
         {
-          path: "/admin/products",
+          path: "/dashboard/products",
           element: ProductList,
           private: true,
           role: ["Admin"],
         },
         {
-          path: "/admin/orders",
+          path: "/dashboard/orders",
           element: OrderList,
           private: true,
           role: ["Admin"],

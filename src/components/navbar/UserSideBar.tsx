@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
 
 import {
+  AppRegistrationRounded,
+  CakeRounded,
+  Diversity2Rounded,
+  EmojiFoodBeverageRounded,
+  ForestRounded,
+  HeadsetMicRounded,
+  HomeRounded,
+  StorefrontRounded,
+} from "@mui/icons-material";
+
+import {
   Box,
   Button,
   Divider,
@@ -11,16 +22,6 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import {
-  AppRegistrationRounded,
-  CakeRounded,
-  Diversity2Rounded,
-  EmojiFoodBeverageRounded,
-  ForestRounded,
-  HeadsetMicRounded,
-  HomeRounded,
-  StorefrontRounded,
-} from "@mui/icons-material";
 import { userStore } from "../../store/userStore";
 
 type UserSideBarProps = {

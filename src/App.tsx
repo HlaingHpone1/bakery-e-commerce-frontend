@@ -1,30 +1,21 @@
-import { useContext } from "react";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-
-import Router from "./router/Router";
-import AlertBox from "./components/alertBox/AlertBox";
-import {
-  DarkThemeContext,
-  DarkThemeContextProvider,
-} from "./context/DarkThemeContext";
+import { alpha, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import GlobalComponents from "./GlobalComponents";
 
 function App() {
-  const { isDarkTheme } = useContext(DarkThemeContext);
-
   const theme = createTheme({
     palette: {
-      mode: isDarkTheme ? "dark" : "light",
       primary: {
-        main: "#FFD5AD",
+        main: "#fff",
       },
       secondary: {
-        main: "#FFF5E1",
+        main: "#000",
+        light: alpha("#000", 0.65),
       },
       tertiary: {
-        main: "#8B4513",
-      },
-      optional: {
-        main: "#F5DEB3",
+        main: "#fca311",
+        light: "#fca311",
+        dark: "#f29602",
+        contrastText: "#fff",
       },
     },
     typography: {
@@ -48,11 +39,8 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <DarkThemeContextProvider>
-          <Router />
-        </DarkThemeContextProvider>
+        <GlobalComponents />
       </ThemeProvider>
-      <AlertBox />
     </>
   );
 }

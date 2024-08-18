@@ -18,7 +18,9 @@ const Footer = () => {
       sx={{
         paddingY: "2rem",
         height: "100%",
-        background: "linear-gradient(45deg, #FFD5AD, #FFF5E1)",
+
+        color: "#fff",
+        background: "#02040f",
       }}
     >
       <ContainerWrapper component="footer">
@@ -27,10 +29,12 @@ const Footer = () => {
             <Box display="flex" gap="5px" alignItems="center">
               <Box
                 component="img"
-                src={logo.logo5}
+                src={logo.logo6}
                 alt="This is Logo Image"
                 sx={{
                   height: "80px",
+
+                  borderRadius: "100%",
                 }}
               />
               <Stack>
@@ -102,13 +106,16 @@ const Footer = () => {
             </Typography>
 
             <Box>
-              <ContactInfo icon={<CalendarMonthRounded />} text="Mon - Sun" />
               <ContactInfo
-                icon={<AccessTimeFilledRounded />}
+                icon={<CalendarMonthRounded color="secondary" />}
+                text="Mon - Sun"
+              />
+              <ContactInfo
+                icon={<AccessTimeFilledRounded color="secondary" />}
                 text="7:15 AM - 6:00 PM"
               />
               <ContactInfo
-                icon={<CalendarMonthRounded />}
+                icon={<CalendarMonthRounded color="secondary" />}
                 text="09-123456789, 09-987654321"
               />
             </Box>

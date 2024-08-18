@@ -1,72 +1,57 @@
-import { ChangeEvent, CSSProperties, FocusEvent, ReactNode } from "react";
+import { ChangeEvent, FocusEvent } from "react";
+import { Theme } from "@emotion/react";
 
-import { FormControl, InputAdornment, TextField } from "@mui/material";
+import { Box, InputLabel, SxProps, TextField } from "@mui/material";
 
 import RequiredStar from "./RequiredStar";
 
-type FormInputProps = {
+type FormInputProps<T> = {
   name: string;
   label: string;
-  required: boolean;
-  icon: ReactNode;
+  required?: boolean;
   onBlur: (e: FocusEvent<HTMLInputElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: T;
   error?: string;
   touch?: boolean;
-  sx?: CSSProperties;
+  sx?: SxProps<Theme>;
 };
 
-const FormInput = ({
+const FormInput = <T,>({
   name,
   label,
   required = false,
-  icon,
   onBlur,
   onChange,
+  value,
   error,
   touch,
   sx,
-}: FormInputProps) => {
+}: FormInputProps<T>) => {
   return (
-    <FormControl fullWidth>
+    <Box>
+      <InputLabel className="mb-1">
+        {label}
+        {required && <RequiredStar />}
+      </InputLabel>
       <TextField
         variant="outlined"
         id={name}
+        size="small"
+        value={value}
         sx={{
-          "& .MuiOutlinedInput-root": {
-            "&.Mui-focused fieldset": {
-              borderColor: "#8B4513",
-            },
-            "&.Mui-error.Mui-focused fieldset": {
-              borderColor: "#d32f2f",
-            },
-          },
-          ".MuiFormLabel-root.MuiInputLabel-root.Mui-focused": {
-            color: "#999",
-          },
-
+          width: "100%",
           ...sx,
-        }}
-        label={
-          <>
-            {label}
-            {required && <RequiredStar />}
-          </>
-        }
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">{icon}</InputAdornment>
-          ),
         }}
         autoComplete="off"
         name={name}
-        placeholder={`Enter your ${label}`}
+        placeholder={label}
         onChange={onChange}
         onBlur={onBlur}
         error={!!error && touch}
         helperText={touch && error ? error : ""}
       />
-    </FormControl>
+    </Box>
   );
 };
 
