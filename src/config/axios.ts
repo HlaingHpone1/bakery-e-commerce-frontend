@@ -19,9 +19,9 @@ const isOngoingMaintenance = (status: number) => {
   if (status === 404 || status === 403) {
     window.location.href = "/notfound";
   } else if (status === 401) {
+    localStorage.removeItem("userStore");
+    localStorage.removeItem("product");
     window.location.href = "/login";
-    const logout = userStore();
-    logout.logOut();
   }
 };
 
@@ -45,6 +45,7 @@ api.interceptors.response.use(
   },
   (error) => {
     isOngoingMaintenance(error.response?.status);
+
     return Promise.reject(error);
   }
 );
