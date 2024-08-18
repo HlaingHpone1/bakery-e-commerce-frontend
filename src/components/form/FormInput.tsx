@@ -1,31 +1,33 @@
 import { ChangeEvent, FocusEvent } from "react";
+import { Theme } from "@emotion/react";
 
 import { Box, InputLabel, SxProps, TextField } from "@mui/material";
 
 import RequiredStar from "./RequiredStar";
-import { Theme } from "@emotion/react";
 
-type FormInputProps = {
+type FormInputProps<T> = {
   name: string;
   label: string;
   required?: boolean;
   onBlur: (e: FocusEvent<HTMLInputElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: T;
   error?: string;
   touch?: boolean;
   sx?: SxProps<Theme>;
 };
 
-const FormInput = ({
+const FormInput = <T,>({
   name,
   label,
   required = false,
   onBlur,
   onChange,
+  value,
   error,
   touch,
   sx,
-}: FormInputProps) => {
+}: FormInputProps<T>) => {
   return (
     <Box>
       <InputLabel className="mb-1">
@@ -36,6 +38,7 @@ const FormInput = ({
         variant="outlined"
         id={name}
         size="small"
+        value={value}
         sx={{
           width: "100%",
           ...sx,

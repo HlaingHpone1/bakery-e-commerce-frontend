@@ -6,14 +6,14 @@ import {
   useState,
 } from "react";
 
+import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
+
 import {
   FormControl,
   IconButton,
   InputAdornment,
   TextField,
 } from "@mui/material";
-
-import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
 
 import RequiredStar from "./RequiredStar";
 

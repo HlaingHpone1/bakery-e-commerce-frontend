@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+
+import { NavigateNext } from "@mui/icons-material";
 
 import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
-import { NavigateNext } from "@mui/icons-material";
 
 const BreadCrumbs = () => {
   const location = useLocation();

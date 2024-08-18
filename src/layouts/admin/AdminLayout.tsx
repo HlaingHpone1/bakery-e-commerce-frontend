@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import Box from "@mui/material/Box";
 
-import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import AdminNavbar from "./AdminNavbar";
+import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
+
 import { SortModelProvider } from "../../context/SortModel";
 
 const AdminLayout = () => {

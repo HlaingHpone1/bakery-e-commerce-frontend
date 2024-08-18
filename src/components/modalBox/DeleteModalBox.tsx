@@ -1,10 +1,9 @@
-import { Button, Stack } from "@mui/material";
-import { Box, Modal, Typography } from "@mui/material";
-import { useContext } from "react";
-import { DeleteModalContext } from "../../context/DeleteModalContext";
+import { Button, Stack, Box, Modal, Typography } from "@mui/material";
+
+import { deleteModalStore } from "../../store/deleteModalStore";
 
 const DeleteModalBox = () => {
-  const { open, setOpen, setConfirm } = useContext(DeleteModalContext);
+  const { open, setOpen, setIsConfirm } = deleteModalStore();
 
   const modalBoxStyle = {
     position: "absolute" as const,
@@ -36,7 +35,7 @@ const DeleteModalBox = () => {
         >
           Delete
         </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2.5 }}>
+        <Typography id="modal-modal-description">
           Are you sure you want to delete this ?
         </Typography>
         <Stack mt={3.25} gap={2} flexDirection={"row"} justifyContent={"end"}>
@@ -50,7 +49,7 @@ const DeleteModalBox = () => {
           <Button
             variant="contained"
             onClick={() => {
-              setConfirm(true);
+              setIsConfirm(true);
               setOpen(false);
             }}
             autoFocus

@@ -22,3 +22,15 @@ export const createUser = async (body: UserFormValue) => {
 export const getAllRoles = async () => {
   return await api.get(`${baseURL}/${role}`);
 };
+
+export const deleteUser = async (id: number) => {
+  return await api.delete(`${baseURL}/${user}/${id}`);
+};
+
+export const getUserById = async (id: number) => {
+  return await api.get(`${baseURL}/${user}/${id}`);
+};
+
+export const updateUser = async (id: number, body: UserFormValue) => {
+  return await api.post(`${baseURL}/${user}/${id}`, body);
+};

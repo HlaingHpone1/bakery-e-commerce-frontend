@@ -1,6 +1,7 @@
 import { Theme } from "@emotion/react";
-import { Button, SxProps } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import { Button, SxProps } from "@mui/material";
 
 type ButtonProps = {
   type: "contained" | "outlined" | "text";
@@ -19,6 +20,11 @@ const CancelButton = ({ type, link, sx }: ButtonProps) => {
           textTransform: "capitalize",
 
           color: "#fff",
+          bgcolor: "secondary.main",
+
+          ":hover": {
+            bgcolor: "secondary.light",
+          },
 
           display: "block",
 

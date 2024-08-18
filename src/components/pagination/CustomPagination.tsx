@@ -1,7 +1,8 @@
+import { ChangeEvent } from "react";
 import { Pagination } from "@mui/material";
-import { ChangeEvent, useContext } from "react";
-import { PaginationContext } from "../../context/PaginationContent";
 import { GridPagination } from "@mui/x-data-grid";
+
+import { usePaginationStore } from "../../store/paginationStore";
 
 const CustomPagination = () => {
   const {
@@ -11,14 +12,14 @@ const CustomPagination = () => {
     selectedLimit,
     setSelectedLimit,
     limitArray,
-  } = useContext(PaginationContext);
+  } = usePaginationStore();
 
   const PaginationList = () => {
     return (
       <Pagination
         count={pageCount}
         page={currentPage}
-        onChange={(e, newPage) => setCurrentPage(newPage)}
+        onChange={(_e: unknown, newPage) => setCurrentPage(newPage)}
         showFirstButton
         showLastButton
       />
@@ -30,7 +31,7 @@ const CustomPagination = () => {
       ActionsComponent={PaginationList}
       labelRowsPerPage=""
       labelDisplayedRows={() => ""}
-      onPageChange={(e: unknown, newPage) => setCurrentPage(newPage)}
+      onPageChange={(_e: unknown, newPage) => setCurrentPage(newPage)}
       rowsPerPage={selectedLimit}
       onRowsPerPageChange={(
         e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>

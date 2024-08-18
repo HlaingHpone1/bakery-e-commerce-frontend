@@ -3,12 +3,10 @@ import { PaletteColorOptions } from "@mui/material/styles";
 declare module "@mui/material" {
   interface Palette {
     tertiary: PaletteColor;
-    optional: PaletteColor;
   }
 
   interface PaletteOptions {
     tertiary?: PaletteColorOptions;
-    optional?: PaletteColorOptions;
   }
 }
 
@@ -32,6 +30,20 @@ declare module "@mui/material/AppBar" {
 
 declare module "@mui/material/Paper" {
   interface PaperPropsColorOverrides {
+    tertiary: true;
+  }
+}
+
+declare module "@mui/material/Chip" {
+  interface ChipPropsColorOverrides {
+    tertiary: true;
+  }
+}
+
+import "@mui/material/IconButton";
+
+declare module "@mui/material/IconButton" {
+  interface IconButtonPropsColorOverrides {
     tertiary: true;
   }
 }

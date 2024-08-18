@@ -1,6 +1,8 @@
 import { cloneElement, MouseEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { ShoppingCartRounded, MenuRounded } from "@mui/icons-material";
+
 import {
   AppBar,
   Avatar,
@@ -14,8 +16,6 @@ import {
   Badge,
   useScrollTrigger,
 } from "@mui/material";
-
-import { ShoppingCartRounded, MenuRounded } from "@mui/icons-material";
 
 import { logo } from "../utils/image";
 import { userStore } from "../store/userStore";

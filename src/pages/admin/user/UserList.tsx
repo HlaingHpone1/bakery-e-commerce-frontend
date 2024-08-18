@@ -1,35 +1,39 @@
+import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-
-import { getAllUsers } from "../../../api/userManagement";
-import CustomPagination from "../../../components/pagination/CustomPagination";
-import { PaginationContext } from "../../../context/PaginationContent";
 import {
   AddRounded,
-  BorderColorRounded,
   CheckCircleRounded,
   DeleteRounded,
   FilterAltRounded,
   RemoveCircleRounded,
   SearchRounded,
 } from "@mui/icons-material";
-import { useDebouncedSearch } from "../../../hooks/useDebouncedSearch";
-import { useHandleSortModelChange } from "../../../utils/sortUtils";
-import { SortModelContext } from "../../../context/SortModel";
-import { Link } from "react-router-dom";
-import AdminTitle from "../../../components/typography/AdminTitle";
+
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  Paper,
+  TextField,
+  Chip,
+} from "@mui/material";
+
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+
+import { deleteUser, getAllUsers } from "../../../api/userManagement";
+
 import NormalButton from "../../../components/button/NormalButton";
-import { DeleteModalContext } from "../../../context/DeleteModalContext";
-import { Chip } from "@mui/material";
+import AdminTitle from "../../../components/typography/AdminTitle";
+import CustomPagination from "../../../components/pagination/CustomPagination";
+
+import { SortModelContext } from "../../../context/SortModel";
+import { deleteModalStore } from "../../../store/deleteModalStore";
+import { useHandleSortModelChange } from "../../../utils/sortUtils";
+import { usePaginationStore } from "../../../store/paginationStore";
+import { useDebouncedSearch } from "../../../hooks/useDebouncedSearch";
+import Edit from "../../../components/dataTable/Edit";
 
 type User = {
   id: number;
@@ -55,10 +59,9 @@ const UserList = () => {
   const { searchText, handleInputChange, handleKeyDown, triggerSearch } =
     useDebouncedSearch(300);
 
-  const { confirm, setOpen } = useContext(DeleteModalContext);
+  const { setOpen, setId, id, isConfirm, setIsConfirm } = deleteModalStore();
 
-  const { setPageCount, currentPage, selectedLimit } =
-    useContext(PaginationContext);
+  const { setPageCount, currentPage, selectedLimit } = usePaginationStore();
 
   const { sortBy, sortOrder } = useContext(SortModelContext);
 
@@ -85,7 +88,14 @@ const UserList = () => {
     createParamString();
   }, [searchText, sortBy, sortOrder]);
 
-  const { isLoading, isFetching } = useQuery<User[]>({
+  useEffect(() => {
+    if (isConfirm && id) {
+      mutateAsync(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConfirm, id]);
+
+  const { isLoading, isFetching, refetch } = useQuery<User[]>({
     queryKey: ["users-list", currentPage, selectedLimit, paramString],
     queryFn: async () =>
       await getAllUsers(currentPage, selectedLimit, paramString).then(
@@ -99,11 +109,24 @@ const UserList = () => {
       ),
   });
 
+  const { mutateAsync } = useMutation({
+    mutationFn: async (value: number) =>
+      await deleteUser(value).then((response) => {
+        if (response.data.code === 200) {
+          refetch();
+          setIsConfirm(false);
+          setId(null);
+        }
+
+        setOpen(false);
+      }),
+  });
+
   const userColumns: GridColDef[] = [
     {
       field: "id",
       headerName: "ID",
-      minWidth: 60,
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -129,6 +152,9 @@ const UserList = () => {
       headerName: "Gender",
       minWidth: 100,
       flex: 1,
+      renderCell: (params) => (
+        <>{params.row.gender === 1 ? "Male" : "Female"}</>
+      ),
     },
     {
       field: "address",
@@ -147,6 +173,8 @@ const UserList = () => {
       headerName: "Account Status",
       minWidth: 100,
       flex: 1,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => (
         <>
           {params.row.account_status ? (
@@ -162,14 +190,21 @@ const UserList = () => {
       ),
     },
     {
-      field: "role",
+      field: "role_id",
       headerName: "Role",
       minWidth: 100,
       flex: 1,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => (
         <Chip
-          label={params.row.role}
-          color={params.row.role === "Admin" ? "info" : "warning"}
+          sx={{
+            height: "25px",
+
+            borderRadius: "6px",
+          }}
+          label={params.row.role_id === 1 ? "Admin" : "User"}
+          color={params.row.role_id === 1 ? "secondary" : "tertiary"}
         />
       ),
     },
@@ -187,14 +222,13 @@ const UserList = () => {
               justifyContent: "center",
             }}
           >
-            <Link to={`/leave-request/${params.row.id}/update`}>
-              <IconButton aria-label="edit">
-                <BorderColorRounded color="info" />
-              </IconButton>
-            </Link>
+            <Edit link={`${params.row.id}`} />
 
-            <IconButton onClick={() => setOpen(true)} aria-label="edit">
-              <DeleteRounded color="error" />
+            <IconButton
+              onClick={() => (setOpen(true), setId(params.row.id))}
+              aria-label="edit"
+            >
+              <DeleteRounded color="secondary" />
             </IconButton>
           </Box>
         </>
@@ -202,13 +236,21 @@ const UserList = () => {
     },
   ];
 
-  console.log(confirm);
-
   return (
     <>
       <AdminTitle text="User List" />
-      <Paper>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Paper
+        elevation={5}
+        sx={{
+          paddingX: 2,
+        }}
+      >
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          paddingTop={2}
+        >
           <Box display="flex" justifyContent="flex-start" alignItems="center">
             <Box display="flex" justifyContent="center" alignItems="center">
               <TextField

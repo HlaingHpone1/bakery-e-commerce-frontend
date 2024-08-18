@@ -12,13 +12,16 @@ const api = axios.create({
     "Cache-Control": "no-cache",
     "Access-Control-Allow-Origin": "*",
     Accept: "application/json",
-    // token key
   },
 });
 
 const isOngoingMaintenance = (status: number) => {
-  if (status === 404) {
+  if (status === 404 || status === 403) {
     window.location.href = "/notfound";
+  } else if (status === 401) {
+    window.location.href = "/login";
+    const logout = userStore();
+    logout.logOut();
   }
 };
 

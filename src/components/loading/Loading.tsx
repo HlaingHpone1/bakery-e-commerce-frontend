@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { LoadingContext } from "../../context/LoadingContext";
+import { loadingStore } from "../../store/isLoadingStore";
+
 import "./css/Loading.css";
 
 const Loading = () => {
-  const { isLoading } = useContext(LoadingContext);
+  const { isLoading } = loadingStore();
 
   return (
     <>

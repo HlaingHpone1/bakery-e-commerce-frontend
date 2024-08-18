@@ -65,7 +65,8 @@ const Login = () => {
               setEmail(response.data.data.email);
               setToken(response.data.data.token);
               setRole(response.data.data.role);
-              navigate("/");
+              if (response.data.data.role == "Admin") navigate("/dashboard");
+              else navigate("/");
             }
           })
           .catch((e) => {
@@ -76,7 +77,7 @@ const Login = () => {
                 : e.response.data.message,
               "error"
             );
-            if (e.response.data.code === 401) {
+            if (e.response.data.code === 400) {
               setForgotShow(true);
             }
           });

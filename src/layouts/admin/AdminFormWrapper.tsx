@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
-import AdminTitle from "../../components/typography/AdminTitle";
+
 import { Grid, Paper } from "@mui/material";
+
+import AdminTitle from "../../components/typography/AdminTitle";
 
 type AdminFormWrapperProps = {
   children: ReactNode;

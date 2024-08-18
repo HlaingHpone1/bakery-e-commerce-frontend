@@ -1,5 +1,7 @@
 import { ChangeEvent, CSSProperties, FocusEvent, useState } from "react";
 
+import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
+
 import {
   Box,
   IconButton,
@@ -9,7 +11,6 @@ import {
 } from "@mui/material";
 
 import RequiredStar from "./RequiredStar";
-import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
 
 type FormInputPasswordProps = {
   name: string;

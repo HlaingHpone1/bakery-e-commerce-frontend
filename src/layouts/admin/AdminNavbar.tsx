@@ -1,19 +1,26 @@
+import { MouseEvent, useState } from "react";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+
+import { ChevronLeft, MenuRounded } from "@mui/icons-material";
+
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { MenuRounded } from "@mui/icons-material";
-import { MouseEvent, useState } from "react";
-import AdminSideBar from "../../components/navbar/AdminSideBar";
-import { Avatar } from "@mui/material";
-import { userStore } from "../../store/userStore";
+
+import {
+  Avatar,
+  IconButton,
+  Divider,
+  Typography,
+  List,
+  Toolbar,
+  Box,
+} from "@mui/material";
+
 import ProfileMenu from "../../components/navbar/ProfileMenu";
+import AdminSideBar from "../../components/navbar/AdminSideBar";
+
+import { userStore } from "../../store/userStore";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -119,17 +126,20 @@ function AdminNavbar() {
           >
             <MenuRounded />
           </IconButton>
-          <Typography
-            variant="h5"
-            component="h1"
-            sx={{
-              fontFamily: "Roboto Slab",
-              fontSize: "20px",
-              fontWeight: 700,
-            }}
-          >
-            Shwe Pu Zun
-          </Typography>
+          <Link to="/dashboard">
+            {" "}
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{
+                fontFamily: "Roboto Slab",
+                fontSize: "20px",
+                fontWeight: 700,
+              }}
+            >
+              Shwe Pu Zun
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1 }} />
 
@@ -172,7 +182,7 @@ function AdminNavbar() {
             Admin Dashboard
           </Typography>
           <IconButton onClick={() => setOpen(false)}>
-            <ChevronLeftIcon />
+            <ChevronLeft />
           </IconButton>
         </DrawerHeader>
         <Divider />

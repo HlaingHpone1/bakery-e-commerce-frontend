@@ -1,3 +1,6 @@
+import { useFormik } from "formik";
+import { SyntheticEvent } from "react";
+
 import {
   Autocomplete,
   Box,
@@ -9,17 +12,20 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import AdminFormWrapper from "../../../layouts/admin/AdminFormWrapper";
-import { useFormik } from "formik";
-import FormInput from "../../../components/form/FormInput";
-import { UserCreateValidationSchema } from "../../../validation/admin/UserValidationChema";
-import NormalButton from "../../../components/button/NormalButton";
+
 import useRoleList from "../../../hooks/useRoleList";
+import FormInput from "../../../components/form/FormInput";
+import { loadingStore } from "../../../store/isLoadingStore";
 import RequiredStar from "../../../components/form/RequiredStar";
-import { SyntheticEvent, useContext } from "react";
 import CancelButton from "../../../components/button/CancelButton";
+import NormalButton from "../../../components/button/NormalButton";
+import AdminFormWrapper from "../../../layouts/admin/AdminFormWrapper";
 import FormInputPassword from "../../../components/form/FormInputPassword";
-import { LoadingContext } from "../../../context/LoadingContext";
+
+import {
+  UserCreateValidationSchema,
+  UserUpdateValidationSchema,
+} from "../../../validation/admin/UserValidationChema";
 
 type Role = {
   id: number;
@@ -33,18 +39,18 @@ export type UserFormValue = {
   role_id: number | null;
   password: string;
   password_confirmation: string;
-  gender: number;
+  gender: number | null;
   address: string;
   region: string;
 };
 
 type UserFormProps = {
-  initialValues?: UserFormValue;
+  initialValue?: UserFormValue;
   fetch: (payload: UserFormValue) => Promise<void>;
 };
 
-const UserForm = ({ initialValues, fetch }: UserFormProps) => {
-  const { setIsLoading } = useContext(LoadingContext);
+const UserForm = ({ initialValue, fetch }: UserFormProps) => {
+  const { setIsLoading } = loadingStore();
 
   const { data: roleData } = useRoleList();
 
@@ -57,7 +63,7 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
     touched,
     setFieldValue,
   } = useFormik<UserFormValue>({
-    initialValues: initialValues ?? {
+    initialValues: initialValue ?? {
       name: "",
       email: "",
       phone_number: "",
@@ -68,7 +74,9 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
       address: "",
       region: "",
     },
-    validationSchema: UserCreateValidationSchema,
+    validationSchema: initialValue
+      ? UserUpdateValidationSchema
+      : UserCreateValidationSchema,
     onSubmit: async (value, { setErrors }) => {
       setIsLoading(true);
 
@@ -86,14 +94,17 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
     },
   });
 
+  console.log(values, errors);
+
   return (
     <>
-      <AdminFormWrapper title="User Create">
+      <AdminFormWrapper title={initialValue ? "User Update" : "User Create"}>
         <Grid item xs={6} pr={2}>
           <FormInput
             name="name"
             label="User Name"
             required={true}
+            value={values.name}
             onBlur={handleBlur}
             onChange={handleChange}
             error={errors.name}
@@ -106,6 +117,7 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
             name="email"
             label="Email"
             required={true}
+            value={values.email}
             onBlur={handleBlur}
             onChange={handleChange}
             error={errors.email}
@@ -118,6 +130,7 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
           <FormInput
             name="address"
             label="Address"
+            value={values.address}
             onBlur={handleBlur}
             onChange={handleChange}
             error={errors.address}
@@ -130,6 +143,7 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
           <FormInput
             name="region"
             label="Region"
+            value={values.region}
             onBlur={handleBlur}
             onChange={handleChange}
             error={errors.region}
@@ -142,6 +156,7 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
           <FormInput
             name="phone_number"
             label="Phone Number"
+            value={values.phone_number}
             onBlur={handleBlur}
             onChange={handleChange}
             error={errors.phone_number}
@@ -175,10 +190,6 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
               sx={{
                 width: "100%",
                 ".MuiInputBase-root": { height: 40, py: 1 },
-
-                ".MuiInputBase-input.Mui-disabled": {
-                  WebkitTextFillColor: "rgba(0, 0, 0, 1)",
-                },
               }}
               renderInput={(params) => (
                 <TextField
@@ -193,31 +204,35 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
             />
           </Box>
 
-          <FormInputPassword
-            name="password"
-            label="Password"
-            required={true}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            error={errors.password}
-            touch={touched.password}
-            sx={{
-              marginBottom: "15px",
-            }}
-          />
+          {!initialValue && (
+            <>
+              <FormInputPassword
+                name="password"
+                label="Password"
+                required={true}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                error={errors.password}
+                touch={touched.password}
+                sx={{
+                  marginBottom: "15px",
+                }}
+              />
 
-          <FormInputPassword
-            name="password_confirmation"
-            label="Password Confirmation"
-            required={true}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            error={errors.password_confirmation}
-            touch={touched.password_confirmation}
-            sx={{
-              marginBottom: "15px",
-            }}
-          />
+              <FormInputPassword
+                name="password_confirmation"
+                label="Password Confirmation"
+                required={true}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                error={errors.password_confirmation}
+                touch={touched.password_confirmation}
+                sx={{
+                  marginBottom: "15px",
+                }}
+              />
+            </>
+          )}
 
           <Box
             sx={{
@@ -262,7 +277,11 @@ const UserForm = ({ initialValues, fetch }: UserFormProps) => {
           sx={{ width: "100%", justifyContent: "flex-end" }}
         >
           <CancelButton link="/dashboard/users" type="contained" />
-          <NormalButton text="Create" type="contained" onClick={handleSubmit} />
+          <NormalButton
+            text={initialValue ? "Update" : "Create"}
+            type="contained"
+            onClick={handleSubmit}
+          />
         </Stack>
       </AdminFormWrapper>
     </>

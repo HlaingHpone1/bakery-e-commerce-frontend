@@ -1,5 +1,7 @@
 import { Theme } from "@emotion/react";
+
 import { SvgIconComponent } from "@mui/icons-material";
+
 import { Button, SxProps } from "@mui/material";
 
 type ButtonProps = {
@@ -20,6 +22,11 @@ const NormalButton = ({ text, type, sx, icon: Icon, onClick }: ButtonProps) => {
         textTransform: "capitalize",
 
         color: "#fff",
+        bgcolor: "secondary.main",
+
+        ":hover": {
+          bgcolor: "secondary.light",
+        },
 
         display: "block",
 

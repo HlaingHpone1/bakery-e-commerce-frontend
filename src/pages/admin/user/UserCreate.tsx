@@ -1,7 +1,8 @@
-import UserForm, { UserFormValue } from "./UserForm";
-import { useMutation } from "@tanstack/react-query";
-import { createUser } from "../../../api/userManagement";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+
+import UserForm, { UserFormValue } from "./UserForm";
+import { createUser } from "../../../api/userManagement";
 
 const UserCreate = () => {
   const navigate = useNavigate();

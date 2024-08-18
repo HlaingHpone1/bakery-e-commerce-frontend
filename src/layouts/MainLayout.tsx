@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 
+import { KeyboardArrowUp } from "@mui/icons-material";
+
 import { Box, Fab, Fade, Toolbar, useScrollTrigger } from "@mui/material";
 
 import Navbar from "./Navbar";
@@ -7,7 +9,6 @@ import Footer from "./Footer";
 
 import "@fontsource/roboto";
 import "@fontsource/roboto-slab";
-import { KeyboardArrowUp } from "@mui/icons-material";
 
 interface Props {
   window?: () => Window;

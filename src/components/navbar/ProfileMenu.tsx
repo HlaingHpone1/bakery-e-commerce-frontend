@@ -67,7 +67,7 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
     >
-      {logInUser && !path.includes("admin") && role === "Admin" && (
+      {logInUser && !path.includes("dashboard") && role === "Admin" && (
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {

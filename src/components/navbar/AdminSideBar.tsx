@@ -1,3 +1,5 @@
+import { Link, useLocation } from "react-router-dom";
+
 import {
   AppRegistrationRounded,
   CategoryRounded,
@@ -5,7 +7,6 @@ import {
   PeopleAlt,
   TaskRounded,
 } from "@mui/icons-material";
-import { userStore } from "../../store/userStore";
 
 import {
   ListItem,
@@ -13,13 +14,16 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+
+import { userStore } from "../../store/userStore";
 
 type AdminSideBarProps = {
   open: boolean;
 };
 
 const AdminSideBar = ({ open }: AdminSideBarProps) => {
+  const location = useLocation();
+
   const { role } = userStore();
 
   const MenuList = [
@@ -59,6 +63,9 @@ const AdminSideBar = ({ open }: AdminSideBarProps) => {
       role: ["Admin"],
     },
   ];
+
+  console.log(location.pathname.includes("/dashboard/orders"));
+
   return (
     <>
       {MenuList.filter((list) => list.role.includes(role)).map((list, i) => (
@@ -69,6 +76,17 @@ const AdminSideBar = ({ open }: AdminSideBarProps) => {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+
+                bgcolor:
+                  list.id ===
+                  MenuList.find((item) => location.pathname.includes(item.link))
+                    ?.id
+                    ? "tertiary.main"
+                    : "transparent",
+
+                ":hover": {
+                  bgcolor: "tertiary.dark",
+                },
               }}
             >
               <ListItemIcon
