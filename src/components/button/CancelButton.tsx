@@ -5,11 +5,12 @@ import { Button, SxProps } from "@mui/material";
 
 type ButtonProps = {
   type: "contained" | "outlined" | "text";
-  link: string;
+  link?: string;
   sx?: SxProps<Theme>;
+  onClick?: () => void;
 };
 
-const CancelButton = ({ type, link, sx }: ButtonProps) => {
+const CancelButton = ({ type, link = "", onClick, sx }: ButtonProps) => {
   return (
     <Link to={link}>
       <Button
@@ -30,6 +31,7 @@ const CancelButton = ({ type, link, sx }: ButtonProps) => {
 
           ...sx,
         }}
+        onClick={onClick}
       >
         Cancel
       </Button>

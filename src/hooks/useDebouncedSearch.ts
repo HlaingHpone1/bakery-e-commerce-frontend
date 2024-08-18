@@ -16,7 +16,6 @@ export const useDebouncedSearch = (delay: number = 500) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const value = (e.target as HTMLInputElement).value;
-      console.log("enter", value);
 
       setSearchText(value);
     } else {

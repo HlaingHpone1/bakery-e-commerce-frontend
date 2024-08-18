@@ -10,13 +10,22 @@ type ButtonProps = {
   sx?: SxProps<Theme>;
   icon?: SvgIconComponent;
   onClick?: () => void;
+  disable?: boolean;
 };
 
-const NormalButton = ({ text, type, sx, icon: Icon, onClick }: ButtonProps) => {
+const NormalButton = ({
+  text,
+  type,
+  sx,
+  icon: Icon,
+  disable = false,
+  onClick,
+}: ButtonProps) => {
   return (
     <Button
       variant={type}
       type="submit"
+      disabled={disable}
       sx={{
         letterSpacing: "1px",
         textTransform: "capitalize",

@@ -64,8 +64,6 @@ const AdminSideBar = ({ open }: AdminSideBarProps) => {
     },
   ];
 
-  console.log(location.pathname.includes("/dashboard/orders"));
-
   return (
     <>
       {MenuList.filter((list) => list.role.includes(role)).map((list, i) => (

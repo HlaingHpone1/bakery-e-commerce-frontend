@@ -54,7 +54,6 @@ type Params = {
 
 const UserList = () => {
   const [paramString, setParamString] = useState<string>("");
-  const [usersList, setUsersList] = useState<User[]>([]);
 
   const { searchText, handleInputChange, handleKeyDown, triggerSearch } =
     useDebouncedSearch(300);
@@ -66,6 +65,31 @@ const UserList = () => {
   const { sortBy, sortOrder } = useContext(SortModelContext);
 
   const handleSortModelChange = useHandleSortModelChange();
+
+  useEffect(() => {
+    if (isConfirm && id) {
+      mutateAsync(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConfirm, id]);
+
+  const {
+    isLoading,
+    isFetching,
+    refetch,
+    data: usersList = [],
+  } = useQuery<User[]>({
+    queryKey: ["users-list", currentPage, selectedLimit, paramString],
+    queryFn: async () =>
+      await getAllUsers(currentPage, selectedLimit, paramString).then(
+        (response) => {
+          if (response.data.code === 200) {
+            setPageCount(response.data.meta.last_page);
+            return response.data.data;
+          }
+        }
+      ),
+  });
 
   useEffect(() => {
     const createParamString = () => {
@@ -87,27 +111,6 @@ const UserList = () => {
     };
     createParamString();
   }, [searchText, sortBy, sortOrder]);
-
-  useEffect(() => {
-    if (isConfirm && id) {
-      mutateAsync(id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConfirm, id]);
-
-  const { isLoading, isFetching, refetch } = useQuery<User[]>({
-    queryKey: ["users-list", currentPage, selectedLimit, paramString],
-    queryFn: async () =>
-      await getAllUsers(currentPage, selectedLimit, paramString).then(
-        (response) => {
-          if (response.data.code === 200) {
-            setPageCount(response.data.meta.last_page);
-            setUsersList(response.data.data);
-            return response.data;
-          }
-        }
-      ),
-  });
 
   const { mutateAsync } = useMutation({
     mutationFn: async (value: number) =>
@@ -293,7 +296,10 @@ const UserList = () => {
             sx={{
               borderLeft: 0,
               borderRight: 0,
-              bgcolor: "#fff",
+
+              ".MuiCircularProgress-svg": {
+                color: "#000",
+              },
             }}
             autoHeight={true}
             disableColumnMenu
