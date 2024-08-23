@@ -22,7 +22,7 @@ import {
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import { deleteUser, getAllUsers } from "../../../api/userManagement";
+import { deleteUser, getAllUsers } from "../../../api/userService";
 
 import NormalButton from "../../../components/button/NormalButton";
 import AdminTitle from "../../../components/typography/AdminTitle";
@@ -34,6 +34,7 @@ import { useHandleSortModelChange } from "../../../utils/sortUtils";
 import { usePaginationStore } from "../../../store/paginationStore";
 import { useDebouncedSearch } from "../../../hooks/useDebouncedSearch";
 import Edit from "../../../components/dataTable/Edit";
+import { alertStore } from "../../../store/alertStore";
 
 type User = {
   id: number;
@@ -57,6 +58,8 @@ const UserList = () => {
 
   const { searchText, handleInputChange, handleKeyDown, triggerSearch } =
     useDebouncedSearch(300);
+
+  const { setAlert } = alertStore();
 
   const { setOpen, setId, id, isConfirm, setIsConfirm } = deleteModalStore();
 
@@ -119,6 +122,8 @@ const UserList = () => {
           refetch();
           setIsConfirm(false);
           setId(null);
+
+          setAlert(true, response.data.message, "success");
         }
 
         setOpen(false);

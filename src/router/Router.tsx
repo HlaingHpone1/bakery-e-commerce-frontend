@@ -19,16 +19,21 @@ import AdminLayout from "../layouts/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import Services from "../pages/visitor/Services";
 import ContactUs from "../pages/visitor/ContactUs";
-import UserList from "../pages/admin/user/UserList";
-import BlogList from "../pages/admin/blog/BlogList";
 import BlogDetail from "../pages/visitor/BlogDetail";
 import OrderList from "../pages/admin/order/OrderList";
 import Agricultural from "../pages/visitor/Agricultural";
 import ProductDetail from "../pages/visitor/ProductDetail";
 import ProductList from "../pages/admin/product/ProductList";
-import CategoryList from "../pages/admin/category/CategoryList";
+
+import UserList from "../pages/admin/user/UserList";
 import UserCreate from "../pages/admin/user/UserCreate";
 import UserUpdate from "../pages/admin/user/UserUpdate";
+
+import CategoryList from "../pages/admin/category/CategoryList";
+
+import BlogList from "../pages/admin/blog/BlogList";
+import BlogCreate from "../pages/admin/blog/BlogCreate";
+import BlogUpdate from "../pages/admin/blog/BlogUpdate";
 
 export type Role = "Admin" | "User";
 
@@ -161,6 +166,18 @@ const Router = () => {
         {
           path: "/dashboard/blogs",
           element: BlogList,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/blogs/create",
+          element: BlogCreate,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/blogs/:id/update",
+          element: BlogUpdate,
           private: true,
           role: ["Admin"],
         },

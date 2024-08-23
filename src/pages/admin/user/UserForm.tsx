@@ -70,7 +70,7 @@ const UserForm = ({ initialValue, fetch }: UserFormProps) => {
       role_id: null,
       password: "",
       password_confirmation: "",
-      gender: 0,
+      gender: null,
       address: "",
       region: "",
     },
@@ -154,6 +154,7 @@ const UserForm = ({ initialValue, fetch }: UserFormProps) => {
           <FormInput
             name="phone_number"
             label="Phone Number"
+            required={true}
             value={values.phone_number}
             onBlur={handleBlur}
             onChange={handleChange}

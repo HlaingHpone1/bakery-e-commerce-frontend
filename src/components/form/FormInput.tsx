@@ -12,6 +12,7 @@ type FormInputProps<T> = {
   onBlur: (e: FocusEvent<HTMLInputElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: T;
+  row?: number;
   error?: string;
   touch?: boolean;
   sx?: SxProps<Theme>;
@@ -26,6 +27,7 @@ const FormInput = <T,>({
   value,
   error,
   touch,
+  row,
   sx,
 }: FormInputProps<T>) => {
   return (
@@ -45,6 +47,8 @@ const FormInput = <T,>({
 
           ...sx,
         }}
+        multiline
+        rows={row ?? 1}
         autoComplete="off"
         name={name}
         placeholder={label}

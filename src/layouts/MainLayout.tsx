@@ -9,6 +9,7 @@ import Footer from "./Footer";
 
 import "@fontsource/roboto";
 import "@fontsource/roboto-slab";
+import ContainerWrapper from "./wrapper/ContainerWrapper";
 
 interface Props {
   window?: () => Window;
@@ -53,7 +54,9 @@ const MainLayout = () => {
     <>
       <Navbar />
       <Toolbar id="back-to-top-anchor" />
-      <Outlet />
+      <ContainerWrapper>
+        <Outlet />
+      </ContainerWrapper>
       <Footer />
       <ScrollTop>
         <Fab size="small" aria-label="scroll back to top">

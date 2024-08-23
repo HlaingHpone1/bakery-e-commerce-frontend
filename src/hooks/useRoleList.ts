@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getAllRoles } from "../api/userManagement";
+import { getAllRoles } from "../api/userService";
 
 const useRoleList = () => {
   const { data = [] } = useQuery({

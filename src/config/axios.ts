@@ -2,8 +2,6 @@ import axios from "axios";
 import { userStore } from "../store/userStore";
 
 export const baseURL = import.meta.env.VITE_BASE_URL;
-const token = userStore.getState().token;
-const logInUser = userStore.getState().logInUser;
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -27,6 +25,9 @@ const isOngoingMaintenance = (status: number) => {
 
 api.interceptors.request.use(
   (request) => {
+    const token = userStore.getState().token;
+    const logInUser = userStore.getState().logInUser;
+
     if (token && logInUser) {
       request.headers.Authorization = `Bearer ${token}`;
     }

@@ -1,17 +1,17 @@
+import React from "react";
+import BlogForm from "./BlogForm";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-
-import UserForm, { UserFormValue } from "./UserForm";
-import { createUser } from "../../../api/userService";
 import { alertStore } from "../../../store/alertStore";
+import { useMutation } from "@tanstack/react-query";
+import { createBlog } from "../../../api/blogService";
 
-const UserCreate = () => {
+const BlogCreate = () => {
   const navigate = useNavigate();
   const { setAlert } = alertStore();
 
   const { mutateAsync } = useMutation({
-    mutationFn: async (values: UserFormValue) =>
-      await createUser(values)
+    mutationFn: async (values: FormData) =>
+      await createBlog(values)
         .then((response) => {
           if (response.data.code === 201) {
             navigate(-1);
@@ -31,9 +31,9 @@ const UserCreate = () => {
 
   return (
     <>
-      <UserForm fetch={mutateAsync} />
+      <BlogForm fetch={mutateAsync} />
     </>
   );
 };
 
-export default UserCreate;
+export default BlogCreate;
