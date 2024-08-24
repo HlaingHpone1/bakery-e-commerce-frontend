@@ -38,3 +38,7 @@ export const deleteImage = async (id: number) => {
 export const getAllBlogUser = async () => {
   return await api.get(`${baseURL}/${publicBlog}`);
 };
+
+export const getBlogDetailById = async (id: number) => {
+  return await api.get(`${baseURL}/${publicBlog}/${id}`);
+};

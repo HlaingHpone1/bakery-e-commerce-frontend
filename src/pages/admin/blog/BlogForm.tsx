@@ -43,6 +43,7 @@ const BlogForm = ({ initialValue, fetch }: BlogFormProps) => {
     handleSubmit,
   } = useFormik<BlogFormValue>({
     initialValues: initialValue ?? {
+      id: 0,
       title: "",
       description: "",
       images: [],
@@ -80,8 +81,6 @@ const BlogForm = ({ initialValue, fetch }: BlogFormProps) => {
     },
   });
 
-  console.log(errors);
-
   const accept: { [key: string]: string[] } = {
     "image/*": [],
   };
@@ -96,7 +95,6 @@ const BlogForm = ({ initialValue, fetch }: BlogFormProps) => {
           }) as UploadFile
       );
       setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-      // console.log(newFiles);
 
       setFieldValue("images", [...values.images, ...newFiles]);
     },
@@ -118,11 +116,6 @@ const BlogForm = ({ initialValue, fetch }: BlogFormProps) => {
     await deleteImage(id);
     queryClient.invalidateQueries({ queryKey: ["blog-show"] });
   };
-
-  console.log(
-    Array.isArray(errors.images) ? errors.images.join(", ") : errors.images
-  );
-  console.log(touched.images && Boolean(errors.images));
 
   return (
     <>
@@ -207,6 +200,15 @@ const BlogForm = ({ initialValue, fetch }: BlogFormProps) => {
               )}
             </div>
           </div>
+          {!Array.isArray(errors.images) ? (
+            <FormHelperText
+              sx={{
+                color: "#d32f2f",
+              }}
+            >
+              {errors.images}
+            </FormHelperText>
+          ) : null}
         </Grid>
 
         <Stack
