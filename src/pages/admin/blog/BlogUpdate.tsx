@@ -1,27 +1,31 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-import UserForm, { UserFormValue } from "./UserForm";
-import { getUserById, updateUser } from "../../../api/userService";
+import BlogForm from "./BlogForm";
 import { alertStore } from "../../../store/alertStore";
+import { getBlogById, updateBlog } from "../../../api/blogService";
 
-const UserUpdate = () => {
+const BlogUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { setAlert } = alertStore();
 
   const { data } = useQuery({
-    queryKey: ["user-show"],
+    queryKey: ["blog-show", id],
     queryFn: async () =>
-      getUserById(Number(id)).then((response) => {
-        if (response.data.code === 200) return response.data.data;
+      getBlogById(Number(id)).then((response) => {
+        if (response.data.code === 200) {
+          return response.data.data;
+        }
       }),
+    gcTime: 0,
+    staleTime: 0,
   });
 
   const { mutateAsync } = useMutation({
-    mutationFn: async (value: UserFormValue) =>
-      updateUser(Number(id), value)
+    mutationFn: async (value: FormData) =>
+      updateBlog(Number(id), value)
         .then((response) => {
           if (response.data.code === 201) {
             navigate(-1);
@@ -38,8 +42,17 @@ const UserUpdate = () => {
           );
         }),
   });
-
-  return <>{data && <UserForm initialValue={data} fetch={mutateAsync} />}</>;
+  return (
+    <>
+      {data && (
+        <BlogForm
+          key={data.attachments}
+          initialValue={data}
+          fetch={mutateAsync}
+        />
+      )}
+    </>
+  );
 };
 
-export default UserUpdate;
+export default BlogUpdate;

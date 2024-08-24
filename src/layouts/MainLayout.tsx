@@ -2,13 +2,22 @@ import { Outlet } from "react-router-dom";
 
 import { KeyboardArrowUp } from "@mui/icons-material";
 
-import { Box, Fab, Fade, Toolbar, useScrollTrigger } from "@mui/material";
+import {
+  Box,
+  Fab,
+  Fade,
+  LinearProgress,
+  Toolbar,
+  useScrollTrigger,
+} from "@mui/material";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 import "@fontsource/roboto";
 import "@fontsource/roboto-slab";
+import ContainerWrapper from "./wrapper/ContainerWrapper";
+import { loadingStore } from "../store/isLoadingStore";
 
 interface Props {
   window?: () => Window;
@@ -49,11 +58,18 @@ function ScrollTop(props: Props) {
 }
 
 const MainLayout = () => {
+  const { barLoading } = loadingStore();
+
   return (
     <>
       <Navbar />
       <Toolbar id="back-to-top-anchor" />
-      <Outlet />
+      <Box sx={{ width: "100%" }}>
+        {barLoading && <LinearProgress color="secondary" />}
+      </Box>
+      <ContainerWrapper>
+        <Outlet />
+      </ContainerWrapper>
       <Footer />
       <ScrollTop>
         <Fab size="small" aria-label="scroll back to top">

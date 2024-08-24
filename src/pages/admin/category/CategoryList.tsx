@@ -31,7 +31,7 @@ import {
   getAllCategories,
   getCategoryById,
   updateCategory,
-} from "../../../api/CategoryService";
+} from "../../../api/categoryService";
 
 import AdminTitle from "../../../components/typography/AdminTitle";
 import CustomPagination from "../../../components/pagination/CustomPagination";
@@ -124,6 +124,7 @@ const CategoryList = () => {
           refetch();
           setIsConfirm(false);
           setId(null);
+          setAlert(true, response.data.message, "success");
         }
 
         setOpen(false);
@@ -137,6 +138,7 @@ const CategoryList = () => {
           if (response.data.code === 201) {
             refetch();
             modalClose();
+            setAlert(true, response.data.message, "success");
           }
         })
         .catch((e) => {
@@ -161,6 +163,7 @@ const CategoryList = () => {
             if (response.data.code === 201) {
               refetch();
               modalClose();
+              setAlert(true, response.data.message, "success");
             }
           })
           .catch((e) => {
