@@ -42,3 +42,7 @@ export const getAllBlogUser = async () => {
 export const getBlogDetailById = async (id: number) => {
   return await api.get(`${baseURL}/${publicBlog}/${id}`);
 };
+
+export const getRandomBlogs = async (id: number) => {
+  return await api.get(`${baseURL}/${publicBlog}-random/${id}`);
+};
