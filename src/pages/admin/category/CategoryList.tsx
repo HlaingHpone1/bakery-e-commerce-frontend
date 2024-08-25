@@ -47,10 +47,6 @@ import { useDebouncedSearch } from "../../../hooks/useDebouncedSearch";
 
 import { CategoryValidationSchema } from "../../../validation/CategoryValidationSchema";
 
-export type Category = {
-  name: string;
-};
-
 type Params = {
   search?: string;
   sort_by?: string;
@@ -274,6 +270,7 @@ const CategoryList = () => {
     setErrors,
   } = useFormik<Category>({
     initialValues: {
+      id: 0,
       name: "",
     },
     validationSchema: CategoryValidationSchema,

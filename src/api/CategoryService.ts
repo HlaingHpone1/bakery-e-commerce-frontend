@@ -1,8 +1,8 @@
 import api from "../config/axios";
 import { baseURL } from "../config/axios";
-import { Category } from "../pages/admin/category/CategoryList";
 
 const category = "api/categories";
+const categoryList = "api/category-list";
 
 export const getAllCategories = async (
   page: number,
@@ -28,4 +28,8 @@ export const getCategoryById = async (id: number) => {
 
 export const updateCategory = async (id: number, body: Category) => {
   return await api.put(`${baseURL}/${category}/${id}`, body);
+};
+
+export const getDropDwonCategories = async () => {
+  return await api.get(`${baseURL}/${categoryList}`);
 };
