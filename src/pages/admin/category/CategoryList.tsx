@@ -31,7 +31,7 @@ import {
   getAllCategories,
   getCategoryById,
   updateCategory,
-} from "../../../api/categoryService";
+} from "../../../api/categoryServices";
 
 import AdminTitle from "../../../components/typography/AdminTitle";
 import CustomPagination from "../../../components/pagination/CustomPagination";

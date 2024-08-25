@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDropDwonCategories } from "../api/categoryService";
+import { getDropDwonCategories } from "../api/categoryServices";
 
 const useCategoryList = () => {
   const { data = [] } = useQuery({
