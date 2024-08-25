@@ -15,3 +15,8 @@ interface BlogFormValue {
   images: File[];
   attachments?: Attachments[];
 }
+
+interface Category {
+  id: number;
+  name: string;
+}

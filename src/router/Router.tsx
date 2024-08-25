@@ -28,6 +28,8 @@ import ProductList from "../pages/admin/product/ProductList";
 import UserList from "../pages/admin/user/UserList";
 import UserCreate from "../pages/admin/user/UserCreate";
 import UserUpdate from "../pages/admin/user/UserUpdate";
+import ProductCreate from "../pages/admin/product/ProductCreate";
+import ProductUpdate from "../pages/admin/product/ProductUpdate";
 
 import CategoryList from "../pages/admin/category/CategoryList";
 
@@ -190,6 +192,18 @@ const Router = () => {
         {
           path: "/dashboard/products",
           element: ProductList,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/products/create",
+          element: ProductCreate,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/products/:id/update",
+          element: ProductUpdate,
           private: true,
           role: ["Admin"],
         },
