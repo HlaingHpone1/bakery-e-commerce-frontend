@@ -25,6 +25,7 @@ import AdminTitle from "../../../components/typography/AdminTitle";
 import NormalButton from "../../../components/button/NormalButton";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/pagination/CustomPagination";
+import { alertStore } from "../../../store/alertStore";
 
 type Params = {
   search?: string;
@@ -52,6 +53,8 @@ const ProductList = () => {
     useDebouncedSearch(300);
 
   const { setOpen, setId, id, isConfirm, setIsConfirm } = deleteModalStore();
+
+  const { setAlert } = alertStore();
 
   const {
     setPageCount,
@@ -92,6 +95,7 @@ const ProductList = () => {
           refetch();
           setIsConfirm(false);
           setId(null);
+          setAlert(true, response.data.message, "success");
         }
 
         setOpen(false);
@@ -139,6 +143,36 @@ const ProductList = () => {
       headerName: "Name",
       minWidth: 150,
       flex: 1,
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      minWidth: 150,
+      flex: 1,
+    },
+    {
+      field: "category_id",
+      headerName: "Category",
+      minWidth: 150,
+      flex: 1,
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      minWidth: 150,
+      flex: 1,
+    },
+    {
+      field: "image_url",
+      headerName: "Image",
+      minWidth: 150,
+      flex: 1,
+      headerAlign: "center",
+      renderCell: (params) => (
+        <>
+          <Box component="img" src={params.row.image_url} alt="THis is Image" />
+        </>
+      ),
     },
     {
       field: "action",

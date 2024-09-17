@@ -130,7 +130,7 @@ const Navbar = () => {
                         color="inherit"
                       >
                         <Badge badgeContent={products.length} color="error">
-                          <ShoppingCartRounded />
+                          <ShoppingCartRounded id="cart-icon" />
                         </Badge>
                       </IconButton>
                     </Link>

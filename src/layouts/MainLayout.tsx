@@ -18,6 +18,8 @@ import "@fontsource/roboto";
 import "@fontsource/roboto-slab";
 import ContainerWrapper from "./wrapper/ContainerWrapper";
 import { loadingStore } from "../store/isLoadingStore";
+import { useEffect } from "react";
+import { useProductCartStore } from "../store/productCartStore";
 
 interface Props {
   window?: () => Window;
@@ -59,6 +61,17 @@ function ScrollTop(props: Props) {
 
 const MainLayout = () => {
   const { barLoading } = loadingStore();
+  const { products, clearProduct } = useProductCartStore();
+
+  const product = localStorage.getItem("product");
+  const parsed = JSON.parse(product!);
+  const now = new Date().getTime();
+
+  useEffect(() => {
+    if (products.length > 0 && now - parsed?.state?.timestamp > 86400000) {
+      clearProduct();
+    }
+  }, [product, parsed]);
 
   return (
     <>

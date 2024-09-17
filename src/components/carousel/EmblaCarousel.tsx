@@ -45,7 +45,6 @@ const EmblaCarousel = ({ slides, options }: EmblaCarouselProps) => {
         <div className="embla__container">
           {slides.map((slide, index) => (
             <div className="embla__slide" key={index}>
-              {/* <div className="embla__slide__number">{index + 1}</div> */}
               <img
                 className="embla__slide__number"
                 src={slide.attachment_url}

@@ -1,5 +1,4 @@
-import React from "react";
-import ProductForm, { ProductFormValue } from "./ProductForm";
+import ProductForm from "./ProductForm";
 import { useNavigate } from "react-router-dom";
 import { alertStore } from "../../../store/alertStore";
 import { useMutation } from "@tanstack/react-query";
@@ -10,7 +9,7 @@ const ProductCreate = () => {
   const { setAlert } = alertStore();
 
   const { mutateAsync } = useMutation({
-    mutationFn: async (values: ProductFormValue) =>
+    mutationFn: async (values: FormData) =>
       await createProduct(values)
         .then((response) => {
           if (response.data.code === 201) {
@@ -29,11 +28,7 @@ const ProductCreate = () => {
         }),
   });
 
-  return (
-    <>
-      <ProductForm fetch={mutateAsync} />
-    </>
-  );
+  return <ProductForm fetch={mutateAsync} />;
 };
 
 export default ProductCreate;
