@@ -44,7 +44,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const { setAlert } = alertStore();
-  const { setLogInUser, setName, setEmail, setToken, setRole } = userStore();
+  const { setLogInUser, setUserData, setToken, setRole } = userStore();
 
   const [forgotShow, setForgotShow] = useState(false);
 
@@ -61,8 +61,7 @@ const Login = () => {
             if (response.data.code === 200) {
               setAlert(true, response.data.message, "success");
               setLogInUser(true);
-              setName(response.data.data.name);
-              setEmail(response.data.data.email);
+              setUserData(response.data.data.user_data);
               setToken(response.data.data.token);
               setRole(response.data.data.role);
               if (response.data.data.role == "Admin") navigate("/dashboard");

@@ -2,6 +2,7 @@ import api from "../config/axios";
 import { baseURL } from "../config/axios";
 
 const product = "api/products";
+const publicProduct = "api/product-list";
 
 export const getAllProducts = async (
   page: number,
@@ -13,7 +14,7 @@ export const getAllProducts = async (
   );
 };
 
-export const createProduct = async (body: any) => {
+export const createProduct = async (body: FormData) => {
   return await api.post(`${baseURL}/${product}`, body);
 };
 
@@ -25,6 +26,20 @@ export const getProductById = async (id: number) => {
   return await api.get(`${baseURL}/${product}/${id}`);
 };
 
-export const updateProduct = async (id: number, body: any) => {
+export const updateProduct = async (id: number, body: FormData) => {
   return await api.post(`${baseURL}/${product}/${id}`, body);
+};
+
+export const getAllProductUser = async () => {
+  return await api.get(`${baseURL}/${publicProduct}`);
+};
+
+export const getProductDetailById = async (id: number) => {
+  return await api
+    .get(`${baseURL}/${publicProduct}/${id}`)
+    .then((res) => res.data.data);
+};
+
+export const getRandomProducts = async (id: number) => {
+  return await api.get(`${baseURL}/${publicProduct}-random/${id}`);
 };

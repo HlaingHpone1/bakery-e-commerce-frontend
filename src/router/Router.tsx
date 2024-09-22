@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { ComponentType } from "react";
 
 import Home from "../pages/Home";
-import Product from "../pages/Product";
+import Product from "../pages/visitor/Product";
 import PublicRoute from "./PublicRoute";
 import Login from "../pages/auth/Login";
 import NotFound from "../pages/NotFound";

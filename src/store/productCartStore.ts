@@ -1,15 +1,11 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-interface Product {
-  id: number;
-  qty: number;
-}
-
 interface ProductCartStore {
   products: Product[];
-
-  setProduct: (product: Product[]) => void;
+  timestamp: number;
+  setProduct: (product: Product[], timestamp: number) => void;
+  clearProduct: () => void;
 }
 
 export const useProductCartStore = create<ProductCartStore>()(
@@ -17,7 +13,11 @@ export const useProductCartStore = create<ProductCartStore>()(
     persist<ProductCartStore>(
       (set) => ({
         products: [],
-        setProduct: (product: Product[]) => set({ products: product }),
+        timestamp: 0,
+        setProduct: (product: Product[], timestamp: number) =>
+          set({ products: product, timestamp: timestamp }),
+        clearProduct: () =>
+          set({ products: [], timestamp: new Date().getTime() }),
       }),
       {
         name: "product",

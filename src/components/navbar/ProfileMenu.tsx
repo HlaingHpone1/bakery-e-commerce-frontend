@@ -110,6 +110,7 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
           onClick={() => {
             handleMenuClose();
             logOut();
+            navigate("/");
           }}
         >
           <ListItemIcon>

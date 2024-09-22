@@ -93,7 +93,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 function AdminNavbar() {
-  const { name } = userStore();
+  const { userData } = userStore();
 
   const [open, setOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<null | HTMLElement>(
@@ -153,7 +153,7 @@ function AdminNavbar() {
             }
             color="inherit"
           >
-            <Avatar>{name.charAt(0)}</Avatar>
+            <Avatar>{userData?.name.charAt(0)}</Avatar>
           </IconButton>
         </Toolbar>
         <ProfileMenu

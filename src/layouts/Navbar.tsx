@@ -43,7 +43,7 @@ export const ElevationScroll = (props: Props) => {
 };
 
 const Navbar = () => {
-  const { logInUser, name } = userStore();
+  const { logInUser, userData } = userStore();
   const { products } = useProductCartStore();
 
   const [profileMenuOpen, setProfileMenuOpen] = useState<null | HTMLElement>(
@@ -130,7 +130,7 @@ const Navbar = () => {
                         color="inherit"
                       >
                         <Badge badgeContent={products.length} color="error">
-                          <ShoppingCartRounded />
+                          <ShoppingCartRounded id="cart-icon" />
                         </Badge>
                       </IconButton>
                     </Link>
@@ -144,7 +144,7 @@ const Navbar = () => {
                       }
                       color="inherit"
                     >
-                      <Avatar>{name.charAt(0)}</Avatar>
+                      <Avatar>{userData?.name.charAt(0)}</Avatar>
                     </IconButton>
                   </Box>
                 </>
