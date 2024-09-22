@@ -16,6 +16,8 @@ import { RemoveShoppingCart } from "@mui/icons-material";
 import "./ProductCard.css";
 import NormalButton from "../button/NormalButton";
 import { useProductCartStore } from "../../store/productCartStore";
+import { userStore } from "../../store/userStore";
+import { alertStore } from "../../store/alertStore";
 
 const ProductCard = ({ product }: { product: ProductCard }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -23,44 +25,65 @@ const ProductCard = ({ product }: { product: ProductCard }) => {
 
   const { products, setProduct } = useProductCartStore();
 
+  const { logInUser } = userStore();
+
+  const { setAlert } = alertStore();
+
   const isProductInCart = products.some((p: Product) => p.id === product.id);
 
   const handleAddToCart = () => {
-    const cardElement = cardRef.current;
-    if (cardElement) {
-      const clonedCard = cardElement.cloneNode(true) as HTMLElement;
-      document.body.appendChild(clonedCard);
+    if (logInUser) {
+      const cardElement = cardRef.current;
+      if (cardElement) {
+        const clonedCard = cardElement.cloneNode(true) as HTMLElement;
+        document.body.appendChild(clonedCard);
 
-      const rect = cardElement.getBoundingClientRect();
-      clonedCard.style.position = "fixed";
-      clonedCard.style.left = `${rect.left}px`;
-      clonedCard.style.top = `${rect.top}px`;
-      clonedCard.style.width = `${rect.width}px`;
-      clonedCard.style.height = `${rect.height}px`;
-      clonedCard.style.zIndex = "1000";
-      clonedCard.style.transition =
-        "transform 0.75s ease-in-out, opacity 0.75s ease-in-out";
+        const rect = cardElement.getBoundingClientRect();
+        clonedCard.style.position = "fixed";
+        clonedCard.style.left = `${rect.left}px`;
+        clonedCard.style.top = `${rect.top}px`;
+        clonedCard.style.width = `${rect.width}px`;
+        clonedCard.style.height = `${rect.height}px`;
+        clonedCard.style.zIndex = "1000";
+        clonedCard.style.transition =
+          "transform 0.75s ease-in-out, opacity 0.75s ease-in-out";
 
-      const cartRect = document
-        .querySelector("#cart-icon")!
-        .getBoundingClientRect();
-      clonedCard.style.transform = `translate(${
-        cartRect.left - rect.left - 130
-      }px, ${cartRect.top - rect.top - 200}px) scale(0.2)`;
-      clonedCard.style.opacity = "0";
+        const cartRect = document
+          .querySelector("#cart-icon")!
+          .getBoundingClientRect();
+        clonedCard.style.transform = `translate(${
+          cartRect.left - rect.left - 130
+        }px, ${cartRect.top - rect.top - 200}px) scale(0.2)`;
+        clonedCard.style.opacity = "0";
 
-      setTimeout(() => {
-        clonedCard.remove();
-        setProduct(
-          [...products, { id: product.id, qty: 1 }],
-          new Date().getTime()
-        );
-      }, 750);
+        setTimeout(() => {
+          clonedCard.remove();
+          setProduct(
+            [
+              ...products,
+              {
+                id: product.id,
+                qty: 1,
+                image: product.image_url,
+                price: product.price!,
+                name: product.name,
+              },
+            ],
+            new Date().getTime()
+          );
+        }, 750);
+      }
+    } else {
+      navigate("/login");
+      setAlert(true, "Plz, Log in First", "info");
     }
   };
 
   const handleRemoveFromCart = () => {
-    setProduct(products.filter((p: Product) => p.id !== product.id));
+    setProduct(
+      products.filter((p: Product) => p.id !== product.id),
+      new Date().getTime()
+    );
   };
 
   return (

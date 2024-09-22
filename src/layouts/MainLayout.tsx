@@ -68,7 +68,7 @@ const MainLayout = () => {
   const now = new Date().getTime();
 
   useEffect(() => {
-    if (products.length > 0 && now - parsed?.state?.timestamp > 86400000) {
+    if (products.length > 0 && now - parsed?.state?.timestamp > 86_400_000) {
       clearProduct();
     }
   }, [product, parsed]);

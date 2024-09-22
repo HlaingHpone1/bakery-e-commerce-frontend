@@ -1,11 +1,14 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-import { getProductDetailById } from "../../api/ProductService";
+import {
+  getProductDetailById,
+  getRandomProducts,
+} from "../../api/ProductService";
 import { loadingStore } from "../../store/isLoadingStore";
 import { EmblaOptionsType } from "embla-carousel";
 import EmblaCarousel from "../../components/carousel/EmblaCarousel";
-import { Box, Chip, IconButton, Rating, Typography } from "@mui/material";
+import { Box, Chip, Grid, IconButton, Rating, Typography } from "@mui/material";
 import { useProductCartStore } from "../../store/productCartStore";
 import NormalButton from "../../components/button/NormalButton";
 import {
@@ -14,6 +17,9 @@ import {
   RemoveRounded,
   RemoveShoppingCart,
 } from "@mui/icons-material";
+import ProductCard from "../../components/cards/ProductCard";
+import { userStore } from "../../store/userStore";
+import { alertStore } from "../../store/alertStore";
 
 const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
 
@@ -23,10 +29,14 @@ const ProductDetail = () => {
 
   const { setBarLoading } = loadingStore();
 
+  const { logInUser } = userStore();
+
   const { products, setProduct } = useProductCartStore();
 
+  const { setAlert } = alertStore();
+
   const { data } = useQuery({
-    queryKey: ["get-product-details"],
+    queryKey: ["get-product-details", id],
     queryFn: async () => {
       setBarLoading(true);
       const productDetails = await getProductDetailById(Number(id));
@@ -35,15 +45,42 @@ const ProductDetail = () => {
     },
   });
 
+  const { data: randomProducts } = useQuery({
+    queryKey: ["get-random-products", id],
+    queryFn: async () => {
+      return await getRandomProducts(Number(id)).then((res) => res.data);
+    },
+  });
+
   const cartProduct = products.find((p: Product) => p.id === data?.id);
   const quantity = cartProduct ? cartProduct.qty : 0;
 
   const handleRemoveFromCart = () => {
-    setProduct(products.filter((p: Product) => p.id !== data.id));
+    setProduct(
+      products.filter((p: Product) => p.id !== data.id),
+      new Date().getTime()
+    );
   };
 
   const handleAddToCart = () => {
-    setProduct([...products, { id: data.id, qty: 1 }], new Date().getTime());
+    if (logInUser) {
+      setProduct(
+        [
+          ...products,
+          {
+            id: data.id,
+            qty: 1,
+            image: data.image_url,
+            price: data.price,
+            name: data.name,
+          },
+        ],
+        new Date().getTime()
+      );
+    } else {
+      navigate("/login");
+      setAlert(true, "Plz, Log in First", "info");
+    }
   };
 
   const handleIncreaseQty = () => {
@@ -51,7 +88,8 @@ const ProductDetail = () => {
       setProduct(
         products.map((p: Product) =>
           p.id === data?.id ? { ...p, qty: p.qty + 1 } : p
-        )
+        ),
+        new Date().getTime()
       );
     }
   };
@@ -61,7 +99,8 @@ const ProductDetail = () => {
       setProduct(
         products.map((p: Product) =>
           p.id === data?.id ? { ...p, qty: p.qty - 1 } : p
-        )
+        ),
+        new Date().getTime()
       );
     }
   };
@@ -72,15 +111,15 @@ const ProductDetail = () => {
         <ArrowBackRounded />
       </IconButton>
       {data && (
-        <Box className="flex space-x-10">
-          <Box className="w-3/5">
+        <Box className="flex md:space-x-10 flex-col md:flex-row">
+          <Box className="w-full md:w-3/5">
             {data?.attachments && (
               <>
                 <EmblaCarousel slides={data?.attachments} options={OPTIONS} />
               </>
             )}
           </Box>
-          <Box className="w-2/5">
+          <Box className="w-full md:w-2/5">
             <Typography variant="h4" component="h1" fontWeight="700">
               {data.name}
             </Typography>
@@ -136,6 +175,14 @@ const ProductDetail = () => {
           </Box>
         </Box>
       )}
+
+      <Grid container>
+        {randomProducts?.data.map((product: ProductCard, i: number) => (
+          <Grid item key={i} lg={3} md={4} sm={6} xs={12} p={1}>
+            <ProductCard product={product} />
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 };

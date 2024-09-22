@@ -51,4 +51,7 @@ interface UploadFile extends File {
 interface Product {
   id: number;
   qty: number;
+  image: string;
+  name: string;
+  price: number;
 }

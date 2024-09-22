@@ -39,3 +39,7 @@ export const getProductDetailById = async (id: number) => {
     .get(`${baseURL}/${publicProduct}/${id}`)
     .then((res) => res.data.data);
 };
+
+export const getRandomProducts = async (id: number) => {
+  return await api.get(`${baseURL}/${publicProduct}-random/${id}`);
+};

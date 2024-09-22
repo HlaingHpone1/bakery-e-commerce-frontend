@@ -151,7 +151,7 @@ const ProductList = () => {
       flex: 1,
     },
     {
-      field: "category_id",
+      field: "category_name",
       headerName: "Category",
       minWidth: 150,
       flex: 1,

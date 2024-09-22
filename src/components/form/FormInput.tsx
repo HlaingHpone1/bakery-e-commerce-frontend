@@ -47,7 +47,7 @@ const FormInput = <T,>({
 
           ...sx,
         }}
-        multiline
+        multiline={!!row}
         rows={row ?? 1}
         autoComplete="off"
         name={name}
