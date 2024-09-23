@@ -3,6 +3,7 @@ import { baseURL } from "../config/axios";
 
 const product = "api/products";
 const publicProduct = "api/product-list";
+const rating = "api/rating";
 
 export const getAllProducts = async (
   page: number,
@@ -42,4 +43,8 @@ export const getProductDetailById = async (id: number) => {
 
 export const getRandomProducts = async (id: number) => {
   return await api.get(`${baseURL}/${publicProduct}-random/${id}`);
+};
+
+export const createProductRating = async (body: Rating) => {
+  return await api.post(`${baseURL}/${rating}`, body);
 };

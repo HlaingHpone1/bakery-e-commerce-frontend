@@ -55,3 +55,8 @@ interface Product {
   name: string;
   price: number;
 }
+
+interface Rating {
+  product_id: number;
+  rating: number;
+}

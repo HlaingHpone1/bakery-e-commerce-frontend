@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import {
+  createProductRating,
   getProductDetailById,
   getRandomProducts,
 } from "../../api/ProductService";
@@ -20,6 +21,7 @@ import {
 import ProductCard from "../../components/cards/ProductCard";
 import { userStore } from "../../store/userStore";
 import { alertStore } from "../../store/alertStore";
+import { SyntheticEvent } from "react";
 
 const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
 
@@ -83,6 +85,10 @@ const ProductDetail = () => {
     }
   };
 
+  const { mutateAsync } = useMutation({
+    mutationFn: async (values: Rating) => await createProductRating(values),
+  });
+
   const handleIncreaseQty = () => {
     if (cartProduct) {
       setProduct(
@@ -105,75 +111,101 @@ const ProductDetail = () => {
     }
   };
 
+  const handleRatingChange = async (
+    e: SyntheticEvent,
+    newValue: number | null
+  ) => {
+    if (newValue) {
+      try {
+        await mutateAsync({ product_id: data?.id, rating: newValue });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <>
       <IconButton onClick={() => navigate(-1)}>
         <ArrowBackRounded />
       </IconButton>
       {data && (
-        <Box className="flex md:space-x-10 flex-col md:flex-row">
-          <Box className="w-full md:w-3/5">
-            {data?.attachments && (
-              <>
-                <EmblaCarousel slides={data?.attachments} options={OPTIONS} />
-              </>
-            )}
-          </Box>
-          <Box className="w-full md:w-2/5">
-            <Typography variant="h4" component="h1" fontWeight="700">
-              {data.name}
-            </Typography>
-            <Chip label={data.category_name} color="tertiary" size="small" />
-            <Typography paragraph>{data.description}</Typography>
-            <Box className="flex items-center space-x-2 my-3">
-              <Rating name="read-only" value={data.average_rating} readOnly />{" "}
-              <Typography
-                marginBottom={0}
-                paragraph
-              >{`(${data.average_rating})`}</Typography>
+        <>
+          <Box className="flex md:space-x-10 flex-col md:flex-row">
+            <Box className="w-full md:w-3/5">
+              {data?.attachments && (
+                <>
+                  <EmblaCarousel slides={data?.attachments} options={OPTIONS} />
+                </>
+              )}
             </Box>
-            <Typography variant="h5" component="h1" fontWeight="700" mt={2}>
-              ${data.price}
-            </Typography>
-
-            {cartProduct ? (
-              <Box className="flex items-center space-x-3 my-4">
-                <NormalButton
-                  text=""
-                  icon={RemoveRounded}
-                  type="contained"
-                  onClick={handleDecreaseQty}
-                  disable={quantity <= 1}
-                />
-                <Typography variant="h6" component="div">
-                  {quantity}
-                </Typography>
-                <NormalButton
-                  text=""
-                  icon={AddRounded}
-                  type="contained"
-                  onClick={handleIncreaseQty}
-                />
+            <Box className="w-full md:w-2/5">
+              <Typography variant="h4" component="h1" fontWeight="700">
+                {data.name}
+              </Typography>
+              <Chip label={data.category_name} color="tertiary" size="small" />
+              <Typography paragraph>{data.description}</Typography>
+              <Box className="flex items-center space-x-2 my-3">
+                <Rating name="read-only" value={data.average_rating} readOnly />{" "}
+                <Typography
+                  marginBottom={0}
+                  paragraph
+                >{`(${data.average_rating})`}</Typography>
               </Box>
-            ) : (
-              <NormalButton
-                text="Add To Cart"
-                type="contained"
-                onClick={handleAddToCart}
-                sx={{ my: 2 }}
-              />
-            )}
+              <Typography variant="h5" component="h1" fontWeight="700" mt={2}>
+                ${data.price}
+              </Typography>
 
-            {cartProduct && (
-              <NormalButton
-                text="Remove"
-                type="contained"
-                icon={RemoveShoppingCart}
-                onClick={handleRemoveFromCart}
-              />
-            )}
+              {cartProduct ? (
+                <Box className="flex items-center space-x-3 my-4">
+                  <NormalButton
+                    text=""
+                    icon={RemoveRounded}
+                    type="contained"
+                    onClick={handleDecreaseQty}
+                    disable={quantity <= 1}
+                  />
+                  <Typography variant="h6" component="div">
+                    {quantity}
+                  </Typography>
+                  <NormalButton
+                    text=""
+                    icon={AddRounded}
+                    type="contained"
+                    onClick={handleIncreaseQty}
+                  />
+                </Box>
+              ) : (
+                <NormalButton
+                  text="Add To Cart"
+                  type="contained"
+                  onClick={handleAddToCart}
+                  sx={{ my: 2 }}
+                />
+              )}
+
+              {cartProduct && (
+                <NormalButton
+                  text="Remove"
+                  type="contained"
+                  icon={RemoveShoppingCart}
+                  onClick={handleRemoveFromCart}
+                />
+              )}
+            </Box>
           </Box>
-        </Box>
+          <Typography variant="h4" component="h2">
+            Product Feedback
+          </Typography>
+
+          <Box>
+            <Rating
+              name="size-medium"
+              defaultValue={data.average_rating}
+              onChange={handleRatingChange}
+            />
+          </Box>
+        </>
       )}
 
       <Grid container>
