@@ -9,7 +9,6 @@ import NotFound from "../pages/NotFound";
 import Blog from "../pages/visitor/Blog";
 import Shop from "../pages/visitor/Shop";
 import PrivateRoute from "./PrivateRoute";
-import Setting from "../pages/user/Setting";
 import Profile from "../pages/user/Profile";
 import Register from "../pages/auth/Register";
 import AboutUs from "../pages/visitor/AboutUs";
@@ -37,6 +36,9 @@ import BlogList from "../pages/admin/blog/BlogList";
 import BlogCreate from "../pages/admin/blog/BlogCreate";
 import BlogUpdate from "../pages/admin/blog/BlogUpdate";
 import OrderDetails from "../pages/admin/order/OrderDetails";
+import SettingLayout from "../layouts/SettingLayout";
+import Security from "../pages/user/Security";
+import ResetPasswordWithOldPassword from "../pages/user/ResetPasswordWithOldPassword";
 
 export type Role = "Admin" | "User";
 
@@ -124,9 +126,23 @@ const Router = () => {
         },
         {
           path: "/settings",
-          element: Setting,
-          private: true,
+          element: SettingLayout,
           role: ["Admin", "User"],
+          private: true,
+          children: [
+            {
+              path: "/settings/security",
+              element: Security,
+              private: true,
+              role: ["Admin", "User"],
+            },
+            {
+              path: "/settings/security/change-password",
+              element: ResetPasswordWithOldPassword,
+              private: true,
+              role: ["Admin", "User"],
+            },
+          ],
         },
         {
           path: "/about-us",

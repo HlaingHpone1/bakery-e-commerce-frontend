@@ -78,8 +78,18 @@ interface OrderDetail {
   qty: number;
   total: number;
   user_name: string;
+  product_image_url: string;
 }
 
 interface OrderStatus {
   status: number | undefined;
+}
+
+interface UserUpdate {
+  name: string;
+  email: string;
+  phone_number: string;
+  gender: null | number;
+  address: string;
+  region: string;
 }

@@ -92,18 +92,17 @@ const OrderList = () => {
     setOpen(true);
   };
 
-  const { handleBlur, handleChange, handleSubmit, resetForm } =
-    useFormik<OrderStatus>({
-      initialValues: {
-        status: undefined,
-      },
-      validationSchema: "",
-      onSubmit: (value) => {
-        console.log(value);
+  const { handleBlur, handleChange, handleSubmit } = useFormik<OrderStatus>({
+    initialValues: {
+      status: undefined,
+    },
+    validationSchema: "",
+    onSubmit: (value) => {
+      console.log(value);
 
-        setOpen(false);
-      },
-    });
+      setOpen(false);
+    },
+  });
 
   const orderColumns: GridColDef[] = [
     {
@@ -122,6 +121,12 @@ const OrderList = () => {
     {
       field: "order_detail_total",
       headerName: "Order Total Product",
+      minWidth: 150,
+      flex: 1,
+    },
+    {
+      field: "note",
+      headerName: "Notes",
       minWidth: 150,
       flex: 1,
     },

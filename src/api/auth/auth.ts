@@ -13,3 +13,7 @@ export const login = async (body: LoginProps) => {
 export const register = async (body: RegisterProps) => {
   return await api.post(`${baseURL}/${user}`, body);
 };
+
+export const logOut = async () => {
+  return await api.post(`${baseURL}/${auth}/logout`);
+};

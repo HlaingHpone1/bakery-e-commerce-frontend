@@ -35,6 +35,6 @@ export const updateUser = async (id: number, body: Order) => {
   return await api.post(`${baseURL}/${user}/${id}`, body);
 };
 
-export const updateOrderUser = async (id: number, body: Order) => {
+export const updateUserData = async (id: number, body: Order | UserUpdate) => {
   return await api.post(`${baseURL}/${user}-update/${id}`, body);
 };

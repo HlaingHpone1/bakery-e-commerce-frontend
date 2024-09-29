@@ -16,8 +16,6 @@ const OrderDetails = () => {
       }),
   });
 
-  console.log(data);
-
   return (
     <AdminFormWrapper title="Order Detail">
       {isLoading ? (
@@ -110,7 +108,7 @@ const OrderDetails = () => {
                           objectFit: "cover",
                           objectPosition: "center",
                         }}
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnGWEwXpRS7z7rVaGrjIWWTdE8_TiYTGiYjA&s"
+                        src={productDetail.product_image_url}
                       />
                       <Box
                         display="block"

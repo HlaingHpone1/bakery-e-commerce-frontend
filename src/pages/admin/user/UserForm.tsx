@@ -25,7 +25,7 @@ import FormInputPassword from "../../../components/form/FormInputPassword";
 import {
   UserCreateValidationSchema,
   UserUpdateValidationSchema,
-} from "../../../validation/admin/UserValidationChema";
+} from "../../../validation/admin/UserValidationSchema";
 
 type Role = {
   id: number;

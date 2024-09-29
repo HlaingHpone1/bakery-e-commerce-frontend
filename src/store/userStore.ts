@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+import { logOut } from "../api/auth/auth";
 
 interface User {
   id: number;
@@ -30,22 +31,24 @@ export const userStore = create<UserStore>()(
         logInUser: false,
         userData: undefined,
         token: "",
-
         role: "",
-
         setLogInUser: (logInUser: boolean) => set({ logInUser: logInUser }),
         setUserData: (user: User) => set({ userData: user }),
         setRole: (role: string) => set({ role: role }),
         setToken: (token: string) => set({ token: token }),
 
-        logOut: () => {
-          set(() => ({
-            logInUser: false,
-            userData: undefined,
-            token: "",
-            role: "",
-          }));
-          localStorage.removeItem("product");
+        logOut: async () => {
+          await logOut().then((response) => {
+            if (response.data.code === 200) {
+              set(() => ({
+                logInUser: false,
+                userData: undefined,
+                token: "",
+                role: "",
+              }));
+              localStorage.removeItem("product");
+            }
+          });
         },
       }),
       {

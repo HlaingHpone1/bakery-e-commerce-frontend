@@ -22,7 +22,7 @@ import { userStore } from "../../store/userStore";
 import { AddToCartOrderValidationSchema } from "../../validation/AddToCartOrderValidationSchema";
 import { createOrder } from "../../api/OrderService";
 import { useNavigate } from "react-router-dom";
-import { updateOrderUser } from "../../api/userService";
+import { updateUserData } from "../../api/userService";
 
 const AddToCart = () => {
   const { products, setProduct } = useProductCartStore();
@@ -65,13 +65,6 @@ const AddToCart = () => {
     return acc + product.price * product.qty;
   }, 0);
 
-  useEffect(() => {
-    if (products) {
-      setFieldValue("products", products);
-      setFieldValue("total_price", totalPrice);
-    }
-  }, [products]);
-
   const {
     values,
     errors,
@@ -93,7 +86,7 @@ const AddToCart = () => {
     validationSchema: AddToCartOrderValidationSchema,
     onSubmit: async (values) => {
       if (userData) {
-        await updateOrderUser(userData?.id, values);
+        await updateUserData(userData?.id, values);
 
         await createOrder(values).then((response) => {
           if (response.data.code === 201) {
@@ -104,6 +97,13 @@ const AddToCart = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (products) {
+      setFieldValue("products", products);
+      setFieldValue("total_price", totalPrice);
+    }
+  }, [products]);
 
   return (
     <>
