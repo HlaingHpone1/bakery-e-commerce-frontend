@@ -36,6 +36,7 @@ import CategoryList from "../pages/admin/category/CategoryList";
 import BlogList from "../pages/admin/blog/BlogList";
 import BlogCreate from "../pages/admin/blog/BlogCreate";
 import BlogUpdate from "../pages/admin/blog/BlogUpdate";
+import OrderDetails from "../pages/admin/order/OrderDetails";
 
 export type Role = "Admin" | "User";
 
@@ -210,6 +211,12 @@ const Router = () => {
         {
           path: "/dashboard/orders",
           element: OrderList,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/orders/:id/details",
+          element: OrderDetails,
           private: true,
           role: ["Admin"],
         },

@@ -9,20 +9,27 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
+
+import { Radio } from "@mui/material";
+
 import { useProductCartStore } from "../../store/productCartStore";
 import NormalButton from "../../components/button/NormalButton";
 import { Delete } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import FormInput from "../../components/form/FormInput";
-import { Radio } from "@mui/material";
 import { userStore } from "../../store/userStore";
 import { AddToCartOrderValidationSchema } from "../../validation/AddToCartOrderValidationSchema";
+import { createOrder } from "../../api/OrderService";
+import { useNavigate } from "react-router-dom";
+import { updateOrderUser } from "../../api/userService";
 
 const AddToCart = () => {
   const { products, setProduct } = useProductCartStore();
 
   const { userData } = userStore();
+
+  const navigate = useNavigate();
 
   const time = new Date().getTime();
 
@@ -73,19 +80,28 @@ const AddToCart = () => {
     touched,
     setFieldValue,
     handleSubmit,
-  } = useFormik({
+  } = useFormik<Order>({
     initialValues: {
-      phone: userData?.phone,
+      phone_number: userData?.phone,
       region: "",
       address: userData?.address ?? undefined,
-      payment: undefined,
+      payment_type: undefined,
       total_price: undefined,
-      note: "",
+      notes: "",
       products: [],
     },
     validationSchema: AddToCartOrderValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      if (userData) {
+        await updateOrderUser(userData?.id, values);
+
+        await createOrder(values).then((response) => {
+          if (response.data.code === 201) {
+            navigate(`/profile/${userData.id}`);
+            setProduct([], time);
+          }
+        });
+      }
     },
   });
 
@@ -120,14 +136,14 @@ const AddToCart = () => {
             <Grid container>
               <Grid item xs={6} pr={1}>
                 <FormInput
-                  name="phone"
+                  name="phone_number"
                   label="Phone"
                   required={true}
-                  value={values.phone}
+                  value={values.phone_number}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  error={errors.phone}
-                  touch={touched.phone}
+                  error={errors.phone_number}
+                  touch={touched.phone_number}
                   sx={{
                     marginBottom: "15px",
                   }}
@@ -162,13 +178,13 @@ const AddToCart = () => {
                   }}
                 />
                 <FormInput
-                  name="note"
-                  label="Note"
-                  value={values.note}
+                  name="notes"
+                  label="Notes"
+                  value={values.notes}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  error={errors.note}
-                  touch={touched.note}
+                  error={errors.notes}
+                  touch={touched.notes}
                   row={3}
                   sx={{
                     marginBottom: "15px",
@@ -202,47 +218,47 @@ const AddToCart = () => {
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
                   sx={{
-                    ".MuiButtonBase-root.MuiRadio-root  .Mui-checked": {
+                    ".MuiButtonBase-root.MuiRadio-root.Mui-checked": {
                       color: "#000",
                     },
                   }}
                 >
                   <FormControlLabel
                     value={1}
-                    checked={Number(values.payment) === 1}
+                    checked={Number(values.payment_type) === 1}
                     control={<Radio size="small" />}
                     label="Cash on Delivery"
-                    name="payment"
+                    name="payment_type"
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                   <FormControlLabel
-                    checked={Number(values.payment) === 2}
+                    checked={Number(values.payment_type) === 2}
                     value={2}
                     control={<Radio size="small" />}
                     label="POS on Delivery"
-                    name="payment"
+                    name="payment_type"
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                   <FormControlLabel
                     value={3}
-                    checked={Number(values.payment) === 3}
+                    checked={Number(values.payment_type) === 3}
                     control={<Radio size="small" />}
                     label="Online Payment"
-                    name="payment"
+                    name="payment_type"
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                 </RadioGroup>
-                {touched.payment && errors.payment ? (
+                {touched.payment_type && errors.payment_type ? (
                   <FormHelperText
                     sx={{
                       color: "#d32f2f",
                       marginLeft: "13px !important",
                     }}
                   >
-                    {errors.payment}
+                    {errors.payment_type}
                   </FormHelperText>
                 ) : null}
               </Grid>

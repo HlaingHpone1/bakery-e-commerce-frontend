@@ -240,10 +240,6 @@ const ProductList = () => {
                 type="contained"
                 onClick={triggerSearch}
               />
-
-              {/* <Button sx={{ ml: 2 }} variant="contained" onClick={triggerSearch}>
-            Export
-          </Button> */}
             </Box>
             <FilterAltRounded />
           </Box>

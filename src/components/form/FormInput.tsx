@@ -9,13 +9,14 @@ type FormInputProps<T> = {
   name: string;
   label: string;
   required?: boolean;
-  onBlur: (e: FocusEvent<HTMLInputElement>) => void;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   value: T;
   row?: number;
   error?: string;
   touch?: boolean;
   sx?: SxProps<Theme>;
+  disabled?: boolean;
 };
 
 const FormInput = <T,>({
@@ -28,6 +29,7 @@ const FormInput = <T,>({
   error,
   touch,
   row,
+  disabled = false,
   sx,
 }: FormInputProps<T>) => {
   return (
@@ -45,8 +47,15 @@ const FormInput = <T,>({
         sx={{
           width: "100%",
 
+          ...(disabled && {
+            "& .MuiInputBase-input.Mui-disabled": {
+              WebkitTextFillColor: "rgba(0, 0, 0, 1)",
+            },
+          }),
+
           ...sx,
         }}
+        disabled={disabled}
         multiline={!!row}
         rows={row ?? 1}
         autoComplete="off"

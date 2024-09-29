@@ -11,6 +11,7 @@ import {
 import {
   AccountCircle,
   Dashboard,
+  HomeRounded,
   LogoutRounded,
   SettingsRounded,
   SvgIconComponent,
@@ -30,26 +31,26 @@ type MenuList = {
   link: string;
 };
 
-const menuList: MenuList[] = [
-  {
-    id: 1,
-    title: "Profile",
-    icon: AccountCircle,
-    link: "/profile",
-  },
-  {
-    id: 2,
-    title: "Settings",
-    icon: SettingsRounded,
-    link: "/settings",
-  },
-];
-
 const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
   const navigate = useNavigate();
-  const { logInUser, logOut, role } = userStore();
+  const { logInUser, logOut, role, userData } = userStore();
 
   const path = location.pathname.split(/\//g);
+
+  const menuList: MenuList[] = [
+    {
+      id: 1,
+      title: "Profile",
+      icon: AccountCircle,
+      link: `/profile/${userData?.id}`,
+    },
+    {
+      id: 2,
+      title: "Settings",
+      icon: SettingsRounded,
+      link: "/settings",
+    },
+  ];
 
   return (
     <Menu
@@ -67,7 +68,7 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
     >
-      {logInUser && !path.includes("dashboard") && role === "Admin" && (
+      {logInUser && !path.includes("dashboard") && role === "Admin" ? (
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
@@ -83,6 +84,24 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
               />
             </ListItemIcon>
             <ListItemText primary="Admin Dashboard" />
+          </ListItemButton>
+        </ListItem>
+      ) : (
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <ListItemIcon>
+              <HomeRounded
+                sx={{
+                  minWidth: "40px",
+                  fontSize: "27px",
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Go Home Page" />
           </ListItemButton>
         </ListItem>
       )}

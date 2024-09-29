@@ -60,3 +60,26 @@ interface Rating {
   product_id: number;
   rating: number;
 }
+
+interface Order {
+  phone_number: string | undefined;
+  region: string;
+  address: string | undefined;
+  payment_type: number | undefined;
+  total_price: number | undefined;
+  notes: string;
+  products: Product[];
+}
+
+interface OrderDetail {
+  price: number;
+  product_id: number;
+  product_name: string;
+  qty: number;
+  total: number;
+  user_name: string;
+}
+
+interface OrderStatus {
+  status: number | undefined;
+}
