@@ -30,6 +30,6 @@ export const updateCategory = async (id: number, body: Category) => {
   return await api.put(`${baseURL}/${category}/${id}`, body);
 };
 
-export const getDropDwonCategories = async () => {
+export const getDropDownCategories = async () => {
   return await api.get(`${baseURL}/${categoryList}`);
 };

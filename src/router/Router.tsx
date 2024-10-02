@@ -39,6 +39,7 @@ import OrderDetails from "../pages/admin/order/OrderDetails";
 import SettingLayout from "../layouts/SettingLayout";
 import Security from "../pages/user/Security";
 import ResetPasswordWithOldPassword from "../pages/user/ResetPasswordWithOldPassword";
+import Order from "../pages/user/Order";
 
 export type Role = "Admin" | "User";
 
@@ -103,6 +104,12 @@ const Router = () => {
         {
           path: "/shops",
           element: Shop,
+          private: false,
+          role: ["Admin", "User"],
+        },
+        {
+          path: "/orders",
+          element: Order,
           private: false,
           role: ["Admin", "User"],
         },

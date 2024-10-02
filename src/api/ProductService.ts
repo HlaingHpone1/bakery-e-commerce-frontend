@@ -31,8 +31,8 @@ export const updateProduct = async (id: number, body: FormData) => {
   return await api.post(`${baseURL}/${product}/${id}`, body);
 };
 
-export const getAllProductUser = async () => {
-  return await api.get(`${baseURL}/${publicProduct}`);
+export const getAllProductUser = async (paramString: string = "") => {
+  return await api.get(`${baseURL}/${publicProduct}?${paramString}`);
 };
 
 export const getProductDetailById = async (id: number) => {

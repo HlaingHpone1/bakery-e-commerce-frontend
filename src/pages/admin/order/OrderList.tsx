@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getAllOrderList } from "../../../api/OrderService";
+import { changeOrderStatus, getAllOrderList } from "../../../api/OrderService";
 import {
   DataGrid,
   GridColDef,
@@ -21,7 +21,6 @@ import {
   TextField,
 } from "@mui/material";
 import {
-  AddRounded,
   CancelRounded,
   CheckCircleRounded,
   Close,
@@ -38,7 +37,7 @@ import { useDebouncedSearch } from "../../../hooks/useDebouncedSearch";
 import { usePaginationStore } from "../../../store/paginationStore";
 import CustomPagination from "../../../components/pagination/CustomPagination";
 import NormalButton from "../../../components/button/NormalButton";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { Radio } from "@mui/material";
 import CancelButton from "../../../components/button/CancelButton";
@@ -62,6 +61,7 @@ const OrderList = () => {
   const handleSortModelChange = useHandleSortModelChange();
 
   const [open, setOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
 
   const {
     setPageCount,
@@ -71,7 +71,7 @@ const OrderList = () => {
     selectedLimit,
   } = usePaginationStore();
 
-  const { data: orderList = [], isLoading } = useQuery({
+  const { data: orderList = [], isLoading,refetch } = useQuery({
     queryKey: ["order-list", paramString, currentPage, selectedLimit],
     queryFn: async () =>
       await getAllOrderList(currentPage, selectedLimit, paramString).then(
@@ -97,9 +97,14 @@ const OrderList = () => {
       status: undefined,
     },
     validationSchema: "",
-    onSubmit: (value) => {
-      console.log(value);
-
+    onSubmit: async (value) => {
+      if (selectedId) {
+        await changeOrderStatus(selectedId, value).then(response => {
+          if(response.data.code === 200){
+            refetch()
+          }
+        });
+      }
       setOpen(false);
     },
   });
@@ -125,7 +130,7 @@ const OrderList = () => {
       flex: 1,
     },
     {
-      field: "note",
+      field: "notes",
       headerName: "Notes",
       minWidth: 150,
       flex: 1,
@@ -158,7 +163,9 @@ const OrderList = () => {
       renderCell: (params: GridRenderCellParams) => (
         <>
           <Chip
-            onClick={handleChangeOrderStatus}
+            onClick={(e) => (
+              handleChangeOrderStatus(e), setSelectedId(params.row.id)
+            )}
             label={
               params.row.status === 1
                 ? "Pending"
@@ -276,9 +283,6 @@ const OrderList = () => {
             </Box>
             <FilterAltRounded />
           </Box>
-          <Link to="create">
-            <NormalButton text="Create" type="contained" icon={AddRounded} />
-          </Link>
         </Box>
 
         <Box>
@@ -359,14 +363,6 @@ const OrderList = () => {
                     onBlur={handleBlur}
                     control={<Radio />}
                     label="Denied"
-                  />
-                  <FormControlLabel
-                    value={3}
-                    name="status"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    control={<Radio />}
-                    label="Cancel"
                   />
                 </RadioGroup>
               </FormControl>

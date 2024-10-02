@@ -1,23 +1,4 @@
-import React, { useEffect } from "react";
-
-import {
-  ChevronLeftRounded,
-  ChevronRightRounded,
-  MenuRounded,
-} from "@mui/icons-material";
-
-import {
-  Box,
-  Divider,
-  Drawer,
-  IconButton,
-  styled,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
-
-import { useTheme } from "@mui/material/styles";
+import { Box, Drawer, Paper, styled } from "@mui/material";
 
 const drawerWidth = 210;
 
@@ -40,21 +21,10 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   }),
 }));
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-
-  ...theme.mixins.toolbar,
-  justifyContent: "space-around",
-}));
-
 import { Outlet } from "react-router-dom";
 import SettingSidebar from "../components/settings/SettingSidebar";
 
 const SettingLayout = () => {
-  const theme = useTheme();
-
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -69,22 +39,7 @@ const SettingLayout = () => {
           }}
           variant="persistent"
           anchor="left"
-        >
-          <DrawerHeader>
-            <Typography variant="h6" component="h6">
-              Settings
-            </Typography>
-            <IconButton>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftRounded />
-              ) : (
-                <ChevronRightRounded />
-              )}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <SettingSidebar />
-        </Drawer>
+        ></Drawer>
 
         <Main
           sx={{
@@ -99,7 +54,9 @@ const SettingLayout = () => {
               width: "30%",
             }}
           >
-            <SettingSidebar />
+            <Paper>
+              <SettingSidebar />
+            </Paper>
           </Box>
           <Box
             sx={{

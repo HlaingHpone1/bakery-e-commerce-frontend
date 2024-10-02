@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDropDwonCategories } from "../api/categoryServices";
+import { getDropDownCategories } from "../api/categoryServices";
 
 const useCategoryList = () => {
   const { data = [] } = useQuery({
     queryKey: ["category-list"],
     queryFn: async () =>
-      getDropDwonCategories().then((response) => {
+      getDropDownCategories().then((response) => {
         if (response.data.code === 200) return response.data.data;
       }),
   });

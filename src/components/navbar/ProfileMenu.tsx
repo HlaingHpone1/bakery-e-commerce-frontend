@@ -12,6 +12,7 @@ import {
   AccountCircle,
   Dashboard,
   HomeRounded,
+  LocalMallRounded,
   LogoutRounded,
   SettingsRounded,
   SvgIconComponent,
@@ -46,9 +47,15 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
     },
     {
       id: 2,
+      title: "Order",
+      icon: LocalMallRounded,
+      link: "/orders",
+    },
+    {
+      id: 3,
       title: "Settings",
       icon: SettingsRounded,
-      link: "/settings",
+      link: "/settings/security",
     },
   ];
 

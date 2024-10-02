@@ -62,6 +62,7 @@ interface Rating {
 }
 
 interface Order {
+  name: string | undefined;
   phone_number: string | undefined;
   region: string;
   address: string | undefined;
@@ -71,6 +72,17 @@ interface Order {
   products: Product[];
 }
 
+interface OrderHistory {
+  id: number;
+  user_name: string;
+  order_code: string;
+  total_price: number;
+  payment_type: string;
+  note: string;
+  status: number;
+  order_date: string;
+  order_details: OrderDetail[];
+}
 interface OrderDetail {
   price: number;
   product_id: number;
@@ -78,6 +90,7 @@ interface OrderDetail {
   qty: number;
   total: number;
   user_name: string;
+  product_image: string;
   product_image_url: string;
 }
 
@@ -92,4 +105,11 @@ interface UserUpdate {
   gender: null | number;
   address: string;
   region: string;
+  image?: File;
+}
+
+interface ResetPasswordWithOldPasswordProp {
+  old_password: string;
+  new_password: string;
+  new_password_confirmation: string;
 }

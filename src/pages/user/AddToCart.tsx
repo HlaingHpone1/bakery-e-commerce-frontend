@@ -23,9 +23,12 @@ import { AddToCartOrderValidationSchema } from "../../validation/AddToCartOrderV
 import { createOrder } from "../../api/OrderService";
 import { useNavigate } from "react-router-dom";
 import { updateUserData } from "../../api/userService";
+import { alertStore } from "../../store/alertStore";
 
 const AddToCart = () => {
   const { products, setProduct } = useProductCartStore();
+
+  const { setAlert } = alertStore();
 
   const { userData } = userStore();
 
@@ -75,6 +78,7 @@ const AddToCart = () => {
     handleSubmit,
   } = useFormik<Order>({
     initialValues: {
+      name: userData?.name,
       phone_number: userData?.phone,
       region: "",
       address: userData?.address ?? undefined,
@@ -90,8 +94,13 @@ const AddToCart = () => {
 
         await createOrder(values).then((response) => {
           if (response.data.code === 201) {
-            navigate(`/profile/${userData.id}`);
+            navigate("/orders");
             setProduct([], time);
+            setAlert(
+              true,
+              "Order Create SuccessFully and You can Cancel the order within 1hr",
+              "successs"
+            );
           }
         });
       }

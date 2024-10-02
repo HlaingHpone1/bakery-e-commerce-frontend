@@ -16,11 +16,13 @@ import FormInput from "../../components/form/FormInput";
 import { Divider } from "@mui/material";
 import { useFormik } from "formik";
 import { Radio } from "@mui/material";
-import { useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import NormalButton from "../../components/button/NormalButton";
 import CancelButton from "../../components/button/CancelButton";
 import { UserUpdateValidationSchema } from "../../validation/UserUpdateValidationSchema";
 import { alertStore } from "../../store/alertStore";
+
+import profile from "../../assets/profile.jpg";
 
 const Profile = () => {
   const { id } = useParams();
@@ -28,6 +30,23 @@ const Profile = () => {
   const { setAlert } = alertStore();
 
   const [disabled, setDisable] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState(profile);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setDisable(true);
+      setValues({ ...values, image: file });
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+    }
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const handleCancel = () => {
     setDisable(false);
@@ -40,6 +59,7 @@ const Profile = () => {
     queryFn: async () =>
       await getUserById(Number(id)).then((response) => {
         if (response.data.code === 200) {
+          setSelectedImage(response.data.data.image);
           setValues({
             ...response.data.data,
           });
@@ -65,10 +85,21 @@ const Profile = () => {
       gender: null,
       address: "",
       region: "",
+      image: undefined,
     },
     validationSchema: UserUpdateValidationSchema,
-    onSubmit: async (value) => {
-      await updateUserData(Number(id), value).then((response) => {
+    onSubmit: async (values) => {
+      const formData = new FormData();
+
+      Object.entries(values).forEach(([key, value]) => {
+        if (value instanceof File) {
+          formData.append(key, value);
+        } else if (value !== null && value !== undefined) {
+          formData.append(key, String(value));
+        }
+      });
+
+      await updateUserData(Number(id), formData).then((response) => {
         if (response.data.code === 201) {
           refetch();
           setDisable(false);
@@ -114,7 +145,15 @@ const Profile = () => {
 
               boxShadow: "0px 0px 5px #999",
             }}
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnGWEwXpRS7z7rVaGrjIWWTdE8_TiYTGiYjA&s"
+            src={selectedImage ?? profile}
+            onClick={handleImageClick}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            ref={fileInputRef}
+            onChange={handleImageChange}
           />
           <Typography
             variant="h4"

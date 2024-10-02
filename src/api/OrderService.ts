@@ -20,3 +20,14 @@ export const getAllOrderList = async (
 export const getOrderById = async (id: number) => {
   return await api.get(`${baseURL}/${order}/${id}`);
 };
+
+export const getOrderByUserId = async () => {
+  return await api.get(`${baseURL}/${order}/user`);
+};
+
+export const changeOrderStatus = async (id: number, body: OrderStatus) => {
+  return await api.post(
+    `${baseURL}/api/users/orders/change-status/${id}`,
+    body
+  );
+};
