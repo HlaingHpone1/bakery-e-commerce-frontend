@@ -7,16 +7,29 @@ import {
   Divider,
   Paper,
   Button,
+  Modal,
+  Stack,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
-import { getOrderByUserId } from "../../api/OrderService";
+import { changeOrderStatus, getOrderByUserId } from "../../api/OrderService";
 import { Cancel, CheckCircle, Error, Pending } from "@mui/icons-material";
 
 import dayjs from "dayjs";
+import { alertStore } from "../../store/alertStore";
+import { useState } from "react";
+import CancelButton from "../../components/button/CancelButton";
+import NormalButton from "../../components/button/NormalButton";
 
 const Order = () => {
-  const { data } = useQuery({
+  const { setAlert } = alertStore();
+
+  const [open, setOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState<number | undefined>(
+    undefined
+  );
+
+  const { data, refetch } = useQuery({
     queryKey: ["order-list"],
     queryFn: async () =>
       await getOrderByUserId().then((response) => response.data.data),
@@ -30,10 +43,19 @@ const Order = () => {
   };
 
   // Function to handle order cancellation
-  const handleCancelOrder = (orderId: number) => {
-    // API call to cancel the order (Replace with actual API call)
-    console.log(`Order with ID: ${orderId} is canceled.`);
-    // You can add an actual API call to your backend here to cancel the order
+  const handleCancelOrder = async (orderId: number) => {
+    changeOrderStatus(orderId, { status: 4 }).then((response) => {
+      if (response.data.code === 201) {
+        setAlert(true, "Order Cancel SuccessFully", "success");
+        refetch();
+        setSelectedOrderId(undefined);
+        setOpen(false);
+      }
+    });
+  };
+
+  const handleCancel = async () => {
+    handleCancelOrder(selectedOrderId!);
   };
 
   const getStatusIcon = (status: number) => {
@@ -43,12 +65,25 @@ const Order = () => {
       case 2: // Success
         return <CheckCircle color="success" />;
       case 3: // Canceled
-        return <Cancel color="error" />;
-      case 4: // Denied
         return <Error color="error" />;
+      case 4: // Denied
+        return <Cancel color="error" />;
       default:
         return null;
     }
+  };
+
+  const modalBoxStyle = {
+    position: "absolute" as const,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "40%",
+    height: "fit-content",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: "15px",
   };
 
   return (
@@ -82,9 +117,9 @@ const Order = () => {
                         case 2:
                           return "Success";
                         case 3:
-                          return "Canceled";
-                        case 4:
                           return "Denied";
+                        case 4:
+                          return "Canceled";
                         default:
                           return "Unknown";
                       }
@@ -110,7 +145,9 @@ const Order = () => {
                   <Button
                     variant="contained"
                     color="error"
-                    onClick={() => handleCancelOrder(order.id)}
+                    onClick={() => (
+                      setOpen(true), setSelectedOrderId(order.id)
+                    )}
                     sx={{ mt: 2 }}
                   >
                     Cancel Order
@@ -172,6 +209,39 @@ const Order = () => {
           );
         })}
       </Paper>
+
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalBoxStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            fontSize={30}
+            fontWeight={700}
+          >
+            Cancel
+          </Typography>
+          <Typography id="modal-modal-description">
+            Are you sure you want to cancel this order
+          </Typography>
+          <Stack mt={3.25} gap={2} flexDirection={"row"} justifyContent={"end"}>
+            <CancelButton
+              type="contained"
+              onClick={() => (setOpen(false), setSelectedOrderId(undefined))}
+            />
+            <NormalButton
+              type="contained"
+              text="Confirm"
+              onClick={handleCancel}
+            />
+          </Stack>
+        </Box>
+      </Modal>
     </>
   );
 };

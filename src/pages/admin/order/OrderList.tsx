@@ -71,7 +71,11 @@ const OrderList = () => {
     selectedLimit,
   } = usePaginationStore();
 
-  const { data: orderList = [], isLoading,refetch } = useQuery({
+  const {
+    data: orderList = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["order-list", paramString, currentPage, selectedLimit],
     queryFn: async () =>
       await getAllOrderList(currentPage, selectedLimit, paramString).then(
@@ -99,15 +103,22 @@ const OrderList = () => {
     validationSchema: "",
     onSubmit: async (value) => {
       if (selectedId) {
-        await changeOrderStatus(selectedId, value).then(response => {
-          if(response.data.code === 200){
-            refetch()
+        await changeOrderStatus(selectedId, value).then((response) => {
+          if (response.data.code === 201) {
+            refetch();
+            setSelectedId(undefined);
           }
         });
       }
       setOpen(false);
     },
   });
+
+  const handleChangeStatus = (e, id: number, status: number) => {
+    if (status === 1) {
+      handleChangeOrderStatus(e), setSelectedId(id);
+    }
+  };
 
   const orderColumns: GridColDef[] = [
     {
@@ -164,7 +175,8 @@ const OrderList = () => {
         <>
           <Chip
             onClick={(e) => (
-              handleChangeOrderStatus(e), setSelectedId(params.row.id)
+              e.stopPropagation(),
+              handleChangeStatus(e, params.row.id, params.row.status)
             )}
             label={
               params.row.status === 1
@@ -349,7 +361,7 @@ const OrderList = () => {
                   }}
                 >
                   <FormControlLabel
-                    value={1}
+                    value={2}
                     name="status"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -357,7 +369,7 @@ const OrderList = () => {
                     label="Success"
                   />
                   <FormControlLabel
-                    value={2}
+                    value={3}
                     name="status"
                     onChange={handleChange}
                     onBlur={handleBlur}

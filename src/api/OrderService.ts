@@ -22,12 +22,9 @@ export const getOrderById = async (id: number) => {
 };
 
 export const getOrderByUserId = async () => {
-  return await api.get(`${baseURL}/${order}/user`);
+  return await api.get(`${baseURL}/api/users/orders`);
 };
 
 export const changeOrderStatus = async (id: number, body: OrderStatus) => {
-  return await api.post(
-    `${baseURL}/api/users/orders/change-status/${id}`,
-    body
-  );
+  return await api.post(`${baseURL}/${order}/change-status/${id}`, body);
 };

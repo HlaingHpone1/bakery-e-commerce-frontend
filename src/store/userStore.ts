@@ -8,6 +8,7 @@ interface User {
   email: string;
   address: string;
   phone: string;
+  region: string;
 }
 
 interface UserStore {
@@ -46,7 +47,6 @@ export const userStore = create<UserStore>()(
                 token: "",
                 role: "",
               }));
-              localStorage.removeItem("product");
             }
           });
         },

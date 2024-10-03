@@ -30,7 +30,7 @@ const AddToCart = () => {
 
   const { setAlert } = alertStore();
 
-  const { userData } = userStore();
+  const { userData, setUserData } = userStore();
 
   const navigate = useNavigate();
 
@@ -96,10 +96,15 @@ const AddToCart = () => {
           if (response.data.code === 201) {
             navigate("/orders");
             setProduct([], time);
+            setUserData({
+              ...userData,
+              region: values.region,
+              address: values.address!,
+            });
             setAlert(
               true,
               "Order Create SuccessFully and You can Cancel the order within 1hr",
-              "successs"
+              "success"
             );
           }
         });

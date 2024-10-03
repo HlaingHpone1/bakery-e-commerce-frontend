@@ -19,6 +19,7 @@ import {
 } from "@mui/icons-material";
 
 import { userStore } from "../../store/userStore";
+import { useProductCartStore } from "../../store/productCartStore";
 
 type ProfileMenuProps = {
   anchorEl: HTMLElement | null;
@@ -35,6 +36,8 @@ type MenuList = {
 const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
   const navigate = useNavigate();
   const { logInUser, logOut, role, userData } = userStore();
+
+  const { setProduct } = useProductCartStore();
 
   const path = location.pathname.split(/\//g);
 
@@ -137,6 +140,7 @@ const ProfileMenu = ({ anchorEl, handleMenuClose }: ProfileMenuProps) => {
             handleMenuClose();
             logOut();
             navigate("/");
+            setProduct([], new Date().getTime());
           }}
         >
           <ListItemIcon>

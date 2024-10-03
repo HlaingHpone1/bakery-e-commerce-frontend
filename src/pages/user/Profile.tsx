@@ -23,9 +23,12 @@ import { UserUpdateValidationSchema } from "../../validation/UserUpdateValidatio
 import { alertStore } from "../../store/alertStore";
 
 import profile from "../../assets/profile.jpg";
+import { userStore } from "../../store/userStore";
 
 const Profile = () => {
   const { id } = useParams();
+
+  const { userData, setUserData } = userStore();
 
   const { setAlert } = alertStore();
 
@@ -104,6 +107,18 @@ const Profile = () => {
           refetch();
           setDisable(false);
           setAlert(true, response.data.message, "success");
+
+          if (userData) {
+            setUserData({
+              ...userData,
+              region: values.region as string,
+              address: values.address! as string,
+              id: Number(id),
+              name: values.name,
+              email: userData?.email,
+              phone: values.phone_number
+            });
+          }
         }
       });
     },
