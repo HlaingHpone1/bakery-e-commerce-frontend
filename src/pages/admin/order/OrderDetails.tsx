@@ -70,10 +70,10 @@ const OrderDetails = () => {
 
           <Grid item xs={12}>
             <FormInput
-              name="note"
-              label="Note"
+              name="notes"
+              label="Notes"
               disabled={true}
-              value={data?.note ?? ""}
+              value={data?.notes ?? ""}
               row={3}
               sx={{
                 marginBottom: "15px",
