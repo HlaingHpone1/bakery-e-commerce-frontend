@@ -24,6 +24,7 @@ import { alertStore } from "../../store/alertStore";
 
 import profile from "../../assets/profile.jpg";
 import { userStore } from "../../store/userStore";
+import ContainerWrapper from "../../layouts/wrapper/ContainerWrapper";
 
 const Profile = () => {
   const { id } = useParams();
@@ -116,7 +117,7 @@ const Profile = () => {
               id: Number(id),
               name: values.name,
               email: userData?.email,
-              phone: values.phone_number
+              phone: values.phone_number,
             });
           }
         }
@@ -125,7 +126,7 @@ const Profile = () => {
   });
 
   return (
-    <>
+    <ContainerWrapper>
       <Toolbar />
       <Paper
         sx={{
@@ -344,7 +345,7 @@ const Profile = () => {
           </Stack>
         </Box>
       </Paper>
-    </>
+    </ContainerWrapper>
   );
 };
 

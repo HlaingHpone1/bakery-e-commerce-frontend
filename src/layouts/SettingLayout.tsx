@@ -23,10 +23,11 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 
 import { Outlet } from "react-router-dom";
 import SettingSidebar from "../components/settings/SettingSidebar";
+import ContainerWrapper from "./wrapper/ContainerWrapper";
 
 const SettingLayout = () => {
   return (
-    <>
+    <ContainerWrapper>
       <Box sx={{ display: "flex" }}>
         <Drawer
           sx={{
@@ -67,7 +68,7 @@ const SettingLayout = () => {
           </Box>
         </Main>
       </Box>
-    </>
+    </ContainerWrapper>
   );
 };
 

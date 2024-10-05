@@ -1,4 +1,4 @@
-import React from "react";
+import { background } from "../../utils/image";
 
 const Shop = () => {
   const shopLocations = [
@@ -7,24 +7,21 @@ const Shop = () => {
       name: "Downtown Bakery",
       address: "123 Main St, Downtown City",
       phone: "(123) 456-7890",
-      image: "/path-to-shop-image1.jpg", // Image for the left side
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=...1", // Replace with actual Google Map Embed URL
+      image: background.bg4,
     },
     {
       id: 2,
       name: "Uptown Cafe",
       address: "456 Uptown Ave, Uptown City",
       phone: "(234) 567-8901",
-      image: "/path-to-shop-image2.jpg", // Image for the left side
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=...2", // Replace with actual Google Map Embed URL
+      image: background.bg5,
     },
     {
       id: 3,
       name: "Westside Pastries",
       address: "789 Westside Rd, Westside City",
       phone: "(345) 678-9012",
-      image: "/path-to-shop-image3.jpg", // Image for the left side
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=...3", // Replace with actual Google Map Embed URL
+      image: background.bg6,
     },
   ];
 
@@ -53,21 +50,12 @@ const Shop = () => {
                 index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               } items-center bg-white shadow-lg rounded-lg overflow-hidden`}
             >
-              {/* Left Side - Image */}
               <div className="w-full md:w-1/2 h-72 md:h-auto">
                 <img
                   src={shop.image}
                   alt={shop.name}
                   className="w-full h-full object-cover"
                 />
-                {/* If you'd prefer to show a map instead of an image */}
-                {/* <iframe
-                src={shop.mapEmbedUrl}
-                className="w-full h-full border-0"
-                allowFullScreen=""
-                loading="lazy"
-                title={`Map of ${shop.name}`}
-              ></iframe> */}
               </div>
 
               {/* Right Side - Shop Info */}

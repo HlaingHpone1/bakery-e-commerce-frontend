@@ -1,18 +1,35 @@
-import React from "react";
+import { background } from "../utils/image";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProductUser } from "../api/ProductService";
+import { PlayArrowRounded } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const Home = () => {
+  const { data } = useQuery({
+    queryKey: ["product-home"],
+    queryFn: async () =>
+      getAllProductUser("limit=3").then((response) => response.data.data),
+  });
+
+  const handlePlayButtonClick = () => {
+    window.location.href = "https://www.youtube.com/your-channel-url";
+  };
   return (
     <>
       <div>
-        {/* Welcome Section */}
         <section
           className="h-screen bg-cover bg-center relative"
-          style={{ backgroundImage: 'url("/path-to-your-cafe-image.jpg")' }}
+          style={{
+            backgroundImage: `url(${background.bg})`,
+            height: "calc(100vh - 80px)",
+          }}
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="relative z-10 flex items-center justify-center text-center text-white p-5">
-            <div className="max-w-lg">
-              <h1 className="text-5xl font-bold mb-4">Welcome to Your Cafe</h1>
+          <div className="relative z-10 h-full flex items-center justify-center text-center text-white p-5">
+            <div className="">
+              <h1 className="text-5xl font-bold mb-4">
+                Welcome to Shew Pu Zun
+              </h1>
               <p className="text-lg">
                 Experience the finest pastries and coffee, made fresh every day.
               </p>
@@ -30,92 +47,70 @@ const Home = () => {
               Indulge in our finest collection of baked goods and beverages.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              <div className="bg-gray-200 p-5 rounded-lg shadow-md">
-                <img
-                  src="/path-to-product-image.jpg"
-                  alt="Product"
-                  className="w-full h-40 object-cover rounded-lg mb-4"
-                />
-                <h3 className="text-xl font-semibold">Fresh Croissants</h3>
-                <p className="text-gray-600">
-                  Delicious, buttery, and flaky croissants baked fresh every
-                  morning.
-                </p>
-              </div>
-              <div className="bg-gray-200 p-5 rounded-lg shadow-md">
-                <img
-                  src="/path-to-product-image.jpg"
-                  alt="Product"
-                  className="w-full h-40 object-cover rounded-lg mb-4"
-                />
-                <h3 className="text-xl font-semibold">Signature Lattes</h3>
-                <p className="text-gray-600">
-                  Perfectly brewed lattes with the best local coffee beans.
-                </p>
-              </div>
-              <div className="bg-gray-200 p-5 rounded-lg shadow-md">
-                <img
-                  src="/path-to-product-image.jpg"
-                  alt="Product"
-                  className="w-full h-40 object-cover rounded-lg mb-4"
-                />
-                <h3 className="text-xl font-semibold">Chocolate Cake</h3>
-                <p className="text-gray-600">
-                  A rich, moist chocolate cake that melts in your mouth.
-                </p>
-              </div>
+              {data?.map((product: ProductCard) => (
+                <div
+                  className="bg-gray-200 p-5 rounded-lg shadow-md"
+                  key={product.id}
+                >
+                  <img
+                    src={product.image_url}
+                    alt="Product"
+                    className="w-full h-40 object-cover rounded-lg mb-4"
+                  />
+                  <h3 className="text-xl font-semibold">{product.name}</h3>
+                  <p className="text-gray-600">{product.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Product Auto-Scrolling Section */}
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              Our Delicious Products
-            </h2>
-            <div className="overflow-hidden">
-              <div className="flex animate-scroll">
-                <div className="flex-shrink-0 w-60 p-5">
-                  <img
-                    src="/path-to-product-image.jpg"
-                    alt="Product"
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-semibold">Muffins</h3>
-                </div>
-                <div className="flex-shrink-0 w-60 p-5">
-                  <img
-                    src="/path-to-product-image.jpg"
-                    alt="Product"
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-semibold">Brownies</h3>
-                </div>
-                <div className="flex-shrink-0 w-60 p-5">
-                  <img
-                    src="/path-to-product-image.jpg"
-                    alt="Product"
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-semibold">Scones</h3>
-                </div>
-                <div className="flex-shrink-0 w-60 p-5">
-                  <img
-                    src="/path-to-product-image.jpg"
-                    alt="Product"
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-semibold">Cinnamon Rolls</h3>
-                </div>
-                {/* Add more product items */}
-              </div>
-            </div>
+        <div>
+          {/* First section: Info on the left, Image on the right */}
+          <InfoImageSection
+            reverse={false}
+            imageSrc={background.bg2}
+            title="Who We Are"
+            description="We are a cafe and bakery shop that prides itself on serving delicious, fresh products daily. Come visit us!"
+          />
+
+          {/* Second section: Image on the left, Info on the right */}
+          <InfoImageSection
+            reverse={true}
+            imageSrc={background.bg3}
+            title="Meet Our Team"
+            description="Our dedicated team is passionate about baking and providing excellent service to our customers."
+          />
+        </div>
+
+        <div
+          className="relative h-screen bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${background.bg1})`,
+          }}
+        >
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+
+          <div className="absolute inset-0 flex justify-center items-center">
+            <div className="absolute w-40 h-40 bg-transparent rounded-full animate-ping border-2 border-indigo-300"></div>
+            <div className="absolute w-32 h-32 bg-transparent rounded-full animate-ping delay-100 border-2 border-indigo-400"></div>
+            <div className="absolute w-24 h-24 bg-transparent rounded-full animate-ping delay-200 border-2 border-indigo-500"></div>
+
+            <button
+              onClick={handlePlayButtonClick}
+              className="w-20 h-20 bg-white rounded-full shadow-lg flex justify-center items-center transition-transform duration-300 hover:scale-110"
+            >
+              <PlayArrowRounded
+                sx={{
+                  fontSize: "25px",
+                }}
+              />
+            </button>
           </div>
-        </section>
+        </div>
 
         {/* Location Map Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 ">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">
               Our Location
@@ -132,8 +127,71 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <div className="py-16 bg-slate-200">
+          <div className="container mx-auto text-center px-4">
+            {/* Title */}
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">Order Now</h2>
+
+            {/* Description */}
+            <p className="text-lg text-gray-600 mb-8">
+              Enjoy our fresh and delicious bakery items delivered right to your
+              door. Order online and experience the taste of our handcrafted
+              pastries and coffee.
+            </p>
+
+            {/* CTA Button */}
+            <button
+              onClick={() => (window.location.href = "/products")}
+              className="bg-cta py-3 px-8 rounded-lg shadow-lg text-lg font-semibold hover:bg-hcta transition-transform duration-300 transform hover:scale-105"
+            >
+              Place Your Order
+            </button>
+          </div>
+        </div>
       </div>
     </>
+  );
+};
+
+const InfoImageSection = ({
+  reverse,
+  imageSrc,
+  title,
+  description,
+}: {
+  reverse: boolean;
+  imageSrc: string;
+  title: string;
+  description: string;
+}) => {
+  return (
+    <div
+      className={`flex flex-col md:flex-row ${
+        reverse ? "md:flex-row-reverse" : ""
+      } my-8 items-center`}
+    >
+      {/* Image */}
+      <div className="md:w-1/2 w-full p-4">
+        <img
+          src={imageSrc}
+          alt={title}
+          className="w-full h-auto object-cover rounded-lg shadow-lg"
+        />
+      </div>
+
+      {/* Info */}
+      <div className="md:w-1/2 w-full p-4">
+        <h2 className="text-3xl font-bold mb-4">{title}</h2>
+        <p className="text-gray-600 mb-4">{description}</p>
+        <Link
+          to="/about-us"
+          className="bg-cta py-2 px-4 rounded-lg shadow hover:bg-hcta transition"
+        >
+          Learn More
+        </Link>
+      </div>
+    </div>
   );
 };
 

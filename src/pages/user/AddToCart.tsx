@@ -24,6 +24,7 @@ import { createOrder } from "../../api/OrderService";
 import { useNavigate } from "react-router-dom";
 import { updateUserData } from "../../api/userService";
 import { alertStore } from "../../store/alertStore";
+import ContainerWrapper from "../../layouts/wrapper/ContainerWrapper";
 
 const AddToCart = () => {
   const { products, setProduct } = useProductCartStore();
@@ -117,10 +118,10 @@ const AddToCart = () => {
       setFieldValue("products", products);
       setFieldValue("total_price", totalPrice);
     }
-  }, [products]);
+  }, [products, setFieldValue, totalPrice]);
 
   return (
-    <>
+    <ContainerWrapper>
       <Grid
         container
         sx={{
@@ -405,7 +406,7 @@ const AddToCart = () => {
           </Paper>
         </Grid>
       </Grid>
-    </>
+    </ContainerWrapper>
   );
 };
 

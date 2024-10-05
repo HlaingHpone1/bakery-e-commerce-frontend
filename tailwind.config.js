@@ -9,6 +9,8 @@ export default {
       colors: {
         'primary': "#CD7649",
         'secondary': "#EBEBEB",
+        "cta": "#fca311",
+        "hcta": "#f0b049"
       },
     },
   },

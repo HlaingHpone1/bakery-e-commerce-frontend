@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllBlogUser } from "../../api/blogService";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { loadingStore } from "../../store/isLoadingStore";
 import BlogCard from "../../components/cards/BlogCard";
+import ContainerWrapper from "../../layouts/wrapper/ContainerWrapper";
 
 const Blog = () => {
   const { setBarLoading } = loadingStore();
@@ -22,18 +23,23 @@ const Blog = () => {
   });
 
   return (
-    <>
+    <ContainerWrapper>
       <Grid container>
-        {data.length > 0 &&
+        {data.length > 0 ? (
           data.map((blog: BlogFormValue, i) => {
             return (
               <Grid item key={i} lg={3} md={4} sm={6} xs={12} p={1}>
                 <BlogCard blog={blog} />
               </Grid>
             );
-          })}
+          })
+        ) : (
+          <Typography variant="h6" component="h4">
+            No Blogs
+          </Typography>
+        )}
       </Grid>
-    </>
+    </ContainerWrapper>
   );
 };
 

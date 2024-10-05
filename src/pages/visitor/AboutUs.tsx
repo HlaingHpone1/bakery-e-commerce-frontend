@@ -1,4 +1,4 @@
-import React from "react";
+import { partnership, people } from "../../utils/image";
 
 const AboutUs = () => {
   return (
@@ -6,11 +6,9 @@ const AboutUs = () => {
       {/* About Us Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">About Us</h2>
-
-          {/* Who We Are */}
+          <h2 className="text-5xl font-bold text-gray-900 mb-8">About Us</h2>
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-4xl font-semibold text-gray-800 mb-4">
               Who We Are
             </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -23,15 +21,15 @@ const AboutUs = () => {
 
           {/* Meet Our Team */}
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-4xl font-semibold text-gray-800 mb-4">
               Meet Our Team
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               <div className="bg-gray-200 p-5 rounded-lg shadow-md">
                 <img
-                  src="/path-to-team-member1.jpg"
+                  src={people.person}
                   alt="Team Member"
-                  className="w-full h-40 object-cover rounded-full mb-4"
+                  className="w-full h-64 rounded-md mb-2 object-cover "
                 />
                 <h4 className="text-xl font-semibold">John Doe</h4>
                 <p className="text-gray-600">Founder & Head Baker</p>
@@ -43,9 +41,9 @@ const AboutUs = () => {
               </div>
               <div className="bg-gray-200 p-5 rounded-lg shadow-md">
                 <img
-                  src="/path-to-team-member2.jpg"
+                  src={people.person1}
                   alt="Team Member"
-                  className="w-full h-40 object-cover rounded-full mb-4"
+                  className="w-full h-64 rounded-md mb-2 object-cover "
                 />
                 <h4 className="text-xl font-semibold">Jane Smith</h4>
                 <p className="text-gray-600">Coffee Specialist</p>
@@ -57,9 +55,9 @@ const AboutUs = () => {
               </div>
               <div className="bg-gray-200 p-5 rounded-lg shadow-md">
                 <img
-                  src="/path-to-team-member3.jpg"
+                  src={people.person2}
                   alt="Team Member"
-                  className="w-full h-40 object-cover rounded-full mb-4"
+                  className="w-full h-64 rounded-md mb-2 object-cover "
                 />
                 <h4 className="text-xl font-semibold">Mary Lee</h4>
                 <p className="text-gray-600">Pastry Chef</p>
@@ -73,7 +71,7 @@ const AboutUs = () => {
 
           {/* Vision and Mission */}
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-4xl font-semibold text-gray-800 mb-4">
               Our Vision and Mission
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
@@ -101,29 +99,29 @@ const AboutUs = () => {
 
           {/* Our Partners */}
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-4xl font-semibold text-gray-800 mb-4">
               Our Partners
             </h3>
             <div className="flex justify-center gap-16">
               <div className="flex-shrink-0">
                 <img
-                  src="/path-to-partner-logo1.png"
+                  src={partnership.partner}
                   alt="Partner 1"
                   className="w-40 h-auto object-contain"
                 />
               </div>
               <div className="flex-shrink-0">
                 <img
-                  src="/path-to-partner-logo2.png"
+                  src={partnership.partner1}
                   alt="Partner 2"
                   className="w-40 h-auto object-contain"
                 />
               </div>
               <div className="flex-shrink-0">
                 <img
-                  src="/path-to-partner-logo3.png"
+                  src={partnership.partner2}
                   alt="Partner 3"
-                  className="w-40 h-auto object-contain"
+                  className="w-40 h-40 object-cover object-center"
                 />
               </div>
               {/* Add more partner logos as needed */}

@@ -20,6 +20,7 @@ import { alertStore } from "../../store/alertStore";
 import { useState } from "react";
 import CancelButton from "../../components/button/CancelButton";
 import NormalButton from "../../components/button/NormalButton";
+import ContainerWrapper from "../../layouts/wrapper/ContainerWrapper";
 
 const Order = () => {
   const { setAlert } = alertStore();
@@ -87,7 +88,7 @@ const Order = () => {
   };
 
   return (
-    <>
+    <ContainerWrapper>
       <Paper sx={{ p: 2 }}>
         <Typography
           variant="h4"
@@ -242,7 +243,7 @@ const Order = () => {
           </Stack>
         </Box>
       </Modal>
-    </>
+    </ContainerWrapper>
   );
 };
 

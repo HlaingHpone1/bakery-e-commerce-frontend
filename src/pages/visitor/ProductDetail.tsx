@@ -22,6 +22,7 @@ import ProductCard from "../../components/cards/ProductCard";
 import { userStore } from "../../store/userStore";
 import { alertStore } from "../../store/alertStore";
 import { SyntheticEvent } from "react";
+import ContainerWrapper from "../../layouts/wrapper/ContainerWrapper";
 
 const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
 
@@ -37,7 +38,7 @@ const ProductDetail = () => {
 
   const { setAlert } = alertStore();
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["get-product-details", id],
     queryFn: async () => {
       setBarLoading(true);
@@ -86,7 +87,8 @@ const ProductDetail = () => {
   };
 
   const { mutateAsync } = useMutation({
-    mutationFn: async (values: Rating) => await createProductRating(values),
+    mutationFn: async (values: Rating) =>
+      await createProductRating(values).then(() => refetch()),
   });
 
   const handleIncreaseQty = () => {
@@ -112,7 +114,7 @@ const ProductDetail = () => {
   };
 
   const handleRatingChange = async (
-    e: SyntheticEvent,
+    _e: SyntheticEvent,
     newValue: number | null
   ) => {
     if (newValue) {
@@ -125,7 +127,7 @@ const ProductDetail = () => {
   };
 
   return (
-    <>
+    <ContainerWrapper>
       <IconButton onClick={() => navigate(-1)}>
         <ArrowBackRounded />
       </IconButton>
@@ -215,7 +217,7 @@ const ProductDetail = () => {
           </Grid>
         ))}
       </Grid>
-    </>
+    </ContainerWrapper>
   );
 };
 

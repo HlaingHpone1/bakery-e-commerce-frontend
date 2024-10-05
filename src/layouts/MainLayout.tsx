@@ -16,7 +16,7 @@ import Footer from "./Footer";
 
 import "@fontsource/roboto";
 import "@fontsource/roboto-slab";
-import ContainerWrapper from "./wrapper/ContainerWrapper";
+
 import { loadingStore } from "../store/isLoadingStore";
 import { useEffect } from "react";
 import { useProductCartStore } from "../store/productCartStore";
@@ -71,7 +71,7 @@ const MainLayout = () => {
     if (products.length > 0 && now - parsed?.state?.timestamp > 86_400_000) {
       clearProduct();
     }
-  }, [product, parsed]);
+  }, [product, parsed, products.length, now, clearProduct]);
 
   return (
     <>
@@ -80,9 +80,9 @@ const MainLayout = () => {
       <Box sx={{ width: "100%" }}>
         {barLoading && <LinearProgress color="secondary" />}
       </Box>
-      <ContainerWrapper>
-        <Outlet />
-      </ContainerWrapper>
+      {/* <ContainerWrapper> */}
+      <Outlet />
+      {/* </ContainerWrapper> */}
       <Footer />
       <ScrollTop>
         <Fab size="small" aria-label="scroll back to top">

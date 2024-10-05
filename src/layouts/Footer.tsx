@@ -3,6 +3,10 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import {
   AccessTimeFilledRounded,
   CalendarMonthRounded,
+  Facebook,
+  Instagram,
+  YouTube,
+  Twitter,
 } from "@mui/icons-material";
 
 import { logo } from "../utils/image";
@@ -65,6 +69,28 @@ const Footer = () => {
               Dolore, doloribus. Laudantium nesciunt voluptates sapiente,
               veritatis tempora est autem porro numquam quam.
             </Typography>
+            <Box display="flex" gap={2} mt={2}>
+              <Facebook
+                sx={{ fontSize: 30, color: "#4267B2", cursor: "pointer" }}
+                onClick={() =>
+                  window.open("https://www.facebook.com", "_blank")
+                }
+              />
+              <Instagram
+                sx={{ fontSize: 30, color: "#E1306C", cursor: "pointer" }}
+                onClick={() =>
+                  window.open("https://www.instagram.com", "_blank")
+                }
+              />
+              <YouTube
+                sx={{ fontSize: 30, color: "#FF0000", cursor: "pointer" }}
+                onClick={() => window.open("https://www.youtube.com", "_blank")}
+              />
+              <Twitter
+                sx={{ fontSize: 30, color: "#1DA1F2", cursor: "pointer" }}
+                onClick={() => window.open("https://www.twitter.com", "_blank")}
+              />
+            </Box>
           </Grid>
           <Grid item smd={4} sm={6} xs={12}>
             <Typography
