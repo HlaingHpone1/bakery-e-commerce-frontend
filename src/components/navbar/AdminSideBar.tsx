@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   AppRegistrationRounded,
   CategoryRounded,
+  ContactMail,
   EmojiFoodBeverageRounded,
   PeopleAlt,
   TaskRounded,
@@ -60,6 +61,13 @@ const AdminSideBar = ({ open }: AdminSideBarProps) => {
       text: "Orders",
       link: "/dashboard/orders",
       icon: TaskRounded,
+      role: ["Admin"],
+    },
+    {
+      id: 6,
+      text: "Contacts",
+      link: "/dashboard/contacts",
+      icon: ContactMail,
       role: ["Admin"],
     },
   ];

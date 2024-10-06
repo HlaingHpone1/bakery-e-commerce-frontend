@@ -80,9 +80,7 @@ const MainLayout = () => {
       <Box sx={{ width: "100%" }}>
         {barLoading && <LinearProgress color="secondary" />}
       </Box>
-      {/* <ContainerWrapper> */}
       <Outlet />
-      {/* </ContainerWrapper> */}
       <Footer />
       <ScrollTop>
         <Fab size="small" aria-label="scroll back to top">

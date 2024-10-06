@@ -3,8 +3,40 @@ import {
   LocationOnRounded,
   PhoneRounded,
 } from "@mui/icons-material";
+import { useFormik } from "formik";
+import FormInput from "../../components/form/FormInput";
+import { postContact } from "../../api/contactService";
+import { alertStore } from "../../store/alertStore";
+import { ContactValidationSchema } from "../../validation/ContactValidationSchema";
 
 const ContactUs = () => {
+  const { setAlert } = alertStore();
+
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+    validationSchema: ContactValidationSchema,
+    onSubmit: async (values) => {
+      await postContact(values).then((response) => {
+        if (response.data.code === 201) {
+          setAlert(true, response.data.message, "success");
+          resetForm();
+        }
+      });
+    },
+  });
+
   return (
     <div className="container mx-auto py-16 px-4">
       {/* Page Title */}
@@ -19,40 +51,47 @@ const ContactUs = () => {
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Get in Touch
           </h2>
-          <form>
-            <div className="mb-4">
-              <label className="block text-gray-600 mb-2" htmlFor="name">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none  "
-                placeholder="Your Name"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-600 mb-2" htmlFor="email">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none "
-                placeholder="Your Email"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-600 mb-2" htmlFor="message">
-                Message
-              </label>
-              <textarea
-                id="message"
-                rows={5}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none resize-none"
-                placeholder="Your Message"
-              ></textarea>
-            </div>
+          <form onSubmit={handleSubmit}>
+            <FormInput
+              name="name"
+              label="Name"
+              required={true}
+              value={values.name}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              error={errors.name}
+              touch={touched.name}
+              sx={{
+                marginBottom: "15px",
+              }}
+            />
+            <FormInput
+              name="email"
+              label="Email"
+              required={true}
+              value={values.email}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              error={errors.email}
+              touch={touched.email}
+              sx={{
+                marginBottom: "15px",
+              }}
+            />
+            <FormInput
+              name="message"
+              label="Message"
+              required={true}
+              value={values.message}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              error={errors.message}
+              touch={touched.message}
+              row={5}
+              sx={{
+                marginBottom: "15px",
+              }}
+            />
             <button
               type="submit"
               className="bg-cta hover:bg-hcta py-2 px-4 rounded-lg  transition"

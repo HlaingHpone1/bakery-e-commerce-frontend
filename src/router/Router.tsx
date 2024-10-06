@@ -40,6 +40,7 @@ import SettingLayout from "../layouts/SettingLayout";
 import Security from "../pages/user/Security";
 import ResetPasswordWithOldPassword from "../pages/user/ResetPasswordWithOldPassword";
 import Order from "../pages/user/Order";
+import ContactList from "../pages/admin/contact/ContactList";
 
 export type Role = "Admin" | "User";
 
@@ -110,7 +111,7 @@ const Router = () => {
         {
           path: "/orders",
           element: Order,
-          private: false,
+          private: true,
           role: ["Admin", "User"],
         },
         {
@@ -240,6 +241,12 @@ const Router = () => {
         {
           path: "/dashboard/orders/:id/details",
           element: OrderDetails,
+          private: true,
+          role: ["Admin"],
+        },
+        {
+          path: "/dashboard/contacts",
+          element: ContactList,
           private: true,
           role: ["Admin"],
         },
