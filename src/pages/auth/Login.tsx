@@ -39,52 +39,52 @@ export type LoginProps = {
   password: string;
 };
 
-const Login = () => {
-  const animationRef = useRef<LottieRefCurrentProps>(null);
+  const Login = () => {
+    const animationRef = useRef<LottieRefCurrentProps>(null);
 
-  const navigate = useNavigate();
-  const { setAlert } = alertStore();
-  const { setLogInUser, setUserData, setToken, setRole } = userStore();
+    const navigate = useNavigate();
+    const { setAlert } = alertStore();
+    const { setLogInUser, setUserData, setToken, setRole } = userStore();
 
-  const [forgotShow, setForgotShow] = useState(false);
+    const [forgotShow, setForgotShow] = useState(false);
 
-  const { handleBlur, handleChange, errors, touched, handleSubmit } =
-    useFormik<LoginProps>({
-      initialValues: {
-        email: "",
-        password: "",
-      },
-      validationSchema: LoginValidationSchema,
-      onSubmit: async (value) => {
-        await login(value)
-          .then((response) => {
-            if (response.data.code === 200) {
-              setAlert(true, response.data.message, "success");
-              setLogInUser(true);
-              setUserData(response.data.data.user_data);
-              setToken(response.data.data.token);
-              setRole(response.data.data.role);
-              if (response.data.data.role == "Admin") navigate("/dashboard");
-              else navigate("/");
-            }
-          })
-          .catch((e) => {
-            setAlert(
-              true,
-              e.response.data.code === 422
-                ? e.response.data.data.message
-                : e.response.data.message,
-              "error"
-            );
-            if (e.response.data.code === 400) {
-              setForgotShow(true);
-            }
-          });
-      },
-    });
+    const { handleBlur, handleChange, errors, touched, handleSubmit } =
+      useFormik<LoginProps>({
+        initialValues: {
+          email: "",
+          password: "",
+        },
+        validationSchema: LoginValidationSchema,
+        onSubmit: async (value) => {
+          await login(value)
+            .then((response) => {
+              if (response.data.code === 200) {
+                setAlert(true, response.data.message, "success");
+                setLogInUser(true);
+                setUserData(response.data.data.user_data);
+                setToken(response.data.data.token);
+                setRole(response.data.data.role);
+                if (response.data.data.role == "Admin") navigate("/dashboard");
+                else navigate("/");
+              }
+            })
+            .catch((e) => {
+              setAlert(
+                true,
+                e.response.data.code === 422
+                  ? e.response.data.data.message
+                  : e.response.data.message,
+                "error"
+              );
+              if (e.response.data.code === 400) {
+                setForgotShow(true);
+              }
+            });
+        },
+      });
 
-  return (
-    <>
+    return (
+      <>
       <AuthLayout>
         <Paper
           elevation={12}

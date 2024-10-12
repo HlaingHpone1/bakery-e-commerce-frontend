@@ -14,6 +14,7 @@ const Home = () => {
   const handlePlayButtonClick = () => {
     window.location.href = "https://www.youtube.com/your-channel-url";
   };
+
   return (
     <>
       <div>
@@ -98,7 +99,7 @@ const Home = () => {
 
             <button
               onClick={handlePlayButtonClick}
-              className="w-20 h-20 bg-white rounded-full shadow-lg flex justify-center items-center transition-transform duration-300 hover:scale-110"
+              className="w-20 h-20 bg-white rounded-full absolute z-50 shadow-lg flex justify-center items-center transition-transform duration-300 hover:scale-110"
             >
               <PlayArrowRounded
                 sx={{

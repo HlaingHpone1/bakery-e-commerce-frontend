@@ -1,3 +1,5 @@
+import { agricultural } from "../../utils/image";
+
 const Agricultural = () => {
   return (
     <div>
@@ -13,9 +15,9 @@ const Agricultural = () => {
           </p>
           <div className="mt-8">
             <img
-              src="/path-to-farm-image.jpg"
+              src={agricultural.farm}
               alt="Our Farm"
-              className="w-full h-auto object-cover rounded-lg shadow-lg"
+              className="w-full h-96 object-cover rounded-lg shadow-lg"
             />
           </div>
         </div>
@@ -31,7 +33,7 @@ const Agricultural = () => {
             {/* Coffee */}
             <div className="bg-white shadow-md rounded-lg p-6">
               <img
-                src="/path-to-coffee-image.jpg"
+                src={agricultural.coffee}
                 alt="Coffee"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
@@ -45,7 +47,7 @@ const Agricultural = () => {
             {/* Dairy */}
             <div className="bg-white shadow-md rounded-lg p-6">
               <img
-                src="/path-to-milk-image.jpg"
+                src={agricultural.milk}
                 alt="Milk"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
@@ -59,7 +61,7 @@ const Agricultural = () => {
             {/* Wheat */}
             <div className="bg-white shadow-md rounded-lg p-6">
               <img
-                src="/path-to-wheat-image.jpg"
+                src={agricultural.wheat}
                 alt="Wheat"
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
@@ -86,9 +88,9 @@ const Agricultural = () => {
           </p>
           <div className="mt-8">
             <img
-              src="/path-to-sustainability-image.jpg"
+              src={agricultural.eco}
               alt="Sustainability"
-              className="w-full h-auto object-cover rounded-lg shadow-lg"
+              className="w-fit m-auto h-[400px] object-contain rounded-lg shadow-lg"
             />
           </div>
         </div>
@@ -106,9 +108,9 @@ const Agricultural = () => {
           </p>
           <div className="mt-8">
             <img
-              src="/path-to-promise-image.jpg"
+              src={agricultural.promise}
               alt="Our Promise"
-              className="w-full h-auto object-cover rounded-lg shadow-lg"
+              className="w-fit m-auto h-[400px] object-contain rounded-lg shadow-lg"
             />
           </div>
         </div>

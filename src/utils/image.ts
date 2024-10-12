@@ -26,6 +26,13 @@ import image2 from "../assets/image2.jpg";
 import image3 from "../assets/image3.jpg";
 import image4 from "../assets/image4.jpg";
 
+import farm from "../assets/farm.jpg";
+import coffee from "../assets/coffee.jpg";
+import milk from "../assets/milk.jpg";
+import wheat from "../assets/wheat.jpg";
+import eco from "../assets/eco.jpg";
+import promise from "../assets/promise.png";
+
 export const logo = {
   logo1,
   logo2,
@@ -62,4 +69,13 @@ export const image = {
   image2,
   image3,
   image4,
+};
+
+export const agricultural = {
+  farm,
+  coffee,
+  milk,
+  wheat,
+  eco,
+  promise,
 };
