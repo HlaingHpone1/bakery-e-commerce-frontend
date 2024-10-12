@@ -155,7 +155,7 @@ const Router = () => {
         {
           path: "/about-us",
           element: AboutUs,
-          private: true,
+          private: false,
           role: ["Admin", "User"],
         },
       ],

@@ -129,7 +129,7 @@ const OrderDetails = () => {
                           pr={3}
                         >
                           <Typography paragraph fontWeight={500}>
-                            $ {productDetail.price} {"*"} {productDetail.qty}
+                            MMK {productDetail.price} {"*"} {productDetail.qty}
                           </Typography>
 
                           <Typography
@@ -137,7 +137,7 @@ const OrderDetails = () => {
                             component="h5"
                             fontWeight={600}
                           >
-                            $ {productDetail.total}
+                            MMK {productDetail.total}
                           </Typography>
                         </Box>
                       </Box>

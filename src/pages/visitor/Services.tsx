@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { image } from "../../utils/image";
 
 const Services = () => {
@@ -28,9 +29,12 @@ const Services = () => {
               delightful experience with custom cakes, decorations, and catering
               options to make your day unforgettable.
             </p>
-            <button className=" text-white py-2 px-4 rounded bg-cta hover:bg-hcta transition">
+            <Link
+              to="/contact-us"
+              className=" text-white py-2 px-4 rounded bg-cta hover:bg-hcta transition"
+            >
               Learn More
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -52,9 +56,12 @@ const Services = () => {
               class and master techniques for making bread, pastries, and more,
               using fresh ingredients from our farm.
             </p>
-            <button className="bg-cta hover:bg-hcta text-white py-2 px-4 rounded  transition">
+            <Link
+              to="/contact-us"
+              className=" text-white py-2 px-4 rounded bg-cta hover:bg-hcta transition"
+            >
               Learn More
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -99,9 +106,12 @@ const Services = () => {
               catering service provides custom menus, including fresh baked
               goods and coffee, perfect for any occasion.
             </p>
-            <button className="bg-cta hover:bg-hcta text-white py-2 px-4 rounded  transition">
+            <Link
+              to="/contact-us"
+              className=" text-white py-2 px-4 rounded bg-cta hover:bg-hcta transition"
+            >
               Learn More
-            </button>
+            </Link>
           </div>
         </div>
       </div>
