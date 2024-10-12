@@ -37,7 +37,7 @@ const Product = () => {
   const [paramString, setParamString] = useState<string>("");
 
   const [category, setCategory] = useState<number[]>([]);
-  const [priceRange, setPriceRange] = useState<number[]>([0, 100]);
+  const [priceRange, setPriceRange] = useState<number[]>([1000, 100_000]);
   const [priceSort, setPriceSort] = useState<string>("");
   const [dateSort, setDateSort] = useState<string>("");
 
@@ -184,16 +184,16 @@ const Product = () => {
 
               <Slider
                 value={priceRange}
-                min={0}
-                max={100}
+                min={1000}
+                max={100_000}
                 color="secondary"
                 onChange={handlePriceChange}
                 valueLabelDisplay="auto"
                 marks={[
-                  { value: 0, label: "MMK 1000" },
-                  { value: 100, label: "MMK 100000" },
+                  { value: 1000, label: "MMK 1000" },
+                  { value: 100_000, label: "MMK 100000" },
                 ]}
-                step={1}
+                step={1000}
                 sx={{ width: "90%" }}
               />
             </Box>
