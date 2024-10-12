@@ -349,7 +349,7 @@ const AddToCart = () => {
                               variant="h6"
                               fontWeight={700}
                             >
-                              $ {product.price}
+                              MMK {product.price}
                             </Typography>
                           </Box>
                         </Box>
@@ -389,7 +389,7 @@ const AddToCart = () => {
                         Total Price
                       </Typography>
                       <Typography variant="h6" component="h2" fontWeight={700}>
-                        $ {totalPrice.toFixed(2)}
+                        MMK {totalPrice.toFixed(2)}
                       </Typography>
                     </Box>
 

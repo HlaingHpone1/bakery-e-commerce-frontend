@@ -105,7 +105,7 @@ const ProductCard = ({ product }: { product: ProductCard }) => {
           </Typography>
           <Rating name="read-only" value={product.average_rating} readOnly />
           <Typography component="h3" fontWeight={700} fontSize={25}>
-            $ {product.price}
+            MMK {product.price}
           </Typography>
         </CardContent>
       </CardActionArea>

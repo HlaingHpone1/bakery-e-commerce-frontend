@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardContent,
@@ -14,7 +13,7 @@ import {
   Inventory,
   ArrowUpward,
   ArrowDownward,
-  AttachMoney,
+  LocalAtmRounded,
 } from "@mui/icons-material";
 
 import { Chart } from "react-google-charts";
@@ -238,7 +237,7 @@ const Dashboard = () => {
                   {renderGrowthIndicator(data?.sale_condition)}
                 </Box>
                 <Box display="flex" alignItems="center">
-                  <AttachMoney
+                  <LocalAtmRounded
                     fontSize="large"
                     style={{ marginRight: "8px" }}
                   />

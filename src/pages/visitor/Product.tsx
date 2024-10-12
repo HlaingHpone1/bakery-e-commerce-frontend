@@ -178,8 +178,8 @@ const Product = () => {
                 fontFamily="Roboto Slab"
                 fontWeight={500}
               >
-                Price Range:{" "}
-                <span className="text-base">{`$${priceRange[0]} - $${priceRange[1]}`}</span>
+                Price Range:
+                <span className="text-base">{`MMK ${priceRange[0]} - MMK ${priceRange[1]}`}</span>
               </Typography>
 
               <Slider
@@ -190,8 +190,8 @@ const Product = () => {
                 onChange={handlePriceChange}
                 valueLabelDisplay="auto"
                 marks={[
-                  { value: 0, label: "$0" },
-                  { value: 100, label: "$100" },
+                  { value: 0, label: "MMK 1000" },
+                  { value: 100, label: "MMK 100000" },
                 ]}
                 step={1}
                 sx={{ width: "90%" }}
