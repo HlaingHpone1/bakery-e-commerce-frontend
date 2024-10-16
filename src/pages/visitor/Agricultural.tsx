@@ -44,19 +44,7 @@ const Agricultural = () => {
               </p>
             </div>
 
-            {/* Dairy */}
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <img
-                src={agricultural.milk}
-                alt="Milk"
-                className="w-full h-48 object-cover rounded-lg mb-4"
-              />
-              <h3 className="text-2xl font-bold mb-2">Milk</h3>
-              <p className="text-gray-600">
-                We use fresh, organic milk from our dairy farm in all of our
-                baked goods and drinks, ensuring the highest quality.
-              </p>
-            </div>
+            
 
             {/* Wheat */}
             <div className="bg-white shadow-md rounded-lg p-6">
@@ -69,6 +57,19 @@ const Agricultural = () => {
               <p className="text-gray-600">
                 Our bakery products are made with wheat that we grow on our
                 farm, producing the freshest breads and pastries.
+              </p>
+            </div>
+            {/* Dairy */}
+            <div className="bg-white shadow-md rounded-lg p-6">
+              <img
+                src={agricultural.milk}
+                alt="Milk"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-2xl font-bold mb-2">Milk</h3>
+              <p className="text-gray-600">
+                We use fresh, organic milk from our dairy farm in all of our
+                baked goods and drinks, ensuring the highest quality.
               </p>
             </div>
           </div>
@@ -86,13 +87,6 @@ const Agricultural = () => {
             waste, using eco-friendly farming techniques, and ensuring animal
             welfare, we create a better future for the planet and our community.
           </p>
-          <div className="mt-8">
-            <img
-              src={agricultural.eco}
-              alt="Sustainability"
-              className="w-fit m-auto h-[400px] object-contain rounded-lg shadow-lg"
-            />
-          </div>
         </div>
       </section>
 
@@ -106,13 +100,6 @@ const Agricultural = () => {
             product, we guarantee the utmost care and attention, ensuring that
             our customers get the best of what we have to offer.
           </p>
-          <div className="mt-8">
-            <img
-              src={agricultural.promise}
-              alt="Our Promise"
-              className="w-fit m-auto h-[400px] object-contain rounded-lg shadow-lg"
-            />
-          </div>
         </div>
       </section>
     </div>

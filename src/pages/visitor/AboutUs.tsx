@@ -12,10 +12,9 @@ const AboutUs = () => {
               Who We Are
             </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We are a passionate team of bakers and coffee enthusiasts who
-              bring you fresh, handmade pastries and the finest brews. With a
-              commitment to quality and taste, we create an experience that
-              makes every bite a delight and every sip unforgettable.
+            At Shwe Pu Zun Bakery & Coffee House, we have proudly served delicious baked goods and beverages since we opened our first shop in 1978 at No 246/248, Anawrahta Road, Lanmadaw Township, Yangon. Over the years, we have expanded with two additional locations—Shop No. 2 in 2005 at No 14(A), Minnandar Road, Dawbon Township, Yangon, and Shop No. 3 in 2010 at Oaktarathiri Township, Nay Pyi Taw. At each of our shops, we offer a variety of bakery items, including cakes, cookies, bread, and pastries, alongside refreshing cold drinks.
+
+We are also deeply involved in agriculture, ensuring the quality of the ingredients we use in our products. We have established Arabica Coffee & Rubber Plantations, as well as a Mango Orchard (Sein-ta-lone), in Yatsauk Township, Southern Shan State, and an additional Arabica Coffee Plantation in Pyin Oo Lwin Township, Mandalay Division. Through these efforts, we are committed to contributing to Myanmar's agricultural sector while offering fresh, high-quality products to our valued customers.
             </p>
           </div>
 
@@ -31,39 +30,41 @@ const AboutUs = () => {
                   alt="Team Member"
                   className="w-full h-64 rounded-md mb-2 object-cover "
                 />
-                <h4 className="text-xl font-semibold">John Doe</h4>
+                <h4 className="text-xl font-semibold">Thein Zaw</h4>
                 <p className="text-gray-600">Founder & Head Baker</p>
                 <p className="text-gray-500 mt-2">
-                  John is the heart and soul of our bakery, with years of
+                  Zaw is the heart and soul of our bakery, with years of
                   experience crafting delicious pastries that keep customers
                   coming back.
                 </p>
               </div>
-              <div className="bg-gray-200 p-5 rounded-lg shadow-md">
-                <img
-                  src={people.person1}
-                  alt="Team Member"
-                  className="w-full h-64 rounded-md mb-2 object-cover "
-                />
-                <h4 className="text-xl font-semibold">Jane Smith</h4>
-                <p className="text-gray-600">Coffee Specialist</p>
-                <p className="text-gray-500 mt-2">
-                  Jane has a passion for coffee and ensures that every cup
-                  served is brewed to perfection, with a dedication to flavor
-                  and consistency.
-                </p>
-              </div>
+              
               <div className="bg-gray-200 p-5 rounded-lg shadow-md">
                 <img
                   src={people.person2}
                   alt="Team Member"
                   className="w-full h-64 rounded-md mb-2 object-cover "
                 />
-                <h4 className="text-xl font-semibold">Mary Lee</h4>
+                <h4 className="text-xl font-semibold">Harry</h4>
                 <p className="text-gray-600">Pastry Chef</p>
                 <p className="text-gray-500 mt-2">
-                  Mary brings creativity and elegance to our pastry selection,
+                  Harry brings creativity and elegance to our pastry selection,
                   always experimenting with new flavors and textures.
+                </p>
+              </div>
+
+              <div className="bg-gray-200 p-5 rounded-lg shadow-md">
+                <img
+                  src={people.person1}
+                  alt="Team Member"
+                  className="w-full h-64 rounded-md mb-2 object-cover "
+                />
+                <h4 className="text-xl font-semibold">Zaw Lwin Phyo</h4>
+                <p className="text-gray-600">Coffee Specialist</p>
+                <p className="text-gray-500 mt-2">
+                  Jane has a passion for coffee and ensures that every cup
+                  served is brewed to perfection, with a dedication to flavor
+                  and consistency.
                 </p>
               </div>
             </div>

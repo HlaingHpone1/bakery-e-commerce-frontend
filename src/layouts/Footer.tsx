@@ -64,30 +64,27 @@ const Footer = () => {
               </Stack>
             </Box>
             <Typography align="justify" paragraph>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-              inventore neque quas, maxime repellendus atque fuga aperiam.
-              Dolore, doloribus. Laudantium nesciunt voluptates sapiente,
-              veritatis tempora est autem porro numquam quam.
+            Shwe Pu Zun Bakery & Coffee House offers the finest baked goods and coffee, delivering quality and freshness in every order. Visit us in-store or shop online to enjoy our delicious treats. Stay updated with the latest news and promotions by following us on social media. 
             </Typography>
             <Box display="flex" gap={2} mt={2}>
               <Facebook
-                sx={{ fontSize: 30, color: "#4267B2", cursor: "pointer" }}
+                sx={{ fontSize: 30, color: "#fff", cursor: "pointer" }}
                 onClick={() =>
                   window.open("https://www.facebook.com", "_blank")
                 }
               />
               <Instagram
-                sx={{ fontSize: 30, color: "#E1306C", cursor: "pointer" }}
+                sx={{ fontSize: 30, color: "#fff", cursor: "pointer" }}
                 onClick={() =>
-                  window.open("https://www.instagram.com", "_blank")
+                  window.open("https://www.instagram.com/shwepuzun_official_page?igsh=eG50djRjcjl2MHd1", "_blank")
                 }
               />
               <YouTube
-                sx={{ fontSize: 30, color: "#FF0000", cursor: "pointer" }}
+                sx={{ fontSize: 30, color: "#fff", cursor: "pointer" }}
                 onClick={() => window.open("https://www.youtube.com", "_blank")}
               />
               <Twitter
-                sx={{ fontSize: 30, color: "#1DA1F2", cursor: "pointer" }}
+                sx={{ fontSize: 30, color: "#fff", cursor: "pointer" }}
                 onClick={() => window.open("https://www.twitter.com", "_blank")}
               />
             </Box>

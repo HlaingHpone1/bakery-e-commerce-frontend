@@ -18,7 +18,7 @@ import person1 from "../assets/person1.jpg";
 import person2 from "../assets/person2.jpg";
 
 import partner from "../assets/partner.png";
-import partner1 from "../assets/partner1.png";
+import partner1 from "../assets/partner1.jpeg";
 import partner2 from "../assets/partner2.jpg";
 
 import image1 from "../assets/image1.jpg";

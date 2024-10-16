@@ -122,7 +122,7 @@ const Product = () => {
     <ContainerWrapper>
       <Grid container my={2}>
         <Grid item smd={3} sm={5} pr={2}>
-          <Paper sx={{ minHeight: "calc(90vh - 75px)", p: 2 }}>
+          <Paper sx={{ minHeight: "calc(90vh - 75px)", p: 2,}}>
             <Box mb={2}>
               <Typography
                 variant="h6"
@@ -194,7 +194,11 @@ const Product = () => {
                   { value: 100_000, label: "MMK 100000" },
                 ]}
                 step={1000}
-                sx={{ width: "90%" }}
+                sx={{
+                  width: "70%",
+                  display: "block",
+                  mx: "auto",
+                }}
               />
             </Box>
 

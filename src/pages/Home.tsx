@@ -12,7 +12,7 @@ const Home = () => {
   });
 
   const handlePlayButtonClick = () => {
-    window.location.href = "https://www.youtube.com/your-channel-url";
+    window.location.href = "https://youtu.be/zUW5V4svhYk?si=kVOznkk5ct3gJLzY";
   };
 
   return (
@@ -29,7 +29,7 @@ const Home = () => {
           <div className="relative z-10 h-full flex items-center justify-center text-center text-white p-5">
             <div className="">
               <h1 className="text-5xl font-bold mb-4">
-                Welcome to Shew Pu Zun
+                Welcome to Shwe Pu Zun
               </h1>
               <p className="text-lg">
                 Experience the finest pastries and coffee, made fresh every day.
@@ -70,17 +70,13 @@ const Home = () => {
           {/* First section: Info on the left, Image on the right */}
           <InfoImageSection
             reverse={false}
-            imageSrc={background.bg2}
+            imageSrc={background.bg4}
             title="Who We Are"
-            description="We are a cafe and bakery shop that prides itself on serving delicious, fresh products daily. Come visit us!"
-          />
+            description="Welcome to Shwe Pu Zun Bakery & Coffee House, where our passion for baking and brewing comes to life every day. We are a cafe and bakery shop that takes pride in serving freshly made, delicious products to our customers. From a wide range of handcrafted pastries, cakes, and bread to freshly brewed coffee, every item we offer is made with care and the finest ingredients to ensure quality and flavor in every bite.
 
-          {/* Second section: Image on the left, Info on the right */}
-          <InfoImageSection
-            reverse={true}
-            imageSrc={background.bg3}
-            title="Meet Our Team"
-            description="Our dedicated team is passionate about baking and providing excellent service to our customers."
+            At Shwe Pu Zun, we believe in the importance of freshness, and that is why we bake daily, ensuring that our customers enjoy products that are always made to perfection. Whether you are looking for a morning coffee, a quick snack, or a special cake for an event, we have something to satisfy every craving. Our warm and inviting atmosphere makes us the perfect place to relax, catch up with friends, or even work remotely. 
+
+            Beyond our physical store, we also offer a seamless online ordering experience, making it easy for you to enjoy our products wherever you are. Visit us today or explore our online shop to discover why we are a favorite destination for bakery lovers in Myanmar. We look forward to serving you!"
           />
         </div>
 
@@ -112,19 +108,18 @@ const Home = () => {
 
         {/* Location Map Section */}
         <section className="py-20 ">
-          <div className="max-w-7xl mx-auto text-center">
+          <div className="mx-auto text-center px-20">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">
               Our Location
             </h2>
             <div className="w-full h-96 rounded-lg overflow-hidden">
-              <iframe
-                title="Cafe Location"
-                src="https://www.google.com/maps/embed?pb=..."
-                width="100%"
-                height="100%"
-                className="border-0"
-                loading="lazy"
-              ></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1939557.9562413616!2d94.8490496691618!3d18.292499375073064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c1ecd8649d3a63%3A0x3c563d27d359780d!2sShwe%20Pu%20Zun%20Cafeteria%20%26%20Bakery%20House!5e0!3m2!1sen!2ssg!4v1728233203998!5m2!1sen!2ssg" 
+            title="Cafe Location"
+            width="100%"
+            height="100%"
+            className="border-0"
+            loading="lazy"
+            ></iframe>
             </div>
           </div>
         </section>
@@ -168,16 +163,16 @@ const InfoImageSection = ({
 }) => {
   return (
     <div
-      className={`flex flex-col md:flex-row ${
+      className={`flex justify-center flex-col md:flex-row ${
         reverse ? "md:flex-row-reverse" : ""
       } my-8 items-center`}
     >
       {/* Image */}
-      <div className="md:w-1/2 w-full p-4">
+      <div className="md:w-1/2 w-full p-4 flex justify-end">
         <img
           src={imageSrc}
           alt={title}
-          className="w-full h-auto object-cover rounded-lg shadow-lg"
+          className="w-fit h-[450px] object-contain rounded-lg shadow-lg"
         />
       </div>
 

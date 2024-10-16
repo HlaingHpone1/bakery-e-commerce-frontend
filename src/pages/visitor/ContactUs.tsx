@@ -112,7 +112,9 @@ const ContactUs = () => {
             <div>
               <p className="text-gray-800 font-semibold">Address:</p>
               <p className="text-gray-600">
-                123 Bakery Street, Sweet Town, ST 12345
+              Shop (1)   No.246,248,  Anawrahta Road, Lanmadaw Township, Yangon, Myanmar.<br/>
+              Shop (2)  No.14-A,  Minnandar  Road, Dawbon Township, Yangon, Myanmar.<br/>
+              Shop(3)   No.42, Oaktarathiri Township, Near InGyinPanWyne, NayPyiTaw, Myanmar.
               </p>
             </div>
           </div>
@@ -121,7 +123,7 @@ const ContactUs = () => {
             <PhoneRounded className="text-black mr-4" fontSize="medium" />
             <div>
               <p className="text-gray-800 font-semibold">Phone:</p>
-              <p className="text-gray-600">+1 (123) 456-7890</p>
+              <p className="text-gray-600">95-1- 222305, 211709, 227171</p>
             </div>
           </div>
           {/* Email */}
@@ -129,7 +131,7 @@ const ContactUs = () => {
             <EmailRounded className="text-black mr-4" fontSize="medium" />
             <div>
               <p className="text-gray-800 font-semibold">Email:</p>
-              <p className="text-gray-600">info@bakeryandcafe.com</p>
+              <p className="text-gray-600">shwepuzun@gmail.com</p>
             </div>
           </div>
         </div>
@@ -137,13 +139,14 @@ const ContactUs = () => {
 
       {/* Google Map Section */}
       <div className="w-full h-80">
-        <iframe
-          className="w-full h-full rounded-lg shadow-lg"
-          title="Bakery and Cafe Location"
-          src="https://www.google.com/maps/embed?pb=YOUR_GOOGLE_MAPS_EMBED_LINK"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
+
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3819.4272807837074!2d96.19144292536427!3d16.80514603200179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c1ecd8649d3a63%3A0x3c563d27d359780d!2sShwe%20Pu%20Zun%20Cafeteria%20%26%20Bakery%20House!5e0!3m2!1sen!2ssg!4v1728236291063!5m2!1sen!2ssg"
+      className="w-full h-full rounded-lg shadow-lg"
+      title="Bakery and Cafe Location"
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      >
+      </iframe>
       </div>
     </div>
   );
