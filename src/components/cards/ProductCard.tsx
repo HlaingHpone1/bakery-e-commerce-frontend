@@ -18,7 +18,6 @@ import NormalButton from "../button/NormalButton";
 import { useProductCartStore } from "../../store/productCartStore";
 import { userStore } from "../../store/userStore";
 import { alertStore } from "../../store/alertStore";
-import { red } from "@mui/material/colors";
 
 const ProductCard = ({ product }: { product: ProductCard }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -88,7 +87,7 @@ const ProductCard = ({ product }: { product: ProductCard }) => {
   };
 
   return (
-    <Card ref={cardRef} sx={{ height: "100%" ,}}>
+    <Card ref={cardRef} sx={{ height: "100%" }}>
       <CardActionArea onClick={() => navigate(`/products/${product.id}`)}>
         <CardMedia
           component="img"

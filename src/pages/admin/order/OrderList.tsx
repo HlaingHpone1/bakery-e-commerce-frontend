@@ -114,7 +114,11 @@ const OrderList = () => {
     },
   });
 
-  const handleChangeStatus = (e, id: number, status: number) => {
+  const handleChangeStatus = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    id: number,
+    status: number
+  ) => {
     if (status === 1) {
       handleChangeOrderStatus(e), setSelectedId(id);
     }
